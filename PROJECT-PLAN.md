@@ -35,7 +35,7 @@
 
 - [x] 以 `template.json` 為單一版本來源，採 SemVer；`0.x` 為預穩定階段（CI 驗證 SemVer 與名稱一致性）。
 - [x] Pull Request 與 `main` CI 檢查結構、版本、連結、範例、封裝與機密排除。
-- [ ] `vX.Y.Z` tag CD 驗證版本一致、封裝 `dist/`、產生 SHA-256 並發布 GitHub Release（`release.yml` 機制已就緒；待首次 tag 實際觸發成功後勾選）。
+- [x] `vX.Y.Z` tag CD 驗證版本一致、封裝 `dist/`、產生 SHA-256 並發布 GitHub Release（2026-07-14 `v0.1.0` 首次 tag 觸發實測成功，Release 含 ZIP 與 `.sha256` 資產）。
 - [ ] 在 GitHub 對 `main` 啟用 Pull Request 與 CI 成功的分支保護。
 
 具體 GitHub Flow、SemVer、Actions 設定和發行操作保留在不追蹤的 `GITHUB_REMOTE_SETUP.local.md`，避免本計畫與操作手冊重複。
