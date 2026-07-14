@@ -40,9 +40,14 @@ def fail(message):
     sys.exit(1)
 
 
+# 與 dice.mjs 的 JS 正規表達式語意對齊：空白用 JS \s 的集合（含 U+FEFF BOM、不含 \x1c-\x1f 與 NEL \x85）；
+# 數字一律 [0-9]（Python 的 \d 會收全形數字，JS 不會）。
+JS_WHITESPACE = "[\t\n\v\f\r \u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]"
+
+
 # 解析公式：先去除空白並轉小寫，再以指標掃描 term/運算子序列。
 def parse_formula(raw):
-    cleaned = re.sub(r"\s+", "", raw).lower()
+    cleaned = re.sub(JS_WHITESPACE + "+", "", raw).lower()
     if len(cleaned) == 0:
         raise ValueError("錯誤：公式不得為空。")
     if cleaned[0] in "+-":
@@ -57,12 +62,12 @@ def parse_formula(raw):
 
     def read_term():
         i = pos[0]
-        lead = re.match(r"\d*", cleaned[i:]).group(0)
+        lead = re.match(r"[0-9]*", cleaned[i:]).group(0)
         if i + len(lead) < len(cleaned) and cleaned[i + len(lead)] == "d":
             if lead != "":
                 assert_no_leading_zero(lead)
             pos[0] = i + len(lead) + 1
-            faces = re.match(r"\d+", cleaned[pos[0]:])
+            faces = re.match(r"[0-9]+", cleaned[pos[0]:])
             if not faces:
                 raise ValueError("錯誤：骰組格式錯誤，需為 [N]d骰面數，例如 2d6。")
             assert_no_leading_zero(faces.group(0))
@@ -74,7 +79,7 @@ def parse_formula(raw):
             if not (2 <= m <= 1000):
                 raise ValueError("錯誤：骰面數（M）需為 2 至 1000 的整數。")
             return {"type": "dice", "n": n, "m": m}
-        num = re.match(r"\d+", cleaned[i:])
+        num = re.match(r"[0-9]+", cleaned[i:])
         if not num:
             raise format_error
         assert_no_leading_zero(num.group(0))

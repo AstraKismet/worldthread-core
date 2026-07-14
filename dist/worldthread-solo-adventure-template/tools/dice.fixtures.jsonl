@@ -8,6 +8,7 @@
 {"args": ["0+2d6", "--seed", "wt-008"], "expect_exit": 0, "expect_stdout": "{\"formula\":\"0+2d6\",\"rolls\":[6,1],\"modifier\":0,\"result\":7,\"source\":\"tool\",\"seed\":\"wt-008\",\"rolled_at\":\"1970-01-01T00:00:00.000Z\"}"}
 {"args": ["7", "--seed", "wt-009"], "expect_exit": 0, "expect_stdout": "{\"formula\":\"7\",\"rolls\":[],\"modifier\":7,\"result\":7,\"source\":\"tool\",\"seed\":\"wt-009\",\"rolled_at\":\"1970-01-01T00:00:00.000Z\"}"}
 {"args": ["--seed", "wt-010", "4d8"], "expect_exit": 0, "expect_stdout": "{\"formula\":\"4d8\",\"rolls\":[6,2,8,1],\"modifier\":0,\"result\":17,\"source\":\"tool\",\"seed\":\"wt-010\",\"rolled_at\":\"1970-01-01T00:00:00.000Z\"}"}
+{"args": ["﻿2d6", "--seed", "wt-011"], "expect_exit": 0, "expect_stdout": "{\"formula\":\"2d6\",\"rolls\":[6,4],\"modifier\":0,\"result\":10,\"source\":\"tool\",\"seed\":\"wt-011\",\"rolled_at\":\"1970-01-01T00:00:00.000Z\"}"}
 {"args": ["2d6-1d4"], "expect_exit": 1, "expect_stderr": "錯誤：骰組僅支援相加，減號只能用於整數常數前。"}
 {"args": ["02d6"], "expect_exit": 1, "expect_stderr": "錯誤：數字不得有前導零。"}
 {"args": ["+2d6"], "expect_exit": 1, "expect_stderr": "錯誤：公式開頭不得為運算符號。"}
@@ -19,3 +20,4 @@
 {"args": ["--foo"], "expect_exit": 1, "expect_stderr": "錯誤：未知參數：--foo"}
 {"args": ["2d6", "3d4"], "expect_exit": 1, "expect_stderr": "錯誤：只能提供一個擲骰公式。"}
 {"args": ["--seed"], "expect_exit": 1, "expect_stderr": "錯誤：--seed 需要提供字串值。"}
+{"args": ["２d６"], "expect_exit": 1, "expect_stderr": "錯誤：公式格式錯誤，請使用如 2d6+3 的格式。"}
