@@ -32,7 +32,7 @@
 ## 階段 4：版本、CI/CD 與發行
 
 - [ ] 以 `template.json` 為單一版本來源，採 SemVer；`0.x` 為預穩定階段。
-- [ ] Pull Request 與 `main` CI 檢查結構、版本、連結、範例、封裝與機密排除。
+- [x] Pull Request 與 `main` CI 檢查結構、版本、連結、範例、封裝與機密排除。
 - [ ] `vX.Y.Z` tag CD 驗證版本一致、封裝 `dist/`、產生 SHA-256 並發布 GitHub Release。
 - [ ] 在 GitHub 對 `main` 啟用 Pull Request 與 CI 成功的分支保護。
 

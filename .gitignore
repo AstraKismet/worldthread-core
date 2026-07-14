@@ -11,3 +11,6 @@ game/rag/
 *.m4a
 *.webm
 .env
+
+# Generated package validation output.
+artifacts/

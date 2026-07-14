@@ -42,7 +42,7 @@ Worldthread（織世）是一個平台中立的單人 TRPG 範本專案。它讓
 └─ .gitignore                                 # 私有戰役資料與機密排除規則
 ```
 
-發行包不應包含真實的 `game/state/`、`game/private/`、`game/rag/`、音檔、`.env`、憑證或 Git 中繼資料。範例的初始狀態應保存在 `game/templates/starter-state/`，由使用者複製後開始自己的戰役。
+發行包不應包含真實戰役的 `game/state/`、RAG 快取、音檔、`.env`、憑證或 Git 中繼資料。範例與範本所需的 `game/private/director/` 可以隨包提供，但其中只能有可公開發行的導演素材，不能混入玩家的私有筆記。範例的初始狀態應保存在 `game/templates/starter-state/`，由使用者複製後開始自己的戰役。
 
 ## 本機檢查
 
