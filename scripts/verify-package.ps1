@@ -68,7 +68,8 @@ if ($manifest.name -ne $expectedName) {
     'game/private/director/fronts/fog-ferry.json',
     'game/private/director/hook-market.md',
     'examples/fog-ferry-first-turn.md',
-    'tools/dice.mjs'
+    'tools/dice.mjs',
+    'tools/convert-rulebook-prompt.md'
 ) | ForEach-Object { Assert-File $_ }
 
 $forbiddenDirectories = @('game/state', 'game/rag', '.git')
