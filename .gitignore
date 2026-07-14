@@ -1,0 +1,13 @@
+# Local guidance and machine-specific material
+GITHUB_REMOTE_SETUP.local.md
+WORLDTHREAD-HANDOFF.local.md
+
+# Never distribute a real campaign, private notes, recordings, or secrets.
+game/state/
+game/private/
+game/rag/
+*.wav
+*.mp3
+*.m4a
+*.webm
+.env

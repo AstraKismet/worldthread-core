@@ -1,0 +1,10 @@
+{
+  "name": "worldthread-solo-adventure-template",
+  "display_name": "Worldthread／織世：單人 TRPG 範本",
+  "version": "0.1.0",
+  "language": "zh-Hant",
+  "license": "MIT",
+  "entrypoint": "README.md",
+  "protocol": "protocol/PLAYBOOK.md",
+  "description": "平台中立、以資料夾為真相來源的單人 TRPG 範本。"
+}
