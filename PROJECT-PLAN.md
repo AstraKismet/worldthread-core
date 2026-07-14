@@ -1,6 +1,6 @@
 # 建置計畫與風險登錄
 
-> 狀態：`v0.1.0` 已於 2026-07-14 發行；`0.2.0`（擲骰 Python 對等工具、契約測試與 AI 自骰降級）開發完成，待 tag 發行。
+> 狀態：`v0.2.0` 已於 2026-07-14 發行（擲骰 Python 對等工具、契約測試與 AI 自骰降級；`v0.1.0` 同日稍早發行）。
 
 ## 階段 0：決策與入口文件
 
@@ -36,7 +36,7 @@
 
 - [x] 以 `template.json` 為單一版本來源，採 SemVer；`0.x` 為預穩定階段（CI 驗證 SemVer 與名稱一致性）。
 - [x] Pull Request 與 `main` CI 檢查結構、版本、連結、範例、封裝與機密排除。
-- [x] `vX.Y.Z` tag CD 驗證版本一致、封裝 `dist/`、產生 SHA-256 並發布 GitHub Release（2026-07-14 `v0.1.0` 首次 tag 觸發實測成功，Release 含 ZIP 與 `.sha256` 資產）。
+- [x] `vX.Y.Z` tag CD 驗證版本一致、封裝 `dist/`、產生 SHA-256 並發布 GitHub Release（2026-07-14 `v0.1.0` 首次 tag 觸發實測成功；同日 `v0.2.0` 再次驗證，Release 均含 ZIP 與 `.sha256` 資產）。
 - [ ] 在 GitHub 對 `main` 啟用 Pull Request 與 CI 成功的分支保護。
 
 具體 GitHub Flow、SemVer、Actions 設定和發行操作保留在不追蹤的 `GITHUB_REMOTE_SETUP.local.md`，避免本計畫與操作手冊重複。
