@@ -69,6 +69,8 @@ if ($manifest.name -ne $expectedName) {
     'game/private/director/hook-market.md',
     'examples/fog-ferry-first-turn.md',
     'tools/dice.mjs',
+    'tools/dice.py',
+    'tools/dice.fixtures.jsonl',
     'tools/convert-rulebook-prompt.md'
 ) | ForEach-Object { Assert-File $_ }
 
@@ -81,7 +83,7 @@ foreach ($relativePath in $forbiddenDirectories) {
 
 $forbiddenExtensions = @('.wav', '.mp3', '.m4a', '.webm', '.pem', '.key', '.pfx', '.p12')
 $forbiddenNames = @('.env', 'id_rsa', 'id_ed25519', 'credentials.json')
-$textExtensions = @('.md', '.json', '.jsonl', '.txt', '.mjs')
+$textExtensions = @('.md', '.json', '.jsonl', '.txt', '.mjs', '.py')
 $files = Get-ChildItem -LiteralPath $PackagePath -Recurse -File
 foreach ($file in $files) {
     if ($file.Extension.ToLowerInvariant() -in $textExtensions -or $file.Name -eq 'LICENSE') {

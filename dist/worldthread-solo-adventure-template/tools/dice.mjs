@@ -1,5 +1,7 @@
 // Worldthread 擲骰工具：解析擲骰公式並以密碼學級亂數擲骰，輸出單行 JSON 供事件紀錄使用。
 // 零依賴：僅使用 Node 內建 node:crypto。相容 Node 18+。
+// 與 tools/dice.py 共用同一份輸出契約：同公式同 --seed 時，兩支工具的輸出逐位元一致，
+// 可互為對照組（契約由 tools/dice.fixtures.jsonl 鎖定）。
 import { randomInt, createHash } from 'node:crypto';
 
 const HELP = `用法：node dice.mjs <公式> [--seed <字串>]

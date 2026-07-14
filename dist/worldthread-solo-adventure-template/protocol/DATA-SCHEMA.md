@@ -33,7 +33,14 @@
 
 ## 擲骰紀錄
 
-擲骰以 `kind: "roll"` 事件記入 `events.jsonl`，除通用鍵外包含：`formula`、`rolls`（各骰個別結果，依公式順序）、`modifier`（常數項含正負號之總和）、`result`（骰子總和加 `modifier`）、`source`（`player`、`tool` 或 `agreed-random`）、`rolled_at`，以及主持人裁定後補上的 `ruling`：
+擲骰以 `kind: "roll"` 事件記入 `events.jsonl`，除通用鍵外包含：`formula`、`rolls`（各骰個別結果，依公式順序）、`modifier`（常數項含正負號之總和）、`result`（骰子總和加 `modifier`）、`source`、`rolled_at`，以及主持人裁定後補上的 `ruling`。
+
+`source` 值域（信任等級由高至低）：
+
+- `player`：玩家親自擲骰後回報。
+- `tool`：程式擲骰工具輸出（`tools/dice.mjs` 與 `tools/dice.py` 皆屬此類；兩者輸出契約相同）。
+- `agreed-random`：雙方事先約定的其他隨機程序。
+- `ai`：主持人在無任何工具可用、玩家亦不自擲時自行產生的骰值。信任等級最低，僅限 `PLAYBOOK.md` 擲骰節的最終降級；必須據實標記，不得偽稱其他來源。
 
 ```json
 {"id":"evt-0002","at":"1970-01-01T00:00:00Z","scene_id":"fog-ferry-opening","kind":"roll","formula":"2d6+3","rolls":[4,2],"modifier":3,"result":9,"source":"tool","rolled_at":"1970-01-01T00:00:00Z","ruling":"成功：你在鐘塔斷繩上找到銀色纖維。","facts":[],"visibility":"player"}

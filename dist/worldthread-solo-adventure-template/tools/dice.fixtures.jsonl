@@ -1,0 +1,23 @@
+{"args": ["2d6+3", "--seed", "wt-001"], "expect_exit": 0, "expect_stdout": "{\"formula\":\"2d6+3\",\"rolls\":[4,5],\"modifier\":3,\"result\":12,\"source\":\"tool\",\"seed\":\"wt-001\",\"rolled_at\":\"1970-01-01T00:00:00.000Z\"}"}
+{"args": ["d20", "--seed", "wt-002"], "expect_exit": 0, "expect_stdout": "{\"formula\":\"d20\",\"rolls\":[9],\"modifier\":0,\"result\":9,\"source\":\"tool\",\"seed\":\"wt-002\",\"rolled_at\":\"1970-01-01T00:00:00.000Z\"}"}
+{"args": ["2d6+1d4+5", "--seed", "wt-003"], "expect_exit": 0, "expect_stdout": "{\"formula\":\"2d6+1d4+5\",\"rolls\":[3,4,4],\"modifier\":5,\"result\":16,\"source\":\"tool\",\"seed\":\"wt-003\",\"rolled_at\":\"1970-01-01T00:00:00.000Z\"}"}
+{"args": ["3d6-2", "--seed", "wt-004"], "expect_exit": 0, "expect_stdout": "{\"formula\":\"3d6-2\",\"rolls\":[4,3,4],\"modifier\":-2,\"result\":9,\"source\":\"tool\",\"seed\":\"wt-004\",\"rolled_at\":\"1970-01-01T00:00:00.000Z\"}"}
+{"args": ["1d1000", "--seed", "wt-005"], "expect_exit": 0, "expect_stdout": "{\"formula\":\"1d1000\",\"rolls\":[769],\"modifier\":0,\"result\":769,\"source\":\"tool\",\"seed\":\"wt-005\",\"rolled_at\":\"1970-01-01T00:00:00.000Z\"}"}
+{"args": ["100d2", "--seed", "wt-006"], "expect_exit": 0, "expect_stdout": "{\"formula\":\"100d2\",\"rolls\":[1,1,2,1,1,1,1,1,1,1,1,2,2,1,1,1,2,1,1,1,2,1,1,2,2,1,2,2,2,2,2,1,2,1,2,1,2,1,2,2,1,2,1,1,1,2,2,2,1,2,1,1,2,1,2,2,2,1,2,2,1,2,2,1,1,1,1,2,2,2,2,1,1,1,2,1,1,1,1,1,2,2,2,2,2,1,1,2,2,2,2,2,1,1,2,1,1,1,1,1],\"modifier\":0,\"result\":146,\"source\":\"tool\",\"seed\":\"wt-006\",\"rolled_at\":\"1970-01-01T00:00:00.000Z\"}"}
+{"args": ["2D6+3", "--seed", "wt-007"], "expect_exit": 0, "expect_stdout": "{\"formula\":\"2d6+3\",\"rolls\":[3,4],\"modifier\":3,\"result\":10,\"source\":\"tool\",\"seed\":\"wt-007\",\"rolled_at\":\"1970-01-01T00:00:00.000Z\"}"}
+{"args": ["0+2d6", "--seed", "wt-008"], "expect_exit": 0, "expect_stdout": "{\"formula\":\"0+2d6\",\"rolls\":[6,1],\"modifier\":0,\"result\":7,\"source\":\"tool\",\"seed\":\"wt-008\",\"rolled_at\":\"1970-01-01T00:00:00.000Z\"}"}
+{"args": ["7", "--seed", "wt-009"], "expect_exit": 0, "expect_stdout": "{\"formula\":\"7\",\"rolls\":[],\"modifier\":7,\"result\":7,\"source\":\"tool\",\"seed\":\"wt-009\",\"rolled_at\":\"1970-01-01T00:00:00.000Z\"}"}
+{"args": ["--seed", "wt-010", "4d8"], "expect_exit": 0, "expect_stdout": "{\"formula\":\"4d8\",\"rolls\":[6,2,8,1],\"modifier\":0,\"result\":17,\"source\":\"tool\",\"seed\":\"wt-010\",\"rolled_at\":\"1970-01-01T00:00:00.000Z\"}"}
+{"args": ["﻿2d6", "--seed", "wt-011"], "expect_exit": 0, "expect_stdout": "{\"formula\":\"2d6\",\"rolls\":[6,4],\"modifier\":0,\"result\":10,\"source\":\"tool\",\"seed\":\"wt-011\",\"rolled_at\":\"1970-01-01T00:00:00.000Z\"}"}
+{"args": ["2d6-1d4"], "expect_exit": 1, "expect_stderr": "錯誤：骰組僅支援相加，減號只能用於整數常數前。"}
+{"args": ["02d6"], "expect_exit": 1, "expect_stderr": "錯誤：數字不得有前導零。"}
+{"args": ["+2d6"], "expect_exit": 1, "expect_stderr": "錯誤：公式開頭不得為運算符號。"}
+{"args": ["2d6+"], "expect_exit": 1, "expect_stderr": "錯誤：公式格式錯誤，請使用如 2d6+3 的格式。"}
+{"args": ["d1"], "expect_exit": 1, "expect_stderr": "錯誤：骰面數（M）需為 2 至 1000 的整數。"}
+{"args": ["101d6"], "expect_exit": 1, "expect_stderr": "錯誤：骰數（N）需為 1 至 100 的整數。"}
+{"args": ["abc"], "expect_exit": 1, "expect_stderr": "錯誤：公式格式錯誤，請使用如 2d6+3 的格式。"}
+{"args": ["10000"], "expect_exit": 1, "expect_stderr": "錯誤：整數常數需為 0 至 9999。"}
+{"args": ["--foo"], "expect_exit": 1, "expect_stderr": "錯誤：未知參數：--foo"}
+{"args": ["2d6", "3d4"], "expect_exit": 1, "expect_stderr": "錯誤：只能提供一個擲骰公式。"}
+{"args": ["--seed"], "expect_exit": 1, "expect_stderr": "錯誤：--seed 需要提供字串值。"}
+{"args": ["２d６"], "expect_exit": 1, "expect_stderr": "錯誤：公式格式錯誤，請使用如 2d6+3 的格式。"}
