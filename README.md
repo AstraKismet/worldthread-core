@@ -23,7 +23,7 @@ Worldthread（織世）是一個平台中立的單人 TRPG 範本專案。它讓
 - 完全原創的低魔奇幻邊境謎案範例：「霧渡口的失竊鐘聲」。
 - 既有角色、共同創角流程、可複製初始狀態與無法寫檔時的降級格式。
 
-尚未完成自動化 CI/CD、正式封裝與 GitHub Release；詳情見建置計畫的階段 3–4。
+CI（封裝驗證）已在 Pull Request 與推送 `main` 時自動執行；tag 觸發的發行 CD、GitHub Release 與分支保護尚未完成，詳情見建置計畫的階段 3–4。
 
 ## 儲存庫結構
 
@@ -46,15 +46,13 @@ Worldthread（織世）是一個平台中立的單人 TRPG 範本專案。它讓
 
 ## 本機檢查
 
-PowerShell 下可先做基本結構與 JSON 驗證：
+改動 `dist/` 內任何內容後，執行與 CI 相同的完整封裝驗證：
 
 ```powershell
-$package = 'dist/worldthread-solo-adventure-template'
-Get-ChildItem $package -Recurse -Filter *.json |
-  ForEach-Object { Get-Content -Raw -Encoding utf8 $_ | ConvertFrom-Json | Out-Null }
+./scripts/verify-package.ps1 -OutputDirectory artifacts
 ```
 
-在加入 CI 前，提交前也應確認發行目錄只含可公開分發的內容：
+提交前也應確認發行目錄只含可公開分發的內容：
 
 ```powershell
 git status --short

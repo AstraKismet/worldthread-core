@@ -20,10 +20,10 @@
 
 ## 資料分層與隱私
 
-`reference/` 是通常不直接變更的來源素材；`state/` 是已確定、玩家可知的本局真相；`private/director/` 是不可向玩家揭露的祕密與前線；`rag/` 是可刪除重建的索引快取。不要把私有筆記、錄音、金鑰或真實戰役存檔發佈或提交。
+`game/reference/` 是通常不直接變更的來源素材；`game/state/` 是已確定、玩家可知的本局真相；`game/private/director/` 是不可向玩家揭露的祕密與前線；`game/rag/` 是可刪除重建的索引快取。不要把私有筆記、錄音、金鑰或真實戰役存檔發佈或提交。
 
 語音只是輸入／輸出管道：STT 文字才是遊戲真相，原始音檔預設不保存。沒有檔案寫入能力的服務，請讓它輸出 `STATE-UPDATE` 區塊，再由你手動貼回。
 
 ## 內容與權利
 
-範本與「霧渡口」範例採 MIT 授權。你加入的規則書、世界設定和玩家內容仍受其原始權利條件約束；只放入你有權使用的內容。詳見 `protocol/DATA-SCHEMA.md`、`RAG-PROTOCOL.md` 與 `VOICE-PROTOCOL.md`。
+範本與「霧渡口」範例採 MIT 授權。你加入的規則書、世界設定和玩家內容仍受其原始權利條件約束；只放入你有權使用的內容。詳見 `protocol/DATA-SCHEMA.md`、`protocol/RAG-PROTOCOL.md` 與 `protocol/VOICE-PROTOCOL.md`。

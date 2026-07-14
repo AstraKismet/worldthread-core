@@ -1,6 +1,6 @@
 # 資料格式
 
-所有文字使用 UTF-8；路徑相對於範本根目錄。`reference/` 為來源真相，已發生的 `state/` 可優先覆蓋相衝突的來源。`private/director/` 永不進玩家可見敘事。每個狀態 JSON 至少有：
+所有文字使用 UTF-8；路徑相對於範本根目錄。`game/reference/` 為來源真相，已發生的 `game/state/` 可優先覆蓋相衝突的來源。`game/private/director/` 永不進玩家可見敘事。每個狀態 JSON 至少有：
 
 ```json
 {"revision": 1, "updated_at": "2026-07-14T00:00:00Z"}

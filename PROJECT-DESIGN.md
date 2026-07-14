@@ -1,6 +1,6 @@
 # 通用單人 TRPG 體驗範本：設計規格
 
-> 狀態：規劃中。正式專案名為 Worldthread／織世；發行套件名為 `worldthread-solo-adventure-template`；授權採 MIT License。
+> 狀態：`0.1.0` 已實作，本文件為現行設計依據。正式專案名為 Worldthread／織世；發行套件名為 `worldthread-solo-adventure-template`；授權採 MIT License。
 
 ## 1. 目標與範圍
 
@@ -10,7 +10,7 @@
 
 ## 2. 發行與資料架構
 
-所有可分發內容將位於 `dist/worldthread-solo-adventure-template/`，並且只從該資料夾封裝。暫定結構如下：
+所有可分發內容位於 `dist/worldthread-solo-adventure-template/`，並且只從該資料夾封裝。發行結構如下：
 
 ```text
 dist/worldthread-solo-adventure-template/
@@ -25,17 +25,15 @@ dist/worldthread-solo-adventure-template/
 │  └─ adapters/
 ├─ game/
 │  ├─ reference/{rules,setting,scenarios,characters}/
-│  ├─ state/{npcs,world,logs,summaries}/
 │  ├─ private/director/{fronts}/
-│  ├─ rag/
-│  └─ templates/
+│  └─ templates/{narrators,starter-state}/
 └─ examples/
 ```
 
-- `reference/`：通常不直接修改的來源真相。
-- `state/`：本局已發生、玩家可知或可公開的變化；與來源衝突時優先。
-- `private/director/`：未揭露秘密、勢力目標、伏筆與導演決策；不能直接進玩家可見內容。
-- `rag/`：可再生索引，不能是唯一真相來源。
+- `game/reference/`：通常不直接修改的來源真相。
+- `game/state/`：本局已發生、玩家可知或可公開的變化；與來源衝突時優先。**不隨發行包提供**——玩家開局時將 `game/templates/starter-state/` 複製為 `game/state/`，其下的 `npcs/`、`world`、`logs/`、`summaries/` 等於遊玩時建立；CI 禁止 `game/state/` 進入封裝。
+- `game/private/director/`：未揭露秘密、勢力目標、伏筆與導演決策；不能直接進玩家可見內容。發行包內僅含可公開發行的範例導演素材。
+- `game/rag/`：可再生索引，不能是唯一真相來源。**不隨發行包提供**，由接入服務於執行期建立；CI 禁止其進入封裝。
 
 ## 3. 平台中立與 RAG
 
