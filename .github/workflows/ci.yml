@@ -21,6 +21,10 @@ jobs:
         shell: pwsh
         run: ./scripts/verify-package.ps1 -OutputDirectory artifacts
 
+      - name: Dice tools contract test
+        shell: pwsh
+        run: ./scripts/test-dice-contract.ps1
+
       - name: Upload review artifact
         uses: actions/upload-artifact@v4
         with:
