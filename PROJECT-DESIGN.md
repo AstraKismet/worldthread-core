@@ -1,6 +1,6 @@
 # 通用單人 TRPG 體驗範本：設計規格
 
-> 狀態：`0.1.0` 已實作，本文件為現行設計依據。正式專案名為 Worldthread／織世；發行套件名為 `worldthread-solo-adventure-template`；授權採 MIT License。
+> 狀態：`0.2.0` 已實作，本文件為現行設計依據。正式專案名為 Worldthread／織世；發行套件名為 `worldthread-solo-adventure-template`；授權採 MIT License。
 
 ## 1. 目標與範圍
 
@@ -26,6 +26,8 @@ dist/worldthread-solo-adventure-template/
 │  └─ adapters/
 ├─ tools/
 │  ├─ dice.mjs
+│  ├─ dice.py                      # 與 dice.mjs 輸出契約相同的 Python 對等實作
+│  ├─ dice.fixtures.jsonl          # 雙工具共用的黃金行契約夾具（CI 契約測試）
 │  └─ convert-rulebook-prompt.md
 ├─ game/
 │  ├─ reference/{rules,setting,scenarios,characters}/
@@ -69,7 +71,7 @@ dist/worldthread-solo-adventure-template/
 
 每回合：讀取當前場景、主角、相關世界／NPC 狀態與摘要；檢索規則及素材；敘事與裁定；把確定結果追加至事件日誌；更新受影響狀態；在場景或門檻結束時壓縮摘要。事件日誌只記錄已確定事實。
 
-採單一主持寫入者原則。狀態檔應具有 `revision` 和 `updated_at`，寫入前重新讀取；日誌採追加式，另設修正紀錄而非覆寫歷史。玩家可自行擲骰或採可審計的擲骰格式與來源。
+採單一主持寫入者原則。狀態檔應具有 `revision` 和 `updated_at`，寫入前重新讀取；日誌採追加式，另設修正紀錄而非覆寫歷史。玩家可自行擲骰或採可審計的擲骰格式與來源；發行包附輸出契約相同的 Node 與 Python 擲骰工具，供主持端依環境可用性擇一呼叫，無任何工具可用且玩家不自擲時，AI 自骰為最終降級，必須據實標記 `source: "ai"`。
 
 ## 7. 安全、隱私與權利
 
