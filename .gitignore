@@ -1,6 +1,9 @@
 # Local guidance and machine-specific material
 GITHUB_REMOTE_SETUP.local.md
 WORLDTHREAD-HANDOFF.local.md
+CLAUDE.local.md
+.claude/dev-rituals.config.json
+.claude/settings.local.json
 
 # Never distribute a real campaign, private notes, recordings, or secrets.
 game/state/

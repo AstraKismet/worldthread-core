@@ -1,5 +1,7 @@
 {
-  "id": "front-fog-ferry",
+  "revision": 1,
+  "updated_at": "1970-01-01T00:00:00Z",
+  "id": "fog-ferry",
   "name": "河霧中的回聲織者",
   "goal": "以失竊的鐘喚醒河底的舊渡道，帶走被鎮民遺忘的名字。",
   "resources": ["廢織坊地下室", "一枚會回應記憶的銀梭"],

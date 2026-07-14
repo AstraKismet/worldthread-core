@@ -1,9 +1,11 @@
 {
   "revision": 1,
-  "updated_at": "2026-07-14T00:00:00Z",
+  "updated_at": "1970-01-01T00:00:00Z",
   "name": "",
   "concept": "",
   "goals": [],
+  "fears": [],
+  "strengths": [],
   "bonds": [],
   "notes": []
 }

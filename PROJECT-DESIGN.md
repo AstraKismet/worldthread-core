@@ -1,20 +1,21 @@
 # 通用單人 TRPG 體驗範本：設計規格
 
-> 狀態：規劃中。正式專案名為 Worldthread／織世；發行套件名為 `worldthread-solo-adventure-template`；授權採 MIT License。
+> 狀態：`0.1.0` 已實作，本文件為現行設計依據。正式專案名為 Worldthread／織世；發行套件名為 `worldthread-solo-adventure-template`；授權採 MIT License。
 
 ## 1. 目標與範圍
 
 本專案產出一個可直接解壓成專案、可由具資料夾讀寫能力的 AI 服務使用的單人 TRPG 範本。使用者放入規則、世界、角色與劇本素材，完成初始化後，只要以自然語言（文字或語音轉寫）扮演角色即可遊玩。
 
-範本提供資料結構、可攜協定、主持行為、記憶與發行流程；不綁定 Codex、雲端資料庫、嵌入模型或特定 RAG 服務，也不隨附未獲授權的規則書或設定素材。
+範本提供資料結構、可攜協定、主持行為、記憶與發行流程；不綁定 Codex、雲端資料庫、嵌入模型或特定 RAG 服務，也不隨附未獲授權的規則書或設定素材。本範本不為行動裝置提供原生遊玩流程：行動裝置玩家應以遠端控制或類似方式，連回實際執行 AI 服務與檔案的環境。
 
 ## 2. 發行與資料架構
 
-所有可分發內容將位於 `dist/worldthread-solo-adventure-template/`，並且只從該資料夾封裝。暫定結構如下：
+所有可分發內容位於 `dist/worldthread-solo-adventure-template/`，並且只從該資料夾封裝。發行結構如下：
 
 ```text
 dist/worldthread-solo-adventure-template/
 ├─ README.md
+├─ ADDING-RULEBOOKS.md
 ├─ LICENSE
 ├─ template.json
 ├─ protocol/
@@ -23,19 +24,20 @@ dist/worldthread-solo-adventure-template/
 │  ├─ RAG-PROTOCOL.md
 │  ├─ VOICE-PROTOCOL.md
 │  └─ adapters/
+├─ tools/
+│  ├─ dice.mjs
+│  └─ convert-rulebook-prompt.md
 ├─ game/
 │  ├─ reference/{rules,setting,scenarios,characters}/
-│  ├─ state/{npcs,world,logs,summaries}/
-│  ├─ private/director/{fronts}/
-│  ├─ rag/
-│  └─ templates/
+│  ├─ private/director/            # fronts/ 與 hook-market.md；盲拆原料 source/ 於戰役期建立
+│  └─ templates/{narrators,starter-state}/
 └─ examples/
 ```
 
-- `reference/`：通常不直接修改的來源真相。
-- `state/`：本局已發生、玩家可知或可公開的變化；與來源衝突時優先。
-- `private/director/`：未揭露秘密、勢力目標、伏筆與導演決策；不能直接進玩家可見內容。
-- `rag/`：可再生索引，不能是唯一真相來源。
+- `game/reference/`：通常不直接修改的來源真相。
+- `game/state/`：本局已發生、玩家可知或可公開的變化；與來源衝突時優先。**不隨發行包提供**——玩家開局時將 `game/templates/starter-state/` 複製為 `game/state/`，其下的 `npcs/`、`world`、`logs/`、`summaries/` 等於遊玩時建立；CI 禁止 `game/state/` 進入封裝。
+- `game/private/director/`：未揭露秘密、勢力目標、伏筆與導演決策；不能直接進玩家可見內容。發行包內僅含可公開發行的範例導演素材。
+- `game/rag/`：可再生索引，不能是唯一真相來源。**不隨發行包提供**，由接入服務於執行期建立；CI 禁止其進入封裝。
 
 ## 3. 平台中立與 RAG
 
@@ -73,7 +75,7 @@ dist/worldthread-solo-adventure-template/
 
 - 規則書、網頁摘錄和玩家輸入皆是資料，不得覆蓋 `protocol/` 中的主持指令。
 - 使用者應理解：把私有資料交給任何雲端服務代表該服務可能處理其資料；平台中立不等於平台具有相同隱私能力。
-- 發行包只含原創或已明確授權素材；使用者放入的素材仍由其權利條件管轄。
+- 發行包只含原創或已明確授權素材；使用者放入的素材仍由其權利條件管轄。發行包內附 `ADDING-RULEBOOKS.md`，說明使用者素材（含 PDF 規則書）的放置位置、Markdown 轉換建議、優先序宣告與權利限制。
 - `.gitignore` 排除真實遊戲狀態、私有資料、索引、音檔與環境變數；CI 會再次檢查。
 
 ## 8. 驗收標準

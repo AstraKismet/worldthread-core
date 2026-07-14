@@ -7,10 +7,12 @@ param(
 $ErrorActionPreference = 'Stop'
 $utf8Strict = [System.Text.UTF8Encoding]::new($false, $true)
 
+# Decode failures are reported as UTF-8 errors; IO failures surface as themselves.
 function Read-Utf8Strict([string]$Path) {
+    $bytes = [System.IO.File]::ReadAllBytes($Path)
     try {
-        return $utf8Strict.GetString([System.IO.File]::ReadAllBytes($Path))
-    } catch {
+        return $utf8Strict.GetString($bytes)
+    } catch [System.Text.DecoderFallbackException] {
         throw "File is not valid UTF-8: $Path"
     }
 }
@@ -25,6 +27,9 @@ function Assert-File([string]$RelativePath) {
 if (-not (Test-Path -LiteralPath $PackagePath -PathType Container)) {
     throw "Package directory not found: $PackagePath"
 }
+# .NET file APIs resolve relative paths against the process CWD, which does not
+# follow Set-Location; pin the package path to an absolute path up front.
+$PackagePath = (Resolve-Path -LiteralPath $PackagePath).Path
 
 $manifestPath = Join-Path $PackagePath 'template.json'
 Assert-File 'template.json'
@@ -45,16 +50,26 @@ if ($manifest.name -ne $expectedName) {
 }
 
 @(
-    'README.md', 'LICENSE', 'template.json',
+    'README.md', 'LICENSE', 'template.json', 'ADDING-RULEBOOKS.md',
     'protocol/PLAYBOOK.md', 'protocol/DATA-SCHEMA.md',
     'protocol/RAG-PROTOCOL.md', 'protocol/VOICE-PROTOCOL.md',
     'protocol/adapters/FILE-WORKSPACE.md',
     'game/templates/narrators/gentle-guide.md',
     'game/templates/narrators/balanced-weaver.md',
     'game/templates/narrators/stormkeeper.md',
+    'game/templates/starter-state/character.json',
+    'game/templates/starter-state/world.json',
+    'game/templates/starter-state/logs/events.jsonl',
+    'game/templates/starter-state/summaries/current.md',
     'game/reference/scenarios/fog-ferry-opening.md',
+    'game/reference/characters/lin-yao.md',
+    'game/reference/rules/lightweight-rulings.md',
+    'game/reference/setting/fog-ferry.md',
     'game/private/director/fronts/fog-ferry.json',
-    'examples/fog-ferry-first-turn.md'
+    'game/private/director/hook-market.md',
+    'examples/fog-ferry-first-turn.md',
+    'tools/dice.mjs',
+    'tools/convert-rulebook-prompt.md'
 ) | ForEach-Object { Assert-File $_ }
 
 $forbiddenDirectories = @('game/state', 'game/rag', '.git')
@@ -66,7 +81,7 @@ foreach ($relativePath in $forbiddenDirectories) {
 
 $forbiddenExtensions = @('.wav', '.mp3', '.m4a', '.webm', '.pem', '.key', '.pfx', '.p12')
 $forbiddenNames = @('.env', 'id_rsa', 'id_ed25519', 'credentials.json')
-$textExtensions = @('.md', '.json', '.jsonl', '.txt')
+$textExtensions = @('.md', '.json', '.jsonl', '.txt', '.mjs')
 $files = Get-ChildItem -LiteralPath $PackagePath -Recurse -File
 foreach ($file in $files) {
     if ($file.Extension.ToLowerInvariant() -in $textExtensions -or $file.Name -eq 'LICENSE') {
