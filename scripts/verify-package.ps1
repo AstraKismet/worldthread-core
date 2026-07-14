@@ -52,8 +52,16 @@ if ($manifest.name -ne $expectedName) {
     'game/templates/narrators/gentle-guide.md',
     'game/templates/narrators/balanced-weaver.md',
     'game/templates/narrators/stormkeeper.md',
+    'game/templates/starter-state/character.json',
+    'game/templates/starter-state/world.json',
+    'game/templates/starter-state/logs/events.jsonl',
+    'game/templates/starter-state/summaries/current.md',
     'game/reference/scenarios/fog-ferry-opening.md',
+    'game/reference/characters/lin-yao.md',
+    'game/reference/rules/lightweight-rulings.md',
+    'game/reference/setting/fog-ferry.md',
     'game/private/director/fronts/fog-ferry.json',
+    'game/private/director/hook-market.md',
     'examples/fog-ferry-first-turn.md'
 ) | ForEach-Object { Assert-File $_ }
 
