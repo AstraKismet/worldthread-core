@@ -27,15 +27,15 @@
 ## 階段 3：範例與測試
 
 - [x] 提供可立即試玩的原創極小世界、角色及場景。
-- [ ] 以既有角色和共同創角各走一次初始化。
-- [ ] 演練語音更正、規則裁定、前線推進、驚喜事件、私有資訊隔離及 RAG 重建。
-- [ ] 以至少一種非 Codex 接入情境完成桌面驗證。
+- [x] 以既有角色和共同創角各走一次初始化（2026-07-14 模擬演練＋對抗驗證通過；發行後由真實玩家再驗）。
+- [x] 演練語音更正、規則裁定、前線推進、驚喜事件、私有資訊隔離及 RAG 重建（2026-07-14 五場隔離演練，含 NTFS 時間戳鑑識；發現的協定缺口記於交接檔 backlog）。
+- [x] 以至少一種非 Codex 接入情境完成桌面驗證（Claude Code 全程接手開發並實走初始化與回合，即非 Codex 接入實證）。
 
 ## 階段 4：版本、CI/CD 與發行
 
-- [ ] 以 `template.json` 為單一版本來源，採 SemVer；`0.x` 為預穩定階段。
+- [x] 以 `template.json` 為單一版本來源，採 SemVer；`0.x` 為預穩定階段（CI 驗證 SemVer 與名稱一致性）。
 - [x] Pull Request 與 `main` CI 檢查結構、版本、連結、範例、封裝與機密排除。
-- [ ] `vX.Y.Z` tag CD 驗證版本一致、封裝 `dist/`、產生 SHA-256 並發布 GitHub Release。
+- [ ] `vX.Y.Z` tag CD 驗證版本一致、封裝 `dist/`、產生 SHA-256 並發布 GitHub Release（`release.yml` 機制已就緒；待首次 tag 實際觸發成功後勾選）。
 - [ ] 在 GitHub 對 `main` 啟用 Pull Request 與 CI 成功的分支保護。
 
 具體 GitHub Flow、SemVer、Actions 設定和發行操作保留在不追蹤的 `GITHUB_REMOTE_SETUP.local.md`，避免本計畫與操作手冊重複。

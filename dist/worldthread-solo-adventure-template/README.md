@@ -7,7 +7,7 @@
 1. 複製整個資料夾，勿直接在發行包中進行你的戰役。
 2. 閱讀 `protocol/PLAYBOOK.md`，選擇 `game/templates/narrators/` 的一個說書人檔。
 3. 將 `game/templates/starter-state/` 複製為 `game/state/`，再填寫主角與開場場景。也可直接使用本包的「霧渡口」範例。
-4. 對 AI 說：「讀取 `protocol/PLAYBOOK.md`、`game/reference/`、`game/state/` 與所選說書人檔；作為主持人為我開局。不要替我的主角做決定。」
+4. 對 AI 說：「讀取 `protocol/PLAYBOOK.md`、`game/reference/`、`game/state/` 與說書人檔 `game/templates/narrators/balanced-weaver.md`；作為主持人為我開局。不要替我的主角做決定。」（說書人檔路徑換成你在第 2 步選的那一個。）
 5. 以角色行動、對話或 OOC 指令遊玩。每回合依協定追加事件與更新狀態。
 
 ## 範例：霧渡口的失竊鐘聲

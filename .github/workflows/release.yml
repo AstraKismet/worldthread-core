@@ -13,6 +13,11 @@ jobs:
   release:
     name: Verify, package, and publish release
     runs-on: ubuntu-latest
+    # Context values enter scripts only via env, never inline in run: text
+    # (tag names may contain quote/backtick characters — injection surface).
+    env:
+      TAG_NAME: ${{ github.ref_name }}
+      IS_TAG_PUSH: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
     steps:
       - name: Check out source
         uses: actions/checkout@v4
@@ -22,13 +27,13 @@ jobs:
         run: ./scripts/verify-package.ps1 -OutputDirectory artifacts
 
       - name: Check tag matches manifest version
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
         shell: pwsh
         run: |
           $manifest = Get-Content -Raw dist/worldthread-solo-adventure-template/template.json | ConvertFrom-Json
           $expected = "v$($manifest.version)"
-          if ('${{ github.ref_name }}' -ne $expected) {
-            throw "Tag ${{ github.ref_name }} does not match template.json version ($expected)."
+          if ($env:TAG_NAME -ne $expected) {
+            throw "Tag $($env:TAG_NAME) does not match template.json version ($expected)."
           }
 
       - name: Create SHA-256 checksum
@@ -39,22 +44,24 @@ jobs:
           "$hash  $($zip.Name)" | Out-File -Encoding ascii "$($zip.FullName).sha256"
 
       - name: Publish GitHub Release
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           $manifest = Get-Content -Raw dist/worldthread-solo-adventure-template/template.json | ConvertFrom-Json
           $zipPath = "artifacts/worldthread-solo-adventure-template-v$($manifest.version).zip"
-          $ghArgs = @('release', 'create', '${{ github.ref_name }}',
+          $ghArgs = @('release', 'create', $env:TAG_NAME,
                       $zipPath, "$zipPath.sha256",
-                      '--title', 'Worldthread ${{ github.ref_name }}',
+                      '--title', "Worldthread $($env:TAG_NAME)",
                       '--verify-tag', '--generate-notes')
-          if ($manifest.version -match '-') { $ghArgs += '--prerelease' }
+          # Prerelease only for a SemVer prerelease segment; a hyphen inside
+          # build metadata (after +) is a normal release.
+          if ($manifest.version -match '^[^+]*-') { $ghArgs += '--prerelease' }
           gh @ghArgs
 
       - name: Upload dry-run artifact (manual runs only)
-        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+        if: env.IS_TAG_PUSH != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: worldthread-release-dry-run

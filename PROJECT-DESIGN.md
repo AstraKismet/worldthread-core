@@ -15,6 +15,7 @@
 ```text
 dist/worldthread-solo-adventure-template/
 ├─ README.md
+├─ ADDING-RULEBOOKS.md
 ├─ LICENSE
 ├─ template.json
 ├─ protocol/
@@ -24,10 +25,11 @@ dist/worldthread-solo-adventure-template/
 │  ├─ VOICE-PROTOCOL.md
 │  └─ adapters/
 ├─ tools/
-│  └─ dice.mjs
+│  ├─ dice.mjs
+│  └─ convert-rulebook-prompt.md
 ├─ game/
 │  ├─ reference/{rules,setting,scenarios,characters}/
-│  ├─ private/director/{fronts}/
+│  ├─ private/director/            # fronts/ 與 hook-market.md；盲拆原料 source/ 於戰役期建立
 │  └─ templates/{narrators,starter-state}/
 └─ examples/
 ```
