@@ -10,7 +10,7 @@ Worldthread（織世）是一個用來單人遊玩 TRPG 的配置範本。它讓
 
 ### 方式一：下載發行版（建議）
 
-1. 到本儲存庫的 [Releases 頁面](https://github.com/Isida-kserpg/worldthread-solo-adventure-template/releases)，下載最新版的 `worldthread-solo-adventure-template-vX.Y.Z.zip`（以及同名 `.sha256` 檔）。
+1. 到本儲存庫的 [Releases 頁面](https://github.com/AstraKismet/worldthread-solo-adventure-template/releases)，下載最新版的 `worldthread-solo-adventure-template-vX.Y.Z.zip`（以及同名 `.sha256` 檔）。
 2. （建議）驗證下載完整性，比對輸出與 `.sha256` 檔內容：
 
    ```powershell
