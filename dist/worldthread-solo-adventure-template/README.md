@@ -1,6 +1,6 @@
 # Worldthread／織世：單人 TRPG 範本
 
-版本：`0.3.0`。這是一個可複製、解壓後即可交給具資料夾讀寫能力之 AI 服務使用的繁體中文單人 TRPG 範本；不綁定特定模型或平台。
+版本：`0.4.0`。這是一個可複製、解壓後即可交給具資料夾讀寫能力之 AI 服務使用的繁體中文單人 TRPG 範本；不綁定特定模型或平台。
 
 ## 三分鐘開始
 
@@ -16,6 +16,10 @@
 5. 以角色行動、對話或 OOC 指令遊玩。每回合依協定追加事件與更新狀態。
 
 要用 Fate 或自帶規則書、或了解如何啟用與替換規則，見 [ADDING-RULEBOOKS.md](ADDING-RULEBOOKS.md) 與 [extras/README.md](extras/README.md)。
+
+## 自訂主持敘事風格（可選）
+
+內附三種說書人風格可直接選用；也可用一份你有權使用的參考素材（小說、跑團記錄、模組敘事等），萃取出專屬的敘事風格檔。選用與萃取流程見 [game/templates/narrators/README.md](game/templates/narrators/README.md)（含空白範本與 [萃取提示詞](tools/extract-narrator-style-prompt.md)）。另外，主持人預設以「敘事沉浸分層」輸出——把 revision、檔案操作、工具過程等系統雜訊留在幕後；想調整可見程度，改 `game/session-brief.md` B 段的「系統雜訊」（安靜／標準／除錯）。
 
 ## 範例：霧渡口的失竊鐘聲
 

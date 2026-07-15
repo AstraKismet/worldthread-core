@@ -58,6 +58,8 @@ if ($manifest.name -ne $expectedName) {
     'game/templates/narrators/gentle-guide.md',
     'game/templates/narrators/balanced-weaver.md',
     'game/templates/narrators/stormkeeper.md',
+    'game/templates/narrators/README.md',
+    'game/templates/narrators/STYLE-EXTRACTION-TEMPLATE.md',
     'game/templates/starter-state/character.json',
     'game/templates/starter-state/world.json',
     'game/templates/starter-state/logs/events.jsonl',
@@ -69,10 +71,12 @@ if ($manifest.name -ne $expectedName) {
     'game/private/director/fronts/fog-ferry.json',
     'game/private/director/hook-market.md',
     'examples/fog-ferry-first-turn.md',
+    'examples/narrator-style-extracted-example.md',
     'tools/dice.mjs',
     'tools/dice.py',
     'tools/dice.fixtures.jsonl',
-    'tools/convert-rulebook-prompt.md'
+    'tools/convert-rulebook-prompt.md',
+    'tools/extract-narrator-style-prompt.md'
 ) | ForEach-Object { Assert-File $_ }
 
 $forbiddenDirectories = @('game/state', 'game/rag', '.git')
