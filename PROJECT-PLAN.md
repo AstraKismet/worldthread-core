@@ -1,6 +1,6 @@
 # 建置計畫與風險登錄
 
-> 狀態：`v0.2.0` 已於 2026-07-14 發行（擲骰 Python 對等工具、契約測試與 AI 自骰降級；`v0.1.0` 同日稍早發行）。
+> 狀態：`v0.2.0` 已於 2026-07-14 發行（擲骰 Python 對等工具、契約測試與 AI 自骰降級；`v0.1.0` 同日稍早發行）。`0.3.0` 隨附 Fate Core／FAE（CC-BY 3.0）規則範例庫與開局宣告。`0.4.0`（本次迭代）新增**敘事沉浸分層**（PLAYBOOK 分 IC／OOC 兩層、`系統雜訊` 三級預設安靜，修正 revision／工具過程／建檔／機制推導寫進玩家可見敘事的出戲反饋）與**敘事風格萃取範本**（八節空白範本＋萃取提示詞＋示範產物，讓玩家用有權使用的素材萃取專屬說書人風格；narrators/README 為單一權威）。
 
 ## 階段 0：決策與入口文件
 
@@ -13,7 +13,7 @@
 - [x] 建立獨立 `dist/<package-name>/` 發行結構及 `template.json`。
 - [x] 建立 `protocol/`、權限分層、狀態／日誌／摘要／索引／導演範本。
 - [x] 建立可選語音轉寫格式、骰子紀錄和手動狀態更新降級流程。
-- [x] 建立數種預設說書人，並讓使用者可追加設定檔。
+- [x] 建立數種預設說書人，並讓使用者可追加設定檔。`0.4.0` 起提供敘事風格萃取範本（`game/templates/narrators/STYLE-EXTRACTION-TEMPLATE.md`、`tools/extract-narrator-style-prompt.md`、`examples/narrator-style-extracted-example.md`），可從素材萃取專屬風格，主持人支援極簡散文與八節結構化兩種顆粒度。
 - [x] 建立規則書使用指南與自我劇透防護：`ADDING-RULEBOOKS.md`（權利、放置、轉檔、優先序）、盲拆流程（`private/director/source/` 慣例＋PLAYBOOK 模組盲拆節＋重混選項）、`tools/convert-rulebook-prompt.md` 轉檔提示詞（2026-07-14 定案）。
 - [x] 建立平台中立擲骰工具 `tools/dice.mjs`：任何具執行能力的 agent 可呼叫、玩家亦可親自執行；程式擲骰、AI 僅裁定並逐字引用輸出（玩家公平性反饋，2026-07-14 定案納入 `0.1.0`；手機原生情境已於同日定案取消，行動裝置採遠端控制模式）。
 - [x] 擲骰工具 Python 對等實作 `tools/dice.py`：同公式同 `--seed` 時與 `dice.mjs` 輸出逐位元一致，聊天沙盒限定單一語言（Python 或 JS）的環境皆有可用工具；契約由 `tools/dice.fixtures.jsonl` 黃金行夾具鎖定，CI 以 `scripts/test-dice-contract.ps1` 雙引擎驗證；PLAYBOOK 擲骰改三級選擇（程式擲骰→玩家擲骰→AI 自骰 `source: "ai"` 最終降級）（2026-07-14 定案，納入 `0.2.0`）。
@@ -57,3 +57,4 @@
 - 可攜向量索引與嵌入模型版本契約。
 - 戰役快照匯出、社群模組 manifest 與相容性宣告。
 - 多代理鎖定機制、在地化、無障礙與進階內容安全工具。
+- **主持人操作日誌（AI 操作 log）**：稽核主持人是否遵守約束（敘事沉浸分層、規則優先、私有隔離）的 director-private 日誌。約束：絕不洩入玩家可見敘事、絕不洩漏 director 祕密；平台中立（UTF-8、可刪重建或追加式）。候選方案（未定案，留待 milestone ceremony）：① 復用 `events.jsonl` 加 `kind:"op"`＋`visibility:"director"`；② 新增 `game/private/director/host-log.jsonl` 獨立日誌；③ 最小無 schema 版（`除錯` 模式寫自由格式 `session-log.md`）。與 `0.4.0` 系統雜訊 `除錯` 級（聊天內即時 bookkeeping）互補而非重複（2026-07-16 使用者定案排入 backlog）。

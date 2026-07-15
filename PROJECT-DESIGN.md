@@ -57,7 +57,9 @@ dist/worldthread-solo-adventure-template/
 
 主持人以敘事與 NPC 對話呈現世界，不暴露工具或模型存在；不能替主角決定意圖、台詞或關鍵選擇。規則以原始規則書優先；缺漏時採一致、可記錄的臨時裁定，並保留至少一條合理回應路徑。
 
-主持不只回應，而是持續運作的劇情導演。初始化設定「說書人檔」：壓力頻率、恢復節奏、偏好鉤子、後果強度、規則嚴謹度、敘事調性及題材界線。使用者可新增或修改此類設定檔；發行包至少提供數種可選設定。
+**敘事沉浸分層**：主持產出分兩層，玩家可見的只有 IC 沉浸敘事。狀態 bookkeeping（`revision`、pending、檔名、`scene_id`）、工具執行過程（讀狀態、擲骰工具選擇與 fallback、路徑失敗）與規則機制的逐步推導都是主持人私下的作業，不得織進 IC 敘事；只有為信任或操作所必需者（骰值原始結果、無法寫檔的 `STATE-UPDATE` 區塊）才進入明確分隔的 OOC 系統區。可見詳略由 `系統雜訊` 設定分三級（`安靜` 預設／`標準`／`除錯`），玩家於 `session-brief.md` B 段選擇。權威定義見 `protocol/PLAYBOOK.md` §敘事沉浸分層。
+
+主持不只回應，而是持續運作的劇情導演。初始化設定「說書人檔」：壓力頻率、恢復節奏、偏好鉤子、後果強度、規則嚴謹度、敘事調性及題材界線。使用者可新增或修改此類設定檔；發行包至少提供數種可選設定，並附敘事風格萃取範本與提示詞，讓使用者以有權使用的參考素材萃取專屬說書人風格（極簡散文或八節結構化皆可作為依據）。
 
 導演層以五項機制維持主觀能動性：
 
@@ -98,8 +100,12 @@ dist/worldthread-solo-adventure-template/
 ```mermaid
 flowchart TD
   A0(["解壓發行包，複製整個資料夾作為你的戰役"]) --> A1
-  A1["編輯 game/session-brief.md 的 B 段「可調整區塊」<br/>依據：README.md §三分鐘開始；session-brief.md（A 段＝固定規範入口／目錄）<br/>設定：說書人、規則系統、題材界線、壓力、嚴謹度、主角"]
-  A1 --> A2{"本局用哪種規則？"}
+  A1["編輯 game/session-brief.md 的 B 段「可調整區塊」<br/>依據：README.md §三分鐘開始；session-brief.md（A 段＝固定規範入口／目錄）<br/>設定：說書人、系統雜訊（安靜／標準／除錯，預設安靜）、規則系統、題材界線、壓力、嚴謹度、主角"]
+  A1 --> AN{"說書人風格？"}
+  AN -->|內附三種| A2
+  AN -->|自訂萃取（可選）| ANX["依據：game/templates/narrators/README.md、tools/extract-narrator-style-prompt.md<br/>用有權使用的素材依 STYLE-EXTRACTION-TEMPLATE.md 萃取八節風格指南<br/>存成 game/templates/narrators/&lt;風格名&gt;.md，於 session-brief 說書人欄填該名稱"]
+  ANX --> A2
+  A2{"本局用哪種規則？"}
   A2 -->|內附輕量裁定| A3["不動 game/reference/rules/（保留 fallback 裁定檔）<br/>session-brief 規則系統欄留「無」"]
   A2 -->|隨附的 Fate（擇一）| A4["依據：extras/README.md、ADDING-RULEBOOKS.md<br/>① 先移除 rules/ 內其他完整系統（保留 fallback 裁定檔，目前為 lightweight-rulings.md）<br/>② 從 extras/ 複製你要的『一套』 → game/reference/rules/<br/>③ 在 session-brief 規則系統欄填該路徑（只放一套不需 priority.md）"]
   A2 -->|自帶規則書| A5["依據：ADDING-RULEBOOKS.md（含〈拆章基準〉）、tools/convert-rulebook-prompt.md<br/>轉成 Markdown 放 game/reference/rules/（依拆章基準拆章或單檔）<br/>含謎底模組→game/private/director/source/ 交由 §模組盲拆<br/>放多本書、需指定先後順序時才寫 priority.md"]
@@ -115,10 +121,10 @@ flowchart TD
 ```mermaid
 flowchart TD
   P0["〔玩家〕開局：送出 session-brief 的開局一句<br/>「讀取 game/session-brief.md，依其規範與我的設定為我開局」"] --> I1
-  I1["〔AI〕初始化（依據：PLAYBOOK §初始化 ＋ session-brief A 段）<br/>讀 session-brief、PLAYBOOK、所選 narrator、game/reference/、game/state/（無則由 starter-state 建）<br/>讀但不外洩 game/private/director/<br/>多套互斥系統時擇一設 active（§規則來源與優先序）"] --> I2
+  I1["〔AI〕初始化（依據：PLAYBOOK §初始化 ＋ session-brief A 段）<br/>讀 session-brief、PLAYBOOK、所選 narrator（極簡散文或八節結構化皆可）、game/reference/、game/state/（無則由 starter-state 建）<br/>讀但不外洩 game/private/director/<br/>多套互斥系統時擇一設 active（§規則來源與優先序）；讀取系統雜訊層級"] --> I2
   I2["〔AI〕開場（依據：PLAYBOOK §共同創角）<br/>依 session-brief 問題材界線／壓力／嚴謹度；選既有角色或帶玩家共同創角（DATA-SCHEMA 擴充欄位）；佈置第一個場景"] --> T0
   T0["〔玩家〕回合：以角色行動／對話／OOC 指令表達意圖（可語音）"] --> T1
-  T1["〔AI〕主持（依據：PLAYBOOK §每回合／§擲骰／§主動但公平；DATA-SCHEMA；RAG；VOICE）<br/>重讀受影響 state＋revision；依 active 規則系統檢索 reference/rules（有 rag 只索引 active 套）<br/>解釋意圖（不替主角決定）；具體敘事＋NPC／世界行動；需隨機→dice.mjs／dice.py（禁編造，最終降級記 source:ai）"] --> T2
+  T1["〔AI〕主持（依據：PLAYBOOK §每回合／§擲骰／§主動但公平／§敘事沉浸分層；DATA-SCHEMA；RAG；VOICE）<br/>重讀受影響 state＋revision；依 active 規則系統檢索 reference/rules（有 rag 只索引 active 套）＝私下作業<br/>解釋意圖（不替主角決定）；具體敘事＋NPC／世界行動；需隨機→dice.mjs／dice.py（禁編造，最終降級記 source:ai）<br/>依系統雜訊層級呈現：bookkeeping／工具過程／建檔不入 IC 敘事，骰值與降級區塊置 OOC"] --> T2
   T2["〔AI〕寫入（依據：DATA-SCHEMA；PLAYBOOK §無法寫檔降級）<br/>只寫已確定事實→state/logs/events.jsonl（追加）；更新 state（revision＋1）；每 6–10 事件更新 summaries；依 hook-market 調鉤子權重<br/>不能寫檔→輸出 STATE-UPDATE 由玩家貼回"] --> T3{"還要繼續嗎？"}
   T3 -->|同一 session・下一回合| T0
   T3 -->|下次再玩| R0
@@ -136,4 +142,5 @@ flowchart TD
 - `game/reference/` 為來源真相；`game/state/` 可覆蓋相衝突的來源；`game/rag/` 是可刪除重建的快取，非唯一真相。
 - `extras/` 預設不參與裁定；一場戰役同時只有**一套**完整規則系統為 active；只放一套時不需 `priority.md`，`priority.md` 僅用於多本書排序（見 PLAYBOOK §規則來源與優先序）。
 - 擲骰不得由 AI 編造；唯一例外是玩家同意的最終降級，且事件 `source` 必記為 `ai`。
+- **敘事沉浸分層**：玩家可見的 IC 敘事不得夾帶 bookkeeping（`revision`、pending、檔名、`scene_id`）、工具執行過程或規則機制推導；骰值與無法寫檔的 `STATE-UPDATE` 屬 OOC 系統區。呈現詳略由 `系統雜訊` 層級（安靜／標準／除錯，預設安靜）決定（見 PLAYBOOK §敘事沉浸分層）。
 - 公私分層、公開 repo 隱私、平台中立、dist-only 封裝為發行紅線（見 §7 與 `AGENTS.md`）。
