@@ -1,6 +1,6 @@
 # 建置計畫與風險登錄
 
-> 狀態：`v0.2.0` 已於 2026-07-14 發行（擲骰 Python 對等工具、契約測試與 AI 自骰降級；`v0.1.0` 同日稍早發行）。`0.3.0` 隨附 Fate Core／FAE（CC-BY 3.0）規則範例庫與開局宣告。`0.4.0`（本次迭代）新增**敘事沉浸分層**（PLAYBOOK 分 IC／OOC 兩層、`系統雜訊` 三級預設安靜，修正 revision／工具過程／建檔／機制推導寫進玩家可見敘事的出戲反饋）與**敘事風格萃取範本**（八節空白範本＋萃取提示詞＋示範產物，讓玩家用有權使用的素材萃取專屬說書人風格；narrators/README 為單一權威）。`0.5.0`（本次迭代）為**外部遊玩反饋改善**，見〈階段 5〉。
+> 狀態：`v0.2.0` 已於 2026-07-14 發行（擲骰 Python 對等工具、契約測試與 AI 自骰降級；`v0.1.0` 同日稍早發行）。`0.3.0` 隨附 Fate Core／FAE（CC-BY 3.0）規則範例庫與開局宣告。`0.4.0`（本次迭代）新增**敘事沉浸分層**（PLAYBOOK 分 IC／OOC 兩層、`系統雜訊` 三級預設安靜，修正 revision／工具過程／建檔／機制推導寫進玩家可見敘事的出戲反饋）與**敘事風格萃取範本**（八節空白範本＋萃取提示詞＋示範產物，讓玩家用有權使用的素材萃取專屬說書人風格；narrators/README 為單一權威）。`0.5.0` 為**外部遊玩反饋改善**，見〈階段 5〉（2026-07-16 發行）。`0.6.0`（本次迭代）範圍經決策看板 ceremony 於 2026-07-16 全數定案，見〈階段 6〉。
 
 ## 階段 0：決策與入口文件
 
@@ -54,6 +54,20 @@
 - [x] 實體分層架構（playground 實跑回饋《WORLDTHREAD-0.4-架構更新需求》＋複盤紀錄，2026-07-16 第三輪定案併入本迭代）：`current-scene.json`（場景級工作紀錄）＋`entities/{items,npcs}/`（重要實體各一檔、單一事實來源、`confirmed_abilities`／`unknown_capabilities`／`known_info`、`last_updated_event_id` 事件溯源）＋`archive/` 封存（移動不刪除）；PLAYBOOK 分層讀取順序與「回應前實體核對」（對治物品能力錯置／NPC 知識漂移）；推測不升格條文；NPC 未揭露祕密置 `private/director/npcs/`（公私分層）；多人擴充僅 schema 預留（`holder`／`visibility` 以 id 指稱、不假設唯一主角），流程實作需先重議專案定位。
 - [x] `main` 分支保護補完：ruleset 已有禁刪除、禁 force push、必走 PR；補 required status checks（CI job「Verify distributable package」，strict）並將必要核准審查數 1→0（單人 repo 無法自核 PR，實質門祛為 CI 綠燈）（2026-07-16 定案並完成，API 查驗生效）。
 
+## 階段 6：`0.6.0`（2026-07-16 決策看板 ceremony 定案，14 題全數定案）
+
+範圍主軸四條全納入：0.5.0 實測回饋、演練缺口 backlog 補洞、主持人操作日誌、多人擴充；另納入本輪新發現的發行包代理入口檔缺口。閘門採**局部制**：僅「動 `system` 容器／`entities` schema」的工作項須先核對 0.5.0 實測回饋，其餘平行推進。
+
+- [ ] **0.5.0 實測清單**：產出六機制（rules-quickref 強制核對、單人調整、存檔確認、inventory/quests、system 容器、實體分層＋回應前實體核對）逐項檢核清單（勾選＋一句話、≤15 條）；置本機不追蹤檔自用，回饋由使用者手動摘要帶回（不含逐字戰役內容）。
+- [ ] **發行包代理入口檔**：dist 補建 `AGENTS.md`（工具中立主持入口＋遊戲守則以外的 agent 行為規範：先讀 session-brief／PLAYBOOK、玩家可見輸出不得引用 `private/director/`、不得修改 `protocol/`、探索邊界與隱私紀律）＋`CLAUDE.md`（一行 `@AGENTS.md` 匯入）；同步 PROJECT-DESIGN §2 結構圖、`verify-package.ps1` 結構斷言、發行包 README。
+- [ ] **契約補洞（缺口①②⑫，同批同 PR）**：DATA-SCHEMA 補 `summaries/current.md` 專節（「必要章節」式保敘事彈性）與 `world.json` 專節（基線欄位、更新時機、與 current-scene `established_facts` 分工）；⑫前線資訊入摘要界線以禁止清單明文化（允許敘事化節奏描述；禁前線 id、`clocks` 數值、前線名稱，附正反例）；一併研究 Markdown 契約導入 YAML frontmatter 統一規格（任意 agent 可解析，可推廣至其他契約檔）。
+- [ ] **可見度操作規則（缺口④⑤）**：④ `events.jsonl` 混合可見度單檔的讀取過濾義務與祕密擲骰呈現方式；⑤ correction 的 `visibility` 繼承規則；設計與代理入口檔協同——入口檔承載 agent 層級紀律、協定條文承載操作細則，兩層互補。
+- [ ] **revision 衝突（缺口⑥，保守版）**：不自動合併、偵測衝突即停下請玩家仲裁；定提示時機與提示內容。
+- [ ] **STATE-UPDATE 語意（缺口⑨⑩）**：檔案類型對應表——小檔（character/inventory/quests/world/current-scene）整檔 replace、`events.jsonl` 一律 append；不引入通用 patch 語法。
+- [ ] **RAG（缺口⑦⑧）**：補原則層級最小條文（不寫死數字／演算法）；另研究仿擲骰工具模式的可攜 RAG 工具（未來獨立 RAG 模組的抽象／降級版本），可行即實作最小版；若研究結論需調整「平台中立／rag 快取」紅線，另走定案不得逕改。
+- [ ] **主持人操作日誌（兼解缺口⑪）**：獨立 `game/private/director/host-log.jsonl`——追加式、最小鍵 `id/at/kind/facts`、靠目錄隔離刻意不設 `visibility` 欄、選配 `refs_event_id` 關聯事件；例外時寫（違規、例外裁定、私有邊界操作）＋預設啟用、不綁系統雜訊層級；保存／輪替比照 `archive/` 封存模式避免無界成長。
+- [ ] **多人擴充**：目標形態＝「bot 中繼 Discord／Telegram 頻道 ↔ AI」遠端多人（bot 為另開專案，引用本範本為核心模組使溝通架構一致）；分人方式未定（第三人稱自標／論壇團式主持統整為候選）。0.6.0 先做架構研究（分人方式、訊息流、本範本需預留的接縫），研究結論可行即動工最小多人協定並依結果起草 §1 定位文字交使用者定案；**動 schema 前受局部閘門約束（須先核對 0.5.0 實測回饋，並顧可視化專案讀取契約相容）**。
+
 ## 主要風險與處置
 
 | 風險 | 第一版處置 |
@@ -70,4 +84,4 @@
 - 可攜向量索引與嵌入模型版本契約。
 - 戰役快照匯出、社群模組 manifest 與相容性宣告。
 - 多代理鎖定機制、在地化、無障礙與進階內容安全工具。
-- **主持人操作日誌（AI 操作 log）**：稽核主持人是否遵守約束（敘事沉浸分層、規則優先、私有隔離）的 director-private 日誌。約束：絕不洩入玩家可見敘事、絕不洩漏 director 祕密；平台中立（UTF-8、可刪重建或追加式）。候選方案（未定案，留待 milestone ceremony）：① 復用 `events.jsonl` 加 `kind:"op"`＋`visibility:"director"`；② 新增 `game/private/director/host-log.jsonl` 獨立日誌；③ 最小無 schema 版（`除錯` 模式寫自由格式 `session-log.md`）。與 `0.4.0` 系統雜訊 `除錯` 級（聊天內即時 bookkeeping）互補而非重複（2026-07-16 使用者定案排入 backlog）。
+- ~~主持人操作日誌~~：2026-07-16 決策看板定案採獨立 `host-log.jsonl` 方案並排入 `0.6.0`，見〈階段 6〉。
