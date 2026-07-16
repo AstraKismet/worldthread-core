@@ -15,6 +15,8 @@
 
 5. 以角色行動、對話或 OOC 指令遊玩。每回合依協定追加事件與更新狀態；每回合末主持人會給一行存檔確認（例：`✦ 進度已存`），**看到它就可以安全關閉對話**，下次用同一句開局提示詞即可接續。
 
+若你用的 AI 工具會自動讀取工作區規範（如 Claude Code、Codex CLI），根目錄的 [AGENTS.md](AGENTS.md)（及 Claude 用的 `CLAUDE.md`）已預先寫好給 AI 的入口指引與行為紅線——AI 在你送出開局句之前就知道哪些地方不能亂看、哪些檔案不能改。
+
 要用 Fate 或自帶規則書、或了解如何啟用與替換規則，見 [ADDING-RULEBOOKS.md](ADDING-RULEBOOKS.md) 與 [extras/README.md](extras/README.md)。
 
 ## 自訂主持敘事風格（可選）

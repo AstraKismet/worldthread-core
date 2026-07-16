@@ -15,6 +15,8 @@
 ```text
 dist/worldthread-solo-adventure-template/
 ├─ README.md
+├─ AGENTS.md                        # 代理入口：AI 主持人的入口指引與行為規範（工具中立）
+├─ CLAUDE.md                        # Claude Code 入口：單行 @AGENTS.md 匯入
 ├─ ADDING-RULEBOOKS.md
 ├─ LICENSE
 ├─ template.json
@@ -36,6 +38,7 @@ dist/worldthread-solo-adventure-template/
 └─ examples/
 ```
 
+- 根目錄 `AGENTS.md`／`CLAUDE.md` 是**代理入口檔**：供會自動載入工作區規範的 agent 工具（Claude Code、Codex CLI 等）在收到開局提示前就取得入口指引（先讀 `session-brief.md`／`PLAYBOOK.md`）與行為規範（私有隔離、協定不可改、隱私、玩家主導）。內容僅指路與紅線，權威內容仍在 `game/session-brief.md` 與 `protocol/`；與開發儲存庫根目錄的同名檔用途不同（該檔屬開發代理指南、不隨發行包散布）。
 - `game/reference/`：通常不直接修改的來源真相。
 - `game/state/`：本局已發生、玩家可知或可公開的變化；與來源衝突時優先。**不隨發行包提供**——玩家開局時將 `game/templates/starter-state/` 複製為 `game/state/`，其下的 `entities/{items,npcs}/`、`archive/`、`logs/`、`summaries/` 等於遊玩時建立；CI 禁止 `game/state/` 進入封裝。
 - `game/private/director/`：未揭露秘密、勢力目標、伏筆與導演決策；不能直接進玩家可見內容。發行包內僅含可公開發行的範例導演素材。
