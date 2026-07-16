@@ -1,4 +1,5 @@
 # Local guidance and machine-specific material
+*.local.md
 GITHUB_REMOTE_SETUP.local.md
 WORLDTHREAD-HANDOFF.local.md
 CLAUDE.local.md
