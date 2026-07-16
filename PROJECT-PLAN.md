@@ -1,6 +1,6 @@
 # 建置計畫與風險登錄
 
-> 狀態：`v0.2.0` 已於 2026-07-14 發行（擲骰 Python 對等工具、契約測試與 AI 自骰降級；`v0.1.0` 同日稍早發行）。`0.3.0` 隨附 Fate Core／FAE（CC-BY 3.0）規則範例庫與開局宣告。`0.4.0`（本次迭代）新增**敘事沉浸分層**（PLAYBOOK 分 IC／OOC 兩層、`系統雜訊` 三級預設安靜，修正 revision／工具過程／建檔／機制推導寫進玩家可見敘事的出戲反饋）與**敘事風格萃取範本**（八節空白範本＋萃取提示詞＋示範產物，讓玩家用有權使用的素材萃取專屬說書人風格；narrators/README 為單一權威）。
+> 狀態：`v0.2.0` 已於 2026-07-14 發行（擲骰 Python 對等工具、契約測試與 AI 自骰降級；`v0.1.0` 同日稍早發行）。`0.3.0` 隨附 Fate Core／FAE（CC-BY 3.0）規則範例庫與開局宣告。`0.4.0`（本次迭代）新增**敘事沉浸分層**（PLAYBOOK 分 IC／OOC 兩層、`系統雜訊` 三級預設安靜，修正 revision／工具過程／建檔／機制推導寫進玩家可見敘事的出戲反饋）與**敘事風格萃取範本**（八節空白範本＋萃取提示詞＋示範產物，讓玩家用有權使用的素材萃取專屬說書人風格；narrators/README 為單一權威）。`0.5.0`（本次迭代）為**外部遊玩反饋改善**，見〈階段 5〉。
 
 ## 階段 0：決策與入口文件
 
@@ -37,9 +37,22 @@
 - [x] 以 `template.json` 為單一版本來源，採 SemVer；`0.x` 為預穩定階段（CI 驗證 SemVer 與名稱一致性）。
 - [x] Pull Request 與 `main` CI 檢查結構、版本、連結、範例、封裝與機密排除。
 - [x] `vX.Y.Z` tag CD 驗證版本一致、封裝 `dist/`、產生 SHA-256 並發布 GitHub Release（2026-07-14 `v0.1.0` 首次 tag 觸發實測成功；同日 `v0.2.0` 再次驗證，Release 均含 ZIP 與 `.sha256` 資產）。
-- [ ] 在 GitHub 對 `main` 啟用 Pull Request 與 CI 成功的分支保護。
+- [x] 在 GitHub 對 `main` 啟用 Pull Request 與 CI 成功的分支保護（2026-07-16 完成：ruleset「GitHub Flow main protect」——必走 PR、禁刪除、禁 force push、required status checks「Verify distributable package」（strict）、必要核准審查 0、無 bypass；經 API 查驗生效）。
 
 具體 GitHub Flow、SemVer、Actions 設定和發行操作保留在不追蹤的 `GITHUB_REMOTE_SETUP.local.md`，避免本計畫與操作手冊重複。
+
+## 階段 5：`0.5.0` 外部遊玩反饋改善（2026-07-16 定案）
+
+外部反饋六項痛點（低階模型不遵規則書創角／判定、規則書預設 4–5 人團、存檔時機不明、庫存／任務找不到紀錄、AI 不主動提醒系統機制），加上角色卡結構化與分支保護補完：
+
+- [x] 角色卡 `system` 通用容器層：規則欄位一律收進 `id`＋`stats`／`pools`／`tracks`／`tags`／`abilities` 五容器（DATA-SCHEMA §角色＋starter-state `character.json`），供未來可視化專案泛用讀取；人類可讀日誌／可視化介面定案另開專案，本範本維持核心模組定位。
+- [x] 庫存與任務結構化：`game/state/inventory.json`、`quests.json`（DATA-SCHEMA 定義＋starter-state 骨架）；回合末寫入核對清單明列 character／world／inventory／quests；續玩缺檔自 starter-state 補建。
+- [x] 規則速查卡＋強制核對：啟用完整規則系統時開局前必產 `game/state/rules-quickref.md`（創角步驟清單、核心判定流程、玩家可用資源機制表、單人調整摘要）；創角逐項勾核＋OOC 角色卡確認；判定先查卡再回查原書引 `ruling`（PLAYBOOK §初始化／§共同創角／§每回合）。
+- [x] 存檔可見性：回合末一行極簡 OOC 存檔確認（`✦ 進度已存`），與資源選項提示同列「不受雜訊層級管制」的兩項 OOC；README／session-brief 明示「看到即可安全關閉對話」。
+- [x] 資源機制提醒：擲骰／關鍵判定前，玩家有可影響結果的規則資源時一行 OOC 提示選項與代價，不得代玩家決定（PLAYBOOK §每回合第 2 步）。
+- [x] 單人調整：PLAYBOOK 新增 §單人調整（遭遇規模、資源恢復、失敗後果、可選夥伴 NPC，調整記 `ruling`）；`convert-rulebook-prompt.md` 加創角／判定／資源機制章節必轉與「單人化注意」標記；ADDING-RULEBOOKS 同步。
+- [x] 實體分層架構（playground 實跑回饋《WORLDTHREAD-0.4-架構更新需求》＋複盤紀錄，2026-07-16 第三輪定案併入本迭代）：`current-scene.json`（場景級工作紀錄）＋`entities/{items,npcs}/`（重要實體各一檔、單一事實來源、`confirmed_abilities`／`unknown_capabilities`／`known_info`、`last_updated_event_id` 事件溯源）＋`archive/` 封存（移動不刪除）；PLAYBOOK 分層讀取順序與「回應前實體核對」（對治物品能力錯置／NPC 知識漂移）；推測不升格條文；NPC 未揭露祕密置 `private/director/npcs/`（公私分層）；多人擴充僅 schema 預留（`holder`／`visibility` 以 id 指稱、不假設唯一主角），流程實作需先重議專案定位。
+- [x] `main` 分支保護補完：ruleset 已有禁刪除、禁 force push、必走 PR；補 required status checks（CI job「Verify distributable package」，strict）並將必要核准審查數 1→0（單人 repo 無法自核 PR，實質門祛為 CI 綠燈）（2026-07-16 定案並完成，API 查驗生效）。
 
 ## 主要風險與處置
 
