@@ -1,6 +1,6 @@
 # 通用單人 TRPG 體驗範本：設計規格
 
-> 狀態：`0.2.0` 已實作，本文件為現行設計依據。正式專案名為 Worldthread／織世；發行套件名為 `worldthread-solo-adventure-template`；授權採 MIT License。
+> 狀態：`0.4.0` 已實作；本文件為現行設計依據，並含 `0.5.0`（遊玩反饋改善：規則遵循、單人調整、存檔可見性、庫存／任務追蹤、資源機制提醒、角色卡 `system` 通用容器）之設計。正式專案名為 Worldthread／織世；發行套件名為 `worldthread-solo-adventure-template`；授權採 MIT License。
 
 ## 1. 目標與範圍
 
@@ -57,7 +57,11 @@ dist/worldthread-solo-adventure-template/
 
 主持人以敘事與 NPC 對話呈現世界，不暴露工具或模型存在；不能替主角決定意圖、台詞或關鍵選擇。規則以原始規則書優先；缺漏時採一致、可記錄的臨時裁定，並保留至少一條合理回應路徑。
 
-**敘事沉浸分層**：主持產出分兩層，玩家可見的只有 IC 沉浸敘事。狀態 bookkeeping（`revision`、pending、檔名、`scene_id`）、工具執行過程（讀狀態、擲骰工具選擇與 fallback、路徑失敗）與規則機制的逐步推導都是主持人私下的作業，不得織進 IC 敘事；只有為信任或操作所必需者（骰值原始結果、無法寫檔的 `STATE-UPDATE` 區塊）才進入明確分隔的 OOC 系統區。可見詳略由 `系統雜訊` 設定分三級（`安靜` 預設／`標準`／`除錯`），玩家於 `session-brief.md` B 段選擇。權威定義見 `protocol/PLAYBOOK.md` §敘事沉浸分層。
+**敘事沉浸分層**：主持產出分兩層，玩家可見的只有 IC 沉浸敘事。狀態 bookkeeping（`revision`、pending、檔名、`scene_id`）、工具執行過程（讀狀態、擲骰工具選擇與 fallback、路徑失敗）與規則機制的逐步推導都是主持人私下的作業，不得織進 IC 敘事；只有為信任或操作所必需者（骰值原始結果、無法寫檔的 `STATE-UPDATE` 區塊）才進入明確分隔的 OOC 系統區。可見詳略由 `系統雜訊` 設定分三級（`安靜` 預設／`標準`／`除錯`），玩家於 `session-brief.md` B 段選擇。**兩項 OOC 不受雜訊層級管制**（屬玩家的信任與決策權，非系統雜訊，所有層級皆顯示）：回合末一行極簡存檔確認（例：`✦ 進度已存`），與判定關鍵點的資源選項提示。權威定義見 `protocol/PLAYBOOK.md` §敘事沉浸分層。
+
+**規則遵循與資源機制提醒**：啟用完整規則系統時，主持人開局前必先依 active 規則書產出規則速查卡 `game/state/rules-quickref.md`（創角步驟清單、核心判定流程、玩家可用資源機制表、單人調整摘要）。創角必須逐項對照速查卡勾核並向玩家做 OOC 角色卡確認；判定先查速查卡再回查規則書原文引 `ruling`；進入擲骰或關鍵判定前，若玩家有可影響結果的規則資源（消耗品、燒屬性、命運點等），以一行 OOC 提示選項與代價，交由玩家決定、不得代決。
+
+**單人調整**：規則書多預設 4–5 人團隊；套用於單人遊玩時依 `PLAYBOOK.md` §單人調整縮放——遭遇規模以單角色行動經濟為準、資源與恢復節奏對應放寬、失敗後果傾向代價與挫折而非終局、可選主持人控制的夥伴 NPC（不得奪走玩家能動性）；每項調整記入 `ruling` 保持全戰役一致。
 
 主持不只回應，而是持續運作的劇情導演。初始化設定「說書人檔」：壓力頻率、恢復節奏、偏好鉤子、後果強度、規則嚴謹度、敘事調性及題材界線。使用者可新增或修改此類設定檔；發行包至少提供數種可選設定，並附敘事風格萃取範本與提示詞，讓使用者以有權使用的參考素材萃取專屬說書人風格（極簡散文或八節結構化皆可作為依據）。
 
@@ -71,7 +75,9 @@ dist/worldthread-solo-adventure-template/
 
 ## 6. 回合、記憶與資料完整性
 
-每回合：讀取當前場景、主角、相關世界／NPC 狀態與摘要；檢索規則及素材；敘事與裁定；把確定結果追加至事件日誌；更新受影響狀態；在場景或門檻結束時壓縮摘要。事件日誌只記錄已確定事實。
+每回合：讀取當前場景、主角、相關世界／NPC 狀態與摘要；檢索規則及素材（啟用規則系統時先查速查卡再回查原書）；敘事與裁定；把確定結果追加至事件日誌；更新受影響狀態；在場景或門檻結束時壓縮摘要。事件日誌只記錄已確定事實。
+
+玩家可見的戰役紀錄結構化存於 `game/state/`：`character.json`（角色卡；規則欄位一律收進 `system` 通用容器——`id`＋`stats`／`pools`／`tracks`／`tags`／`abilities` 五容器，讓下游工具不需理解個別規則系統即可讀取，形狀見 `DATA-SCHEMA.md`）、`inventory.json`（庫存與貨幣）、`quests.json`（任務與目標進度）、`world.json`、`logs/events.jsonl`、`summaries/`。回合末寫入前逐項核對受影響檔案皆已更新（含庫存與任務——物品得失、任務進度屬確定事實，與事件日誌同步）；寫入完成後以一行極簡 OOC 存檔確認告知玩家。
 
 採單一主持寫入者原則。狀態檔應具有 `revision` 和 `updated_at`，寫入前重新讀取；日誌採追加式，另設修正紀錄而非覆寫歷史。玩家可自行擲骰或採可審計的擲骰格式與來源；發行包附輸出契約相同的 Node 與 Python 擲骰工具，供主持端依環境可用性擇一呼叫，無任何工具可用且玩家不自擲時，AI 自骰為最終降級，必須據實標記 `source: "ai"`。
 
@@ -121,17 +127,17 @@ flowchart TD
 ```mermaid
 flowchart TD
   P0["〔玩家〕開局：送出 session-brief 的開局一句<br/>「讀取 game/session-brief.md，依其規範與我的設定為我開局」"] --> I1
-  I1["〔AI〕初始化（依據：PLAYBOOK §初始化 ＋ session-brief A 段）<br/>讀 session-brief、PLAYBOOK、所選 narrator（極簡散文或八節結構化皆可）、game/reference/、game/state/（無則由 starter-state 建）<br/>讀但不外洩 game/private/director/<br/>多套互斥系統時擇一設 active（§規則來源與優先序）；讀取系統雜訊層級"] --> I2
-  I2["〔AI〕開場（依據：PLAYBOOK §共同創角）<br/>依 session-brief 問題材界線／壓力／嚴謹度；選既有角色或帶玩家共同創角（DATA-SCHEMA 擴充欄位）；佈置第一個場景"] --> T0
+  I1["〔AI〕初始化（依據：PLAYBOOK §初始化 ＋ session-brief A 段）<br/>讀 session-brief、PLAYBOOK、所選 narrator（極簡散文或八節結構化皆可）、game/reference/、game/state/（無則由 starter-state 建）<br/>讀但不外洩 game/private/director/<br/>多套互斥系統時擇一設 active（§規則來源與優先序）；啟用完整系統→先產規則速查卡 game/state/rules-quickref.md（§初始化）；讀取系統雜訊層級"] --> I2
+  I2["〔AI〕開場（依據：PLAYBOOK §共同創角）<br/>依 session-brief 問題材界線／壓力／嚴謹度；選既有角色或帶玩家共同創角（規則欄位入 DATA-SCHEMA 的 system 容器；規則系統 active 時逐項對照速查卡勾核＋OOC 角色卡確認）；佈置第一個場景"] --> T0
   T0["〔玩家〕回合：以角色行動／對話／OOC 指令表達意圖（可語音）"] --> T1
-  T1["〔AI〕主持（依據：PLAYBOOK §每回合／§擲骰／§主動但公平／§敘事沉浸分層；DATA-SCHEMA；RAG；VOICE）<br/>重讀受影響 state＋revision；依 active 規則系統檢索 reference/rules（有 rag 只索引 active 套）＝私下作業<br/>解釋意圖（不替主角決定）；具體敘事＋NPC／世界行動；需隨機→dice.mjs／dice.py（禁編造，最終降級記 source:ai）<br/>依系統雜訊層級呈現：bookkeeping／工具過程／建檔不入 IC 敘事，骰值與降級區塊置 OOC"] --> T2
-  T2["〔AI〕寫入（依據：DATA-SCHEMA；PLAYBOOK §無法寫檔降級）<br/>只寫已確定事實→state/logs/events.jsonl（追加）；更新 state（revision＋1）；每 6–10 事件更新 summaries；依 hook-market 調鉤子權重<br/>不能寫檔→輸出 STATE-UPDATE 由玩家貼回"] --> T3{"還要繼續嗎？"}
+  T1["〔AI〕主持（依據：PLAYBOOK §每回合／§擲骰／§主動但公平／§敘事沉浸分層；DATA-SCHEMA；RAG；VOICE）<br/>重讀受影響 state＋revision；依 active 規則系統檢索 reference/rules（有 rag 只索引 active 套）＝私下作業<br/>解釋意圖（不替主角決定）；判定先查 rules-quickref 再回查原書引 ruling；擲骰前若玩家有可用規則資源→一行 OOC 資源選項提示（各雜訊級皆顯示）；具體敘事＋NPC／世界行動（單人調整見 §單人調整）；需隨機→dice.mjs／dice.py（禁編造，最終降級記 source:ai）<br/>依系統雜訊層級呈現：bookkeeping／工具過程／建檔不入 IC 敘事，骰值與降級區塊置 OOC"] --> T2
+  T2["〔AI〕寫入（依據：DATA-SCHEMA；PLAYBOOK §無法寫檔降級）<br/>只寫已確定事實→state/logs/events.jsonl（追加）；逐項核對並更新受影響 state（character／world／inventory／quests，revision＋1）；每 6–10 事件更新 summaries；依 hook-market 調鉤子權重；完成後一行 OOC 存檔確認（✦ 進度已存，各雜訊級皆顯示）<br/>不能寫檔→輸出 STATE-UPDATE 由玩家貼回"] --> T3{"還要繼續嗎？"}
   T3 -->|同一 session・下一回合| T0
   T3 -->|下次再玩| R0
   R0["〔玩家〕新 session：送**同一句**開局（不需不同提示詞）<br/>〔AI〕偵測到既有進度→續玩：先讀 summaries/current.md 給前情提要，再重讀 state＋reference＋active 規則系統續行、不重啟<br/>（rag 刪了可依 RAG-PROTOCOL 重建而不失真相）"] --> T0
 ```
 
-> **安全存檔點**：每回合末（④ 寫入完成、即「還要繼續嗎？」之前）為安全中斷點——該回合的**已確定事實**都已追加寫入 `game/state/logs/events.jsonl` 並更新 `game/state/`（`revision`＋1）。此時關閉 session 不會遺失戰役資訊。唯一不保留的是「尚未確定」的回合中互動（設計上只寫確定事實）；續玩時重做該動作即可。摘要每 6–10 事件才更新，但 `state`＋`events.jsonl` 已是完整真相，續玩以它們為準。
+> **安全存檔點**：每回合末（④ 寫入完成、即「還要繼續嗎？」之前）為安全中斷點——該回合的**已確定事實**都已追加寫入 `game/state/logs/events.jsonl` 並更新 `game/state/`（`revision`＋1）。寫入完成後主持人輸出一行極簡 OOC 存檔確認（例：`✦ 進度已存`，所有雜訊層級皆顯示），玩家看到即知此刻可安全關閉 session。此時關閉 session 不會遺失戰役資訊。唯一不保留的是「尚未確定」的回合中互動（設計上只寫確定事實）；續玩時重做該動作即可。摘要每 6–10 事件才更新，但 `state`＋`events.jsonl` 已是完整真相，續玩以它們為準。
 
 > **續玩（新 session）**：允許且是設計預期的常態。用**同一句**開局提示詞即可，不需要不同提示詞——主持人偵測到 `game/state/` 已有進度時會**續玩**而非重啟，並先以 `summaries/current.md` 給你前情提要。狀態即記憶：`game/state/`（角色、世界、事件日誌、摘要）承載跨 session 的一切，因此換一個新對話也能接續。
 
@@ -142,5 +148,5 @@ flowchart TD
 - `game/reference/` 為來源真相；`game/state/` 可覆蓋相衝突的來源；`game/rag/` 是可刪除重建的快取，非唯一真相。
 - `extras/` 預設不參與裁定；一場戰役同時只有**一套**完整規則系統為 active；只放一套時不需 `priority.md`，`priority.md` 僅用於多本書排序（見 PLAYBOOK §規則來源與優先序）。
 - 擲骰不得由 AI 編造；唯一例外是玩家同意的最終降級，且事件 `source` 必記為 `ai`。
-- **敘事沉浸分層**：玩家可見的 IC 敘事不得夾帶 bookkeeping（`revision`、pending、檔名、`scene_id`）、工具執行過程或規則機制推導；骰值與無法寫檔的 `STATE-UPDATE` 屬 OOC 系統區。呈現詳略由 `系統雜訊` 層級（安靜／標準／除錯，預設安靜）決定（見 PLAYBOOK §敘事沉浸分層）。
+- **敘事沉浸分層**：玩家可見的 IC 敘事不得夾帶 bookkeeping（`revision`、pending、檔名、`scene_id`）、工具執行過程或規則機制推導；骰值與無法寫檔的 `STATE-UPDATE` 屬 OOC 系統區。呈現詳略由 `系統雜訊` 層級（安靜／標準／除錯，預設安靜）決定；唯回合末存檔確認與資源選項提示不受層級管制、所有層級皆顯示（見 PLAYBOOK §敘事沉浸分層）。
 - 公私分層、公開 repo 隱私、平台中立、dist-only 封裝為發行紅線（見 §7 與 `AGENTS.md`）。
