@@ -60,9 +60,56 @@ scene_id: fog-ferry-opening
 
 ## 角色 `game/state/character.json`
 
-基線鍵：`revision`、`updated_at`、`name`、`concept`、`goals`、`fears`、`strengths`、`bonds`、`notes`。共同創角四問的對應：想追求→`goals`、怕失去→`fears`、擅長→`strengths`、牽絆→`bonds`。
+基線鍵：`revision`、`updated_at`、`name`、`concept`、`goals`、`fears`、`strengths`、`bonds`、`notes`、`system`。共同創角四問的對應：想追求→`goals`、怕失去→`fears`、擅長→`strengths`、牽絆→`bonds`。
 
-角色卡欄位依玩家放入的規則書擴充：規則書要求的屬性、技能、資源等欄位，由主持人於開局時增列；增列欄位不得移除或改變基線鍵的語意。
+規則書要求的屬性、技能、資源等欄位，一律收進 `system` 通用容器（見下節），不得在 `system` 之外新增頂層鍵，也不得移除或改變基線鍵的語意。未啟用完整規則系統（僅用內附輕量裁定）時，`system` 為 `null`。
+
+### `system` 通用容器
+
+`system` 是固定形狀的容器層：任何規則系統的角色欄位都映射進五種容器，讓下游工具（如可視化介面）不需理解個別規則系統即可讀取。容器內的名稱沿用規則書原文詞彙。
+
+- `id`：字串，active 規則系統識別，與規則優先序宣告一致。
+- `stats`：物件，靜態數值或等級（屬性值、edge、tier、技能等級等）。
+- `pools`：陣列，會消耗與恢復的資源池，每項 `{name, current, max}`（生命值、法力、Numenera 三池、Fate 點等）。
+- `tracks`：陣列，狀態或傷害軌，每項 `{name, steps, current}`；`steps` 為階段名稱陣列，`current` 為目前階段的索引（0 起算）。勾格式的軌（如 Fate 壓力）以 `steps` 列出格名、`current` 記已勾格數。
+- `tags`：字串陣列，標籤型特徵（aspects、descriptor/focus、職業標籤等）。
+- `abilities`：陣列，能力、專長或戲法，每項 `{name, notes}`；可主動花費資源影響擲骰或結果的機制（如 Numenera 的 Effort）必須列於此，與規則速查卡的資源機制表對齊。
+
+```json
+{
+  "id": "numenera",
+  "stats": { "Tier": 1, "Might Edge": 1 },
+  "pools": [ { "name": "Might", "current": 8, "max": 10 } ],
+  "tracks": [ { "name": "Damage Track", "steps": ["Hale", "Impaired", "Debilitated"], "current": 0 } ],
+  "tags": [ "Glaive", "Bears a Halo of Fire" ],
+  "abilities": [ { "name": "Effort", "notes": "花費 3 點資源池降低任務難度一級" } ]
+}
+```
+
+開局創角時由主持人依規則速查卡（`game/state/rules-quickref.md`）建立 `system`。既有戰役的角色卡若缺 `system` 鍵，視為未結構化舊卡：不強制立即改寫，於下次創角級變更（升級、重塑）時遷移。
+
+## 庫存 `game/state/inventory.json`
+
+基線鍵：`revision`、`updated_at`、`currency`、`items`。
+
+- `currency`：物件，幣別為自由鍵（例：`{"銀幣": 12}`）。
+- `items`：陣列，每項 `{id, name, qty, notes}`；`id` 用小寫連字號。規則書要求的欄位（負重、位置等）由主持人擴充，不得移除基線鍵的語意。
+
+物品的取得、失去與數量變化屬確定事實：寫入事件日誌的同時必須同步更新本檔。
+
+## 任務 `game/state/quests.json`
+
+基線鍵：`revision`、`updated_at`、`quests`。
+
+- `quests`：陣列，每項 `{id, name, status, objectives, notes}`。
+- `status` 值域：`active`（進行中）、`completed`（完成）、`failed`（失敗）、`abandoned`（放棄）。
+- `objectives`：陣列，每項 `{text, done}`。
+
+任務的承接、目標進度與結局屬確定事實：寫入事件日誌的同時必須同步更新本檔。
+
+## 規則速查卡 `game/state/rules-quickref.md`
+
+啟用完整規則系統時，主持人於開局前依 `PLAYBOOK.md`〈初始化〉產出的速查卡，必要章節：創角步驟清單、核心判定流程、玩家可用資源機制表、單人調整摘要。屬戰役期產物，不隨發行包提供。
 
 ## NPC 狀態
 
