@@ -51,6 +51,7 @@
 - [x] 存檔可見性：回合末一行極簡 OOC 存檔確認（`✦ 進度已存`），與資源選項提示同列「不受雜訊層級管制」的兩項 OOC；README／session-brief 明示「看到即可安全關閉對話」。
 - [x] 資源機制提醒：擲骰／關鍵判定前，玩家有可影響結果的規則資源時一行 OOC 提示選項與代價，不得代玩家決定（PLAYBOOK §每回合第 2 步）。
 - [x] 單人調整：PLAYBOOK 新增 §單人調整（遭遇規模、資源恢復、失敗後果、可選夥伴 NPC，調整記 `ruling`）；`convert-rulebook-prompt.md` 加創角／判定／資源機制章節必轉與「單人化注意」標記；ADDING-RULEBOOKS 同步。
+- [x] 實體分層架構（playground 實跑回饋《WORLDTHREAD-0.4-架構更新需求》＋複盤紀錄，2026-07-16 第三輪定案併入本迭代）：`current-scene.json`（場景級工作紀錄）＋`entities/{items,npcs}/`（重要實體各一檔、單一事實來源、`confirmed_abilities`／`unknown_capabilities`／`known_info`、`last_updated_event_id` 事件溯源）＋`archive/` 封存（移動不刪除）；PLAYBOOK 分層讀取順序與「回應前實體核對」（對治物品能力錯置／NPC 知識漂移）；推測不升格條文；NPC 未揭露祕密置 `private/director/npcs/`（公私分層）；多人擴充僅 schema 預留（`holder`／`visibility` 以 id 指稱、不假設唯一主角），流程實作需先重議專案定位。
 - [x] `main` 分支保護補完：ruleset 已有禁刪除、禁 force push、必走 PR；補 required status checks（CI job「Verify distributable package」，strict）並將必要核准審查數 1→0（單人 repo 無法自核 PR，實質門祛為 CI 綠燈）（2026-07-16 定案並完成，API 查驗生效）。
 
 ## 主要風險與處置

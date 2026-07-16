@@ -37,7 +37,7 @@ dist/worldthread-solo-adventure-template/
 ```
 
 - `game/reference/`：通常不直接修改的來源真相。
-- `game/state/`：本局已發生、玩家可知或可公開的變化；與來源衝突時優先。**不隨發行包提供**——玩家開局時將 `game/templates/starter-state/` 複製為 `game/state/`，其下的 `npcs/`、`world`、`logs/`、`summaries/` 等於遊玩時建立；CI 禁止 `game/state/` 進入封裝。
+- `game/state/`：本局已發生、玩家可知或可公開的變化；與來源衝突時優先。**不隨發行包提供**——玩家開局時將 `game/templates/starter-state/` 複製為 `game/state/`，其下的 `entities/{items,npcs}/`、`archive/`、`logs/`、`summaries/` 等於遊玩時建立；CI 禁止 `game/state/` 進入封裝。
 - `game/private/director/`：未揭露秘密、勢力目標、伏筆與導演決策；不能直接進玩家可見內容。發行包內僅含可公開發行的範例導演素材。
 - `game/rag/`：可再生索引，不能是唯一真相來源。**不隨發行包提供**，由接入服務於執行期建立；CI 禁止其進入封裝。
 
@@ -77,7 +77,9 @@ dist/worldthread-solo-adventure-template/
 
 每回合：讀取當前場景、主角、相關世界／NPC 狀態與摘要；檢索規則及素材（啟用規則系統時先查速查卡再回查原書）；敘事與裁定；把確定結果追加至事件日誌；更新受影響狀態；在場景或門檻結束時壓縮摘要。事件日誌只記錄已確定事實。
 
-玩家可見的戰役紀錄結構化存於 `game/state/`：`character.json`（角色卡；規則欄位一律收進 `system` 通用容器——`id`＋`stats`／`pools`／`tracks`／`tags`／`abilities` 五容器，讓下游工具不需理解個別規則系統即可讀取，形狀見 `DATA-SCHEMA.md`）、`inventory.json`（庫存與貨幣）、`quests.json`（任務與目標進度）、`world.json`、`logs/events.jsonl`、`summaries/`。回合末寫入前逐項核對受影響檔案皆已更新（含庫存與任務——物品得失、任務進度屬確定事實，與事件日誌同步）；寫入完成後以一行極簡 OOC 存檔確認告知玩家。
+玩家可見的戰役紀錄結構化存於 `game/state/`：`character.json`（角色卡；規則欄位一律收進 `system` 通用容器——`id`＋`stats`／`pools`／`tracks`／`tags`／`abilities` 五容器，讓下游工具不需理解個別規則系統即可讀取，形狀見 `DATA-SCHEMA.md`）、`inventory.json`（庫存與貨幣）、`quests.json`（任務與目標進度）、`current-scene.json`（場景級工作紀錄：威脅、線索、在場實體、已確認事實）、`entities/{items,npcs}/`（重要實體各一檔，單一事實來源：已確認能力／限制／已知情報與 `last_updated_event_id` 事件溯源）、`world.json`（戰役級事實）、`logs/events.jsonl`、`summaries/`、`archive/`（場景結束時封存不再活躍的場景快照與實體，移動不刪除）。回合末寫入前逐項核對受影響檔案皆已更新（含庫存與任務——物品得失、任務進度屬確定事實，與事件日誌同步）；寫入完成後以一行極簡 OOC 存檔確認告知玩家。
+
+主持每回合採**分層讀取**（current-scene → 主角 → 場景所列實體 → 最近事件與摘要；必要時才讀 archive／director），並在敘事前做**回應前實體核對**（誰在說話、此 NPC 依 `known_info` 知道嗎、此能力屬於哪個物品、事實還是推測、本回合是否真的改變狀態）——對治長局中物品能力錯置與 NPC 知識漂移。實體紀錄只能因玩家明確行動、骰判定、主持揭露或已確認劇情結果修改；**推測不升格**：未確認者記 `unknown_capabilities`／`open_questions`，經事件確認才移入 confirmed 欄位。NPC 的未揭露祕密放 `game/private/director/npcs/`（公私分層不破）。schema 不假設唯一主角（實體 `holder`、`visibility` 皆以 id 指稱），為未來多人擴充預留，但多人流程未實作、需先重議 §1 定位。
 
 採單一主持寫入者原則。狀態檔應具有 `revision` 和 `updated_at`，寫入前重新讀取；日誌採追加式，另設修正紀錄而非覆寫歷史。玩家可自行擲骰或採可審計的擲骰格式與來源；發行包附輸出契約相同的 Node 與 Python 擲骰工具，供主持端依環境可用性擇一呼叫，無任何工具可用且玩家不自擲時，AI 自骰為最終降級，必須據實標記 `source: "ai"`。
 
@@ -130,8 +132,8 @@ flowchart TD
   I1["〔AI〕初始化（依據：PLAYBOOK §初始化 ＋ session-brief A 段）<br/>讀 session-brief、PLAYBOOK、所選 narrator（極簡散文或八節結構化皆可）、game/reference/、game/state/（無則由 starter-state 建）<br/>讀但不外洩 game/private/director/<br/>多套互斥系統時擇一設 active（§規則來源與優先序）；啟用完整系統→先產規則速查卡 game/state/rules-quickref.md（§初始化）；讀取系統雜訊層級"] --> I2
   I2["〔AI〕開場（依據：PLAYBOOK §共同創角）<br/>依 session-brief 問題材界線／壓力／嚴謹度；選既有角色或帶玩家共同創角（規則欄位入 DATA-SCHEMA 的 system 容器；規則系統 active 時逐項對照速查卡勾核＋OOC 角色卡確認）；佈置第一個場景"] --> T0
   T0["〔玩家〕回合：以角色行動／對話／OOC 指令表達意圖（可語音）"] --> T1
-  T1["〔AI〕主持（依據：PLAYBOOK §每回合／§擲骰／§主動但公平／§敘事沉浸分層；DATA-SCHEMA；RAG；VOICE）<br/>重讀受影響 state＋revision；依 active 規則系統檢索 reference/rules（有 rag 只索引 active 套）＝私下作業<br/>解釋意圖（不替主角決定）；判定先查 rules-quickref 再回查原書引 ruling；擲骰前若玩家有可用規則資源→一行 OOC 資源選項提示（各雜訊級皆顯示）；具體敘事＋NPC／世界行動（單人調整見 §單人調整）；需隨機→dice.mjs／dice.py（禁編造，最終降級記 source:ai）<br/>依系統雜訊層級呈現：bookkeeping／工具過程／建檔不入 IC 敘事，骰值與降級區塊置 OOC"] --> T2
-  T2["〔AI〕寫入（依據：DATA-SCHEMA；PLAYBOOK §無法寫檔降級）<br/>只寫已確定事實→state/logs/events.jsonl（追加）；逐項核對並更新受影響 state（character／world／inventory／quests，revision＋1）；每 6–10 事件更新 summaries；依 hook-market 調鉤子權重；完成後一行 OOC 存檔確認（✦ 進度已存，各雜訊級皆顯示）<br/>不能寫檔→輸出 STATE-UPDATE 由玩家貼回"] --> T3{"還要繼續嗎？"}
+  T1["〔AI〕主持（依據：PLAYBOOK §每回合／§擲骰／§主動但公平／§敘事沉浸分層；DATA-SCHEMA；RAG；VOICE）<br/>分層讀取：current-scene→主角→場景所列實體（entities/）→最近事件與摘要（必要時才讀 archive／director）＋revision；依 active 規則系統檢索 reference/rules（有 rag 只索引 active 套）＝私下作業<br/>解釋意圖（不替主角決定）；回應前實體核對（誰在說話／NPC known_info／物品 confirmed_abilities／事實或推測）；判定先查 rules-quickref 再回查原書引 ruling；擲骰前若玩家有可用規則資源→一行 OOC 資源選項提示（各雜訊級皆顯示）；具體敘事＋NPC／世界行動（單人調整見 §單人調整）；需隨機→dice.mjs／dice.py（禁編造，最終降級記 source:ai）<br/>依系統雜訊層級呈現：bookkeeping／工具過程／建檔不入 IC 敘事，骰值與降級區塊置 OOC"] --> T2
+  T2["〔AI〕寫入（依據：DATA-SCHEMA；PLAYBOOK §無法寫檔降級）<br/>只寫已確定事實→state/logs/events.jsonl（追加）；逐項核對並更新受影響 state（character／world／inventory／quests／current-scene／entities 實體檔，revision＋1、實體 last_updated_event_id 回指）；每 6–10 事件更新 summaries；場景切換→current-scene 快照與不活躍實體移 archive；依 hook-market 調鉤子權重；完成後一行 OOC 存檔確認（✦ 進度已存，各雜訊級皆顯示）<br/>不能寫檔→輸出 STATE-UPDATE 由玩家貼回"] --> T3{"還要繼續嗎？"}
   T3 -->|同一 session・下一回合| T0
   T3 -->|下次再玩| R0
   R0["〔玩家〕新 session：送**同一句**開局（不需不同提示詞）<br/>〔AI〕偵測到既有進度→續玩：先讀 summaries/current.md 給前情提要，再重讀 state＋reference＋active 規則系統續行、不重啟<br/>（rag 刪了可依 RAG-PROTOCOL 重建而不失真相）"] --> T0

@@ -43,7 +43,7 @@
 
 `game/reference/` 是通常不直接變更的來源素材；`game/state/` 是已確定、玩家可知的本局真相；`game/private/director/` 是不可向玩家揭露的祕密與前線；`game/rag/` 是可刪除重建的索引快取。不要把私有筆記、錄音、金鑰或真實戰役存檔發佈或提交。
 
-想查自己的戰役紀錄時，到 `game/state/` 找：`character.json`（角色卡，規則欄位在 `system` 區塊）、`inventory.json`（庫存與貨幣）、`quests.json`（任務與目標進度）、`world.json`（世界狀態）、`logs/events.jsonl`（逐事件流水帳）、`summaries/current.md`（目前摘要）；啟用規則書時另有 `rules-quickref.md`（規則速查卡——你的創角步驟、判定流程與可用資源機制都在這張卡上）。
+想查自己的戰役紀錄時，到 `game/state/` 找：`character.json`（角色卡，規則欄位在 `system` 區塊）、`inventory.json`（庫存與貨幣）、`quests.json`（任務與目標進度）、`current-scene.json`（當前場景：威脅、線索、在場實體）、`entities/`（重要物品與 NPC 各一檔：已確認能力、限制、已知情報）、`world.json`（世界狀態）、`logs/events.jsonl`（逐事件流水帳）、`summaries/current.md`（目前摘要）、`archive/`（已離場的場景與實體封存）；啟用規則書時另有 `rules-quickref.md`（規則速查卡——你的創角步驟、判定流程與可用資源機制都在這張卡上）。
 
 語音只是輸入／輸出管道：STT 文字才是遊戲真相，原始音檔預設不保存。沒有檔案寫入能力的服務，請讓它輸出 `STATE-UPDATE` 區塊，再由你手動貼回。本範本不提供手機原生遊玩流程；若要在行動裝置上遊玩，請以遠端控制或類似方式，連回實際執行 AI 服務與檔案的環境。
 

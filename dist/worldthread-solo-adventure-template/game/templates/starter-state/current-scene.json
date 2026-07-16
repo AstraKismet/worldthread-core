@@ -1,0 +1,14 @@
+{
+  "revision": 1,
+  "updated_at": "1970-01-01T00:00:00Z",
+  "scene_id": "",
+  "name": "",
+  "location": "",
+  "exits": [],
+  "threats": [],
+  "observable_clues": [],
+  "entities": [],
+  "established_facts": [],
+  "open_questions": [],
+  "last_updated_event_id": null
+}
