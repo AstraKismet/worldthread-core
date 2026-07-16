@@ -60,13 +60,13 @@
 
 - [ ] **0.5.0 實測清單**：產出六機制（rules-quickref 強制核對、單人調整、存檔確認、inventory/quests、system 容器、實體分層＋回應前實體核對）逐項檢核清單（勾選＋一句話、≤15 條）；置本機不追蹤檔自用，回饋由使用者手動摘要帶回（不含逐字戰役內容）。
 - [ ] **發行包代理入口檔**：dist 補建 `AGENTS.md`（工具中立主持入口＋遊戲守則以外的 agent 行為規範：先讀 session-brief／PLAYBOOK、玩家可見輸出不得引用 `private/director/`、不得修改 `protocol/`、探索邊界與隱私紀律）＋`CLAUDE.md`（一行 `@AGENTS.md` 匯入）；同步 PROJECT-DESIGN §2 結構圖、`verify-package.ps1` 結構斷言、發行包 README。
-- [ ] **契約補洞（缺口①②⑫，同批同 PR）**：DATA-SCHEMA 補 `summaries/current.md` 專節（「必要章節」式保敘事彈性）與 `world.json` 專節（基線欄位、更新時機、與 current-scene `established_facts` 分工）；⑫前線資訊入摘要界線以禁止清單明文化（允許敘事化節奏描述；禁前線 id、`clocks` 數值、前線名稱，附正反例）；一併研究 Markdown 契約導入 YAML frontmatter 統一規格（任意 agent 可解析，可推廣至其他契約檔）。
+- [x] **契約補洞（缺口①②⑫，同批同 PR）**：DATA-SCHEMA 補 `summaries/current.md` 專節與 `world.json` 專節；⑫前線資訊禁止清單明文化。動工前 mini-ceremony 定案（2026-07-17）：摘要採最小三章節（前情提要／當前處境／未決線頭）；`known_facts` 升格物件陣列（`{fact, established_at_event_id, tags?}`）＋新增 `archived_facts` 封存分流（舊存檔採寬容模式不強制改寫）；frontmatter 僅 summaries 試點（`updated_at`／`covers_scene_ids`，推廣另案）；summaries 全章節受⑫同套禁止清單管轄。
 - [ ] **可見度操作規則（缺口④⑤）**：④ `events.jsonl` 混合可見度單檔的讀取過濾義務與祕密擲骰呈現方式；⑤ correction 的 `visibility` 繼承規則；設計與代理入口檔協同——入口檔承載 agent 層級紀律、協定條文承載操作細則，兩層互補。
 - [ ] **revision 衝突（缺口⑥，保守版）**：不自動合併、偵測衝突即停下請玩家仲裁；定提示時機與提示內容。
 - [ ] **STATE-UPDATE 語意（缺口⑨⑩）**：檔案類型對應表——小檔（character/inventory/quests/world/current-scene）整檔 replace、`events.jsonl` 一律 append；不引入通用 patch 語法。
 - [ ] **RAG（缺口⑦⑧）**：補原則層級最小條文（不寫死數字／演算法）；另研究仿擲骰工具模式的可攜 RAG 工具（未來獨立 RAG 模組的抽象／降級版本），可行即實作最小版；若研究結論需調整「平台中立／rag 快取」紅線，另走定案不得逕改。
 - [ ] **主持人操作日誌（兼解缺口⑪）**：獨立 `game/private/director/host-log.jsonl`——追加式、最小鍵 `id/at/kind/facts`、靠目錄隔離刻意不設 `visibility` 欄、選配 `refs_event_id` 關聯事件；例外時寫（違規、例外裁定、私有邊界操作）＋預設啟用、不綁系統雜訊層級；保存／輪替比照 `archive/` 封存模式避免無界成長。
-- [ ] **多人擴充**：目標形態＝「bot 中繼 Discord／Telegram 頻道 ↔ AI」遠端多人（bot 為另開專案，引用本範本為核心模組使溝通架構一致）；分人方式未定（第三人稱自標／論壇團式主持統整為候選）。0.6.0 先做架構研究（分人方式、訊息流、本範本需預留的接縫），研究結論可行即動工最小多人協定並依結果起草 §1 定位文字交使用者定案；**動 schema 前受局部閘門約束（須先核對 0.5.0 實測回饋，並顧可視化專案讀取契約相容）**。
+- [ ] **多人擴充**：目標形態＝「bot 中繼 Discord／Telegram 頻道 ↔ AI」遠端多人（bot 為另開專案，引用本範本為核心模組使溝通架構一致）；分人方式未定（第三人稱自標／論壇團式主持統整為候選）。0.6.0 先做架構研究（分人方式、訊息流、本範本需預留的接縫），研究結論可行即動工最小多人協定並依結果起草 §1 定位文字交使用者定案；**動 schema 前受局部閘門約束（須先核對 0.5.0 實測回饋，並顧可視化專案讀取契約相容）**。若定位定案為支援多人，**套件改名（移除 `-solo-`）綁定同一版本一起做**（dist 資料夾名＝manifest name＝ZIP 根目錄名三處一次協調變更；GitHub repo 改名自動重導、既有 tag 不動）（2026-07-17 使用者提出、綁定原則定案）。
 
 ## 主要風險與處置
 

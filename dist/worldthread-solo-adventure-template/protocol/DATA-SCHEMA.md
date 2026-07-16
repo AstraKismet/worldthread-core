@@ -67,7 +67,43 @@ scene_id: fog-ferry-opening
 
 主持人每回合的第一讀取點，只存**當下可操作資訊**；完整對話與擲骰在事件日誌。基線鍵：`revision`、`updated_at`、`scene_id`（須對應已宣告場景）、`name`、`location`、`exits`（可見出口）、`threats`（當前威脅、時間壓力與進行中的程序）、`observable_clues`（玩家可直接觀察到的線索）、`entities`（本場景相關實體 id 清單，對應 `entities/` 下的檔案）、`established_facts`（本場景已確認事實）、`open_questions`（仍未知的問題）、`last_updated_event_id`。
 
-與 `world.json` 的分工：`world.json` 保存戰役級事實（`known_facts`、`open_questions`）與 `current_scene` 指標；`current-scene.json` 是場景級工作紀錄，場景切換時封存舊場景（見〈封存〉）再重建。
+與 `world.json` 的分工：`world.json` 保存戰役級事實；`current-scene.json` 是場景級工作紀錄，場景切換時封存舊場景（見〈封存〉）再重建。分工判準與搬移時機見〈世界〉節。
+
+## 世界 `game/state/world.json`
+
+戰役級（跨場景）事實的單一保存處。基線鍵：`revision`、`updated_at`、`current_scene`、`known_facts`、`archived_facts`、`open_questions`。
+
+- `current_scene`：**場景 id 指標字串**，指向某個已宣告的 `scene_id`；場景本身的工作紀錄在 `current-scene.json`（兩者同名但不同東西，勿混淆）。
+- `known_facts`：陣列，已確認且**效力跨越場景邊界**的戰役級事實，每項：
+
+  ```json
+  {"fact": "失竊的是鐘舌，鐘體仍在。", "established_at_event_id": "evt-0009", "tags": ["鐘塔謎案"]}
+  ```
+
+  `fact` 必填；`established_at_event_id` 回指確立該事實的事件（與實體檔 `last_updated_event_id` 同一溯源模式）；`tags` 選用（字串陣列，供分類與檢索）。**舊格式相容**：既有戰役中的純字串項目視為未結構化舊事實，讀取時當作只有 `fact` 的項目，不強制立即改寫；該項下次被修改或搬移時再補齊物件形狀。
+- `archived_facts`：與 `known_facts` 同形狀。仍然為真、但不再與進行中劇情高頻相關的事實**移動**（不刪除）至此；重新變得相關時移回。`archived_facts` 不在每回合的讀取範圍內（與 `archive/` 同精神）。
+- `open_questions`：字串陣列，戰役級未解問題。
+
+**與 `current-scene.json` `established_facts` 的分工判準**：一個事實**在場景結束後仍然成立、且未來場景可能需要引用**（跨場景效力）→ 記入或搬入 `known_facts`；僅在本場景內有操作意義的暫態觀察 → 留在 `established_facts`，隨場景封存進 `archive/scenes/`。正例：「渡口長真實身分是前走私販」→ `known_facts`；反例：「桌上的蠟燭還亮著」→ `established_facts`。搬移時機：場景切換或摘要更新時（PLAYBOOK 每回合第 6 步）順帶檢視——`established_facts` 中已具跨場景效力者搬入 `known_facts`、`known_facts` 中不再高頻相關者移入 `archived_facts`。
+
+## 摘要 `game/state/summaries/current.md`
+
+玩家可見的目前戰役摘要；續玩時的前情提要與每回合的背景脈絡皆讀此檔。以 YAML front matter 存中繼欄位、內文存敘事：
+
+```markdown
+---
+updated_at: 1970-01-01T00:00:00Z
+covers_scene_ids: []
+---
+```
+
+- `updated_at`：最近一次重寫時間（ISO 8601 UTC）；`covers_scene_ids`：本摘要涵蓋的場景 id 陣列。**舊格式相容**：缺 front matter 視為未結構化舊摘要，續玩仍照常讀取純文字內容，不強制立即改寫；下次重寫摘要時補齊。
+- 必要章節（列章節即可，措辭與長度由主持人依敘事風格決定）：
+  1. **前情提要**：戰役至今發生過什麼的濃縮敘事。
+  2. **當前處境**：主角現在在哪、正在做什麼、迫近的壓力。
+  3. **未決線頭**：仍欠玩家的答案、進行中的承諾與懸念；可順帶提及關鍵 NPC 態度的變化（敘事化概括即可，不抄實體檔欄位值——實體檔才是單一事實來源）。
+- 更新時機：場景結束或累積約 6–10 事件時重寫（PLAYBOOK 每回合第 6 步）。
+- **可見性**：摘要是玩家可見文件，全部章節適用〈前線〉節的「前線資訊禁止清單」；「未決線頭」只寫玩家已知的懸念，不得寫入導演私下追蹤的節奏線索。
 
 ## 角色 `game/state/character.json`
 
@@ -151,3 +187,12 @@ scene_id: fog-ferry-opening
 ## 前線 `game/private/director/fronts/<front-id>.json`
 
 前線屬狀態 JSON，必要鍵：`revision`、`updated_at`、`id`、`name`、`goal`、`resources`、`clocks`、`omens`、`next_reasonable_action`、`secret`。`clocks` 為陣列，每個時鐘含 `name`、`segments`、`current`（0 至 `segments` 的整數）。推進前線（修改 `current`）視同狀態寫入，適用重讀規則。
+
+### 前線資訊禁止清單（玩家可見文件的界線）
+
+前線的節奏壓力**可以**被玩家感覺到，但其識別資訊**不得**出現在任何玩家可見的文件或輸出（摘要、場景敘事、OOC 提示、correction）：
+
+- 禁止：前線 `id`、前線 `name`、任何 `clocks` 的 `segments`／`current` 讀數、`omens` 與 `secret` 原文、`next_reasonable_action` 原文。
+- 允許：不含識別資訊的敘事化節奏描述。
+- 正例：「碼頭的氣氛一天比一天緊，巡夜的人變多了。」
+- 反例：「『霧渡口陰謀』前線時鐘推進到 3/6。」（含前線名稱與時鐘讀數，即使玩家追問也不得給出）

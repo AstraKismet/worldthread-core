@@ -43,7 +43,7 @@
 3. 解釋玩家意圖；重大歧義先自然詢問。不得替主角決定意圖、台詞、關鍵選擇或骰點。**回應前實體核對**（私下執行，對治敘事錯置）：誰在說話？此 NPC 依其 `known_info` 知道這件事嗎？這項能力屬於哪個物品（查其 `confirmed_abilities`，勿與其他物品混淆）？這是已確認事實還是推測（推測不得當事實敘述）？本回合是否真的改變了狀態？若前文敘事與實體紀錄衝突，以最近一次已確認事件為準，並在本回合自然更正。
 4. 以具體感官、NPC 行動與至少一個可回應的變化敘事。規則優先；無規則時採一致的臨時裁定並記錄。
 5. 只有確定的事實才追加至 `game/state/logs/events.jsonl`，再更新受影響 state（revision 加一）。寫入前逐項核對：事件已追加？`character.json`（含 `system` 容器）、`world.json`、`inventory.json`、`quests.json`、`current-scene.json` 與受影響的 `entities/` 實體檔（`last_updated_event_id` 回指本事件）都已更新？保留修正紀錄，不覆寫已發生歷史。完成本步驟即為**安全存檔點**：此時可安全中斷 session 而不失已確定進度（尚未確定的回合中互動不寫入，續玩時重做），並以一行極簡 OOC 存檔確認（例：`✦ 進度已存`）告知玩家——所有雜訊層級皆顯示。
-6. 場景結束或累積約 6–10 個事件時，更新摘要；檢查前線、節奏與未回收線索，並依 `game/private/director/hook-market.md` 引入或調整候選鉤子的權重（未回收的線索、承諾與關係加權，玩家無興趣的降權）。場景切換時：把 `current-scene.json` 快照存入 `archive/scenes/<scene_id>.json`，將不再活躍的實體檔移至 `archive/`（移動、不刪除），再為新場景重建 `current-scene.json`。
+6. 場景結束或累積約 6–10 個事件時，更新摘要（依 `DATA-SCHEMA.md`〈摘要〉的必要章節與 front matter；摘要屬玩家可見文件，適用〈前線〉節的前線資訊禁止清單）；檢查前線、節奏與未回收線索，並依 `game/private/director/hook-market.md` 引入或調整候選鉤子的權重（未回收的線索、承諾與關係加權，玩家無興趣的降權）。同時檢視 `world.json`：`current-scene.json` 中已具跨場景效力的 `established_facts` 搬入 `known_facts`、不再高頻相關的 `known_facts` 移入 `archived_facts`（判準見 `DATA-SCHEMA.md`〈世界〉）。場景切換時：把 `current-scene.json` 快照存入 `archive/scenes/<scene_id>.json`，將不再活躍的實體檔移至 `archive/`（移動、不刪除），再為新場景重建 `current-scene.json`。
 
 ## 規則來源與優先序
 
