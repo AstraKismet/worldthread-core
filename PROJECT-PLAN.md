@@ -59,9 +59,9 @@
 範圍主軸四條全納入：0.5.0 實測回饋、演練缺口 backlog 補洞、主持人操作日誌、多人擴充；另納入本輪新發現的發行包代理入口檔缺口。閘門採**局部制**：僅「動 `system` 容器／`entities` schema」的工作項須先核對 0.5.0 實測回饋，其餘平行推進。
 
 - [ ] **0.5.0 實測清單**：產出六機制（rules-quickref 強制核對、單人調整、存檔確認、inventory/quests、system 容器、實體分層＋回應前實體核對）逐項檢核清單（勾選＋一句話、≤15 條）；置本機不追蹤檔自用，回饋由使用者手動摘要帶回（不含逐字戰役內容）。
-- [ ] **發行包代理入口檔**：dist 補建 `AGENTS.md`（工具中立主持入口＋遊戲守則以外的 agent 行為規範：先讀 session-brief／PLAYBOOK、玩家可見輸出不得引用 `private/director/`、不得修改 `protocol/`、探索邊界與隱私紀律）＋`CLAUDE.md`（一行 `@AGENTS.md` 匯入）；同步 PROJECT-DESIGN §2 結構圖、`verify-package.ps1` 結構斷言、發行包 README。
+- [x] **發行包代理入口檔**（PR #8）：dist 補建 `AGENTS.md`（工具中立主持入口＋遊戲守則以外的 agent 行為規範：先讀 session-brief／PLAYBOOK、玩家可見輸出不得引用 `private/director/`、不得修改 `protocol/`、探索邊界與隱私紀律）＋`CLAUDE.md`（一行 `@AGENTS.md` 匯入）；同步 PROJECT-DESIGN §2 結構圖、`verify-package.ps1` 結構斷言、發行包 README。
 - [x] **契約補洞（缺口①②⑫，同批同 PR）**：DATA-SCHEMA 補 `summaries/current.md` 專節與 `world.json` 專節；⑫前線資訊禁止清單明文化。動工前 mini-ceremony 定案（2026-07-17）：摘要採最小三章節（前情提要／當前處境／未決線頭）；`known_facts` 升格物件陣列（`{fact, established_at_event_id, tags?}`）＋新增 `archived_facts` 封存分流（舊存檔採寬容模式不強制改寫）；frontmatter 僅 summaries 試點（`updated_at`／`covers_scene_ids`，推廣另案）；summaries 全章節受⑫同套禁止清單管轄。
-- [ ] **可見度操作規則（缺口④⑤）**：④ `events.jsonl` 混合可見度單檔的讀取過濾義務與祕密擲骰呈現方式；⑤ correction 的 `visibility` 繼承規則；設計與代理入口檔協同——入口檔承載 agent 層級紀律、協定條文承載操作細則，兩層互補。
+- [x] **可見度操作規則（缺口④⑤）**：④ `events.jsonl` 混合可見度單檔的讀取過濾義務與祕密擲骰呈現方式；⑤ correction 的 `visibility` 繼承規則；與代理入口檔協同（AGENTS.md 補混合可見度過濾一句）。mini-ceremony 定案（2026-07-17）：⑤ correction 的 visibility **必須等於**原事件，改變可見度屬「揭露」另發 fact 事件；④ 導演可見度擲骰照實記檔供稽核，玩家可見層**只呈現後果與徵兆**（不呈現骰值、不告知擲骰），OOC 骰值揭示僅適用玩家可見擲骰。
 - [ ] **revision 衝突（缺口⑥，保守版）**：不自動合併、偵測衝突即停下請玩家仲裁；定提示時機與提示內容。
 - [ ] **STATE-UPDATE 語意（缺口⑨⑩）**：檔案類型對應表——小檔（character/inventory/quests/world/current-scene）整檔 replace、`events.jsonl` 一律 append；不引入通用 patch 語法。
 - [ ] **RAG（缺口⑦⑧）**：補原則層級最小條文（不寫死數字／演算法）；另研究仿擲骰工具模式的可攜 RAG 工具（未來獨立 RAG 模組的抽象／降級版本），可行即實作最小版；若研究結論需調整「平台中立／rag 快取」紅線，另走定案不得逕改。

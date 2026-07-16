@@ -21,6 +21,7 @@
 每行一個不可變事件，必要鍵：`id`、`at`、`scene_id`、`kind`、`facts`、`visibility`。空檔表示尚無事件；解析時跳過空白行。不可改寫舊行。
 
 - `visibility` 值域（全範本統一）：`public`（可公開）、`player`（玩家可知）、`director`（僅主持人可見）。
+- **混合可見度讀取過濾義務**：本檔是單一檔案、混雜三種可見度。把事件內容轉入任何玩家可見輸出（敘事、摘要、OOC、RAG 檢索結果、`STATE-UPDATE` 區塊）之前，必須先按 `visibility` 過濾；`director` 行對玩家視同不存在——玩家 OOC 問起也不揭示該行存在，只以敘事化後果與徵兆回應（比照〈前線〉節禁止清單的精神）。
 - `kind` 基礎值域：`fact`（確定事實）、`roll`（擲骰紀錄）、`correction`（修正）。規則書或模組可擴充新值，但不得改變基礎值的語意。
 - 選用鍵 `updates`：本事件觸及的實體 id 陣列（如 `["compass","ivra"]`），供實體變更反向追溯。
 
@@ -30,7 +31,7 @@
 {"id":"evt-0001","at":"1970-01-01T00:00:00Z","scene_id":"fog-ferry-opening","kind":"fact","facts":["鐘塔的鐘在黎明前失竊。"],"visibility":"player"}
 ```
 
-修正事件以 `kind: "correction"`，並以 `corrects` 鍵指向原事件的 `id`；修正是追加，不是改寫：
+修正事件以 `kind: "correction"`，並以 `corrects` 鍵指向原事件的 `id`；修正是追加，不是改寫。**visibility 繼承**：correction 的 `visibility` 必須等於被修正事件的 `visibility`——修正只改內容、不改可見度；若某事實需要改變可見度（如導演祕密進入玩家可知範圍），那是「揭露」不是「修正」，以新的 `kind: "fact"` 事件記載，原事件不動：
 
 ```json
 {"id":"evt-0009","at":"1970-01-01T00:00:00Z","scene_id":"fog-ferry-opening","kind":"correction","corrects":"evt-0007","facts":["更正：失竊的是鐘舌，鐘體仍在。"],"visibility":"player"}
@@ -50,6 +51,8 @@
 ```json
 {"id":"evt-0002","at":"1970-01-01T00:00:00Z","scene_id":"fog-ferry-opening","kind":"roll","formula":"2d6+3","rolls":[4,2],"modifier":3,"result":9,"source":"tool","rolled_at":"1970-01-01T00:00:00Z","ruling":"成功：你在鐘塔斷繩上找到銀色纖維。","facts":[],"visibility":"player"}
 ```
+
+**導演可見度擲骰**（`visibility: "director"` 的 roll 事件，如前線推進、NPC 暗中行動的判定）：照實記入本檔（含 `source` 與骰值）供稽核，但玩家可見層**只呈現後果與徵兆**——不呈現骰值與公式、也不告知「擲了骰」這件事；`PLAYBOOK.md`〈擲骰〉的 OOC 骰值揭示規則僅適用於玩家可見（`public`／`player`）的擲骰。
 
 ## 場景與 `scene_id`
 
