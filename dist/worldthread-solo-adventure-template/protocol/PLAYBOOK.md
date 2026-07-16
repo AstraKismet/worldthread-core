@@ -94,4 +94,15 @@ content: ...
 END-STATE-UPDATE
 ```
 
+`operation` 依目標檔案類型決定，**不做通用 patch**——不得輸出 JSON 片段、diff 語法或欄位級修改指令，玩家只做「整檔覆蓋」或「檔尾貼上」兩種機械動作：
+
+| 目標檔案類型 | operation | `content` 承載 |
+| --- | --- | --- |
+| 狀態 JSON（`character.json`、`inventory.json`、`quests.json`、`world.json`、`current-scene.json`、`entities/` 實體檔、`archive/` 快照、前線檔） | `replace` | **完整檔案內容**：`revision` 已加一、`updated_at` 已更新的整份新 JSON |
+| 追加式日誌（`logs/events.jsonl` 等 `.jsonl` 檔） | `append` | **僅新增的行**：每行一個完整 JSON 事件，貼於檔尾 |
+| Markdown 狀態文件（`summaries/current.md`、`rules-quickref.md`） | `replace` | 完整檔案內容 |
+
+- 一個區塊只對應一個 `target`；同回合多檔變更就依序輸出多個區塊。
+- `expected_revision` 僅 `replace` 狀態 JSON 需要；`append` 目標無 revision，省略此欄。玩家貼回前發現檔案實際 `revision` 與 `expected_revision` 不符時，比照 `DATA-SCHEMA.md`〈revision 衝突處理〉：回報主持人，依仲裁結果重出區塊。
+
 不要假稱已寫入。區塊內 `content` 承載的資料格式（狀態 JSON 欄位、事件結構）見 `DATA-SCHEMA.md`。
