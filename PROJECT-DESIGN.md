@@ -1,6 +1,6 @@
 # 通用單人 TRPG 體驗範本：設計規格
 
-> 狀態：`0.4.0` 已實作；本文件為現行設計依據，並含 `0.5.0`（遊玩反饋改善：規則遵循、單人調整、存檔可見性、庫存／任務追蹤、資源機制提醒、角色卡 `system` 通用容器）之設計。正式專案名為 Worldthread／織世；發行套件名為 `worldthread-core`；授權採 MIT License。
+> 狀態：`0.5.0` 已發行；本文件為現行設計依據，並含 `0.6.0`（發行包代理入口檔、契約補洞、可見度操作規則、revision 衝突處理、STATE-UPDATE 語意、RAG 原則條文、主持人操作日誌、extras 全量重產、短團收尾機制、共窗多人〔實驗，Hot Seat〕本地多人；套件更名 `worldthread-core`）之設計。正式專案名為 Worldthread／織世；發行套件名為 `worldthread-core`；授權採 MIT License。
 
 ## 1. 目標與範圍
 
