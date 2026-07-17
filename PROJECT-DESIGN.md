@@ -8,7 +8,7 @@
 
 範本提供資料結構、可攜協定、主持行為、記憶與發行流程；不綁定 Codex、雲端資料庫、嵌入模型或特定 RAG 服務，也不隨附未獲授權的規則書或設定素材。本範本不為行動裝置提供原生遊玩流程：行動裝置玩家應以遠端控制或類似方式，連回實際執行 AI 服務與檔案的環境。
 
-定位：**單人為主、雙形態演進中**。本專案是 Worldthread 生態系的**核心模組**（套件名 `worldthread-core` 由此而來），本身即為可直接遊玩的成品；衍生功能（bot 中繼多人、可視化戰役分析、web UI 等）屬另開專案，引用本專案的協定與資料契約為核心。現行完整支援的形態是「一位玩家＋一位 AI 主持人」的單人戰役；核心 schema 已為多人擴充預留——實體 `holder`、事件 `visibility` 與選用 `actor` 鍵皆以 id 指稱、不假設唯一主角（見 `DATA-SCHEMA.md` 多人架構預留註記）。多人目標形態為「中繼程式聚合多位玩家的頻道發言 ↔ AI 主持」的遠端多人：多人流程在中繼專案達到可用里程碑並完成定案前，不落地於本範本。
+定位：**單人為主、雙形態演進中**。本專案是 Worldthread 生態系的**核心模組**（套件名 `worldthread-core` 由此而來），本身即為可直接遊玩的成品；衍生功能（bot 中繼多人、可視化戰役分析、web UI 等）屬另開專案，引用本專案的協定與資料契約為核心。現行完整支援的形態是「一位玩家＋一位 AI 主持人」的單人戰役；另提供**可選啟用的實驗性本地多人**「共窗多人（實驗，Hot Seat）」——一位主持人與數位玩家共用單一對話窗口（預設關閉、於 `game/session-brief.md` 顯式啟用；每位 PC 各存 `game/state/characters/<pc-id>.json`、行動以事件 `actor` 鍵歸屬。單一窗口物理上無法對在場玩家隱藏資訊，故不支援 PC 間機制化祕密）。核心 schema 已為多人擴充預留——實體 `holder`、事件 `visibility` 與選用 `actor` 鍵皆以 id 指稱、不假設唯一主角（見 `DATA-SCHEMA.md` 多人架構註記）。更完整的**遠端多人**目標形態為「中繼程式聚合多位玩家的頻道發言 ↔ AI 主持」（bot 中繼屬另開專案、引用本範本為核心模組）：其多人流程在中繼專案達到可用里程碑並完成定案前，不落地於本範本。**visibility 一律維持 `public`／`player`／`director` 三值、不因多人擴充。**
 
 ## 2. 發行與資料架構
 
@@ -42,7 +42,7 @@ dist/worldthread-core/
 
 - 根目錄 `AGENTS.md`／`CLAUDE.md` 是**代理入口檔**：供會自動載入工作區規範的 agent 工具（Claude Code、Codex CLI 等）在收到開局提示前就取得入口指引（先讀 `session-brief.md`／`PLAYBOOK.md`）與行為規範（私有隔離、協定不可改、隱私、玩家主導）。內容僅指路與紅線，權威內容仍在 `game/session-brief.md` 與 `protocol/`；與開發儲存庫根目錄的同名檔用途不同（該檔屬開發代理指南、不隨發行包散布）。
 - `game/reference/`：通常不直接修改的來源真相。
-- `game/state/`：本局已發生、玩家可知或可公開的變化；與來源衝突時優先。**不隨發行包提供**——玩家開局時將 `game/templates/starter-state/` 複製為 `game/state/`，其下的 `entities/{items,npcs}/`、`archive/`、`logs/`、`summaries/` 等於遊玩時建立；CI 禁止 `game/state/` 進入封裝。
+- `game/state/`：本局已發生、玩家可知或可公開的變化；與來源衝突時優先。**不隨發行包提供**——玩家開局時將 `game/templates/starter-state/` 複製為 `game/state/`，其下的 `entities/{items,npcs}/`、`archive/`、`logs/`、`summaries/`（及共窗多人時的 `characters/<pc-id>.json`）等於遊玩時建立；CI 禁止 `game/state/` 進入封裝。
 - `game/private/director/`：未揭露秘密、勢力目標、伏筆與導演決策；不能直接進玩家可見內容。發行包內僅含可公開發行的範例導演素材。
 - `game/rag/`：可再生索引，不能是唯一真相來源。**不隨發行包提供**，由接入服務於執行期建立；CI 禁止其進入封裝。
 
