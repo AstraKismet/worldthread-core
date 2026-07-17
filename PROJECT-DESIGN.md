@@ -35,7 +35,7 @@ dist/worldthread-core/
 │  └─ convert-rulebook-prompt.md
 ├─ game/
 │  ├─ reference/{rules,setting,scenarios,characters}/
-│  ├─ private/director/            # fronts/ 與 hook-market.md；盲拆原料 source/ 於戰役期建立
+│  ├─ private/director/            # fronts/、hook-market.md 與 campaign-arc.md（戰役主線大綱）；盲拆原料 source/ 於戰役期建立
 │  └─ templates/{narrators,starter-state}/
 └─ examples/
 ```

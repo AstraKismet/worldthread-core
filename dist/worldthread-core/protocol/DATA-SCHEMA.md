@@ -103,6 +103,7 @@ scene_id: fog-ferry-opening
   `fact` 必填；`established_at_event_id` 回指確立該事實的事件（與實體檔 `last_updated_event_id` 同一溯源模式）；`tags` 選用（字串陣列，供分類與檢索）。**舊格式相容**：既有戰役中的純字串項目視為未結構化舊事實，讀取時當作只有 `fact` 的項目，不強制立即改寫；該項下次被修改或搬移時再補齊物件形狀。
 - `archived_facts`：與 `known_facts` 同形狀。仍然為真、但不再與進行中劇情高頻相關的事實**移動**（不刪除）至此；重新變得相關時移回。`archived_facts` 不在每回合的讀取範圍內（與 `archive/` 同精神）。
 - `open_questions`：字串陣列，戰役級未解問題。
+- `campaign_status`（選用）：戰役生命週期旗標，值域 `active`（進行中，預設）／`concluded`（本弧／本章已抵達尾聲）。**缺欄視為 `active`**（舊格式相容，既有戰役不需改寫）。搭配選用 `concluded_at_event_id`（回指促成收尾的事件，與 `established_at_event_id` 同一溯源模式）。**完結≠封存**：檔案留原地供回顧，此旗標供下游（如可視化）判讀戰役是否已收束，不改變任何既有欄位語意。**可續玩**：玩家要延續舊紀錄開新冒險時把 `campaign_status` 改回 `active`（或標記新弧），事件日誌、角色、世界一律延續不重置（收尾與續玩流程見 `PLAYBOOK.md`〈戰役收尾〉）。
 
 **與 `current-scene.json` `established_facts` 的分工判準**：一個事實**在場景結束後仍然成立、且未來場景可能需要引用**（跨場景效力）→ 記入或搬入 `known_facts`；僅在本場景內有操作意義的暫態觀察 → 留在 `established_facts`，隨場景封存進 `archive/scenes/`。正例：「渡口長真實身分是前走私販」→ `known_facts`；反例：「桌上的蠟燭還亮著」→ `established_facts`。搬移時機：場景切換或摘要更新時（PLAYBOOK 每回合第 6 步）順帶檢視——`established_facts` 中已具跨場景效力者搬入 `known_facts`、`known_facts` 中不再高頻相關者移入 `archived_facts`。
 
@@ -121,9 +122,11 @@ covers_scene_ids: []
 - 必要章節（列章節即可，措辭與長度由主持人依敘事風格決定）：
   1. **前情提要**：戰役至今發生過什麼的濃縮敘事。
   2. **當前處境**：主角現在在哪、正在做什麼、迫近的壓力。
-  3. **未決線頭**：仍欠玩家的答案、進行中的承諾與懸念；可順帶提及關鍵 NPC 態度的變化（敘事化概括即可，不抄實體檔欄位值——實體檔才是單一事實來源）。
+  3. **未決線頭**：仍欠玩家的答案、進行中的承諾與懸念；可順帶提及關鍵 NPC 態度的變化（敘事化概括即可，不抄實體檔欄位值——實體檔才是單一事實來源）。戰役收尾時，本節改記各線頭的**最終處置**（收束或刻意留白）。
+  4. **尾聲（epilogue）** *(僅戰役收尾時出現的條件式必要章節)*：本弧抵達的結局敘事，回應玩家一路的關鍵選擇；未完結的戰役無此節。詳見 `PLAYBOOK.md`〈戰役收尾〉。
 - 更新時機：場景結束或累積約 6–10 事件時重寫（PLAYBOOK 每回合第 6 步）。
 - **可見性**：摘要是玩家可見文件，全部章節適用〈前線〉節的「前線資訊禁止清單」；「未決線頭」只寫玩家已知的懸念，不得寫入導演私下追蹤的節奏線索。
+- **戰役收尾與續玩**：收尾時於 `world.json` 設 `campaign_status: "concluded"`（見〈世界〉）、本檔加寫〈尾聲〉節。玩家續玩新冒險時，把收尾時的本檔快照存入 `archive/summaries/<arc-id>.md`（移動不刪除、比照〈封存〉精神），再重寫 `current.md`（舊尾聲折入新「前情提要」），`campaign_status` 回 `active`。
 
 ## 角色 `game/state/character.json`
 
@@ -202,7 +205,7 @@ covers_scene_ids: []
 
 ## 封存 `game/state/archive/`
 
-場景結束時，不再活躍的實體檔**移動**（不刪除）至 `archive/items/`、`archive/npcs/`；切換場景前把 `current-scene.json` 快照存為 `archive/scenes/<scene_id>.json`。archive 不在每回合的讀取範圍內，實體重新登場時把檔案移回 `entities/` 即可，歷史事件不受影響。
+場景結束時，不再活躍的實體檔**移動**（不刪除）至 `archive/items/`、`archive/npcs/`；切換場景前把 `current-scene.json` 快照存為 `archive/scenes/<scene_id>.json`。archive 不在每回合的讀取範圍內，實體重新登場時把檔案移回 `entities/` 即可，歷史事件不受影響。戰役收尾後玩家續玩新弧時，把收尾時的 `summaries/current.md` 快照存為 `archive/summaries/<arc-id>.md`（見〈摘要〉）。
 
 ## 前線 `game/private/director/fronts/<front-id>.json`
 
@@ -230,3 +233,15 @@ covers_scene_ids: []
 ```json
 {"id":"hlog-0001","at":"1970-01-01T00:00:00Z","kind":"ruling","facts":["規則書未涵蓋水下射擊；臨時裁定沿用遠射並提高一級難度，後續一致適用。"],"refs_event_id":"evt-0012"}
 ```
+
+## 戰役主線大綱 `game/private/director/campaign-arc.md`
+
+戰役級的**導演私有**主線藍圖，初始化時由主持人依 `game/session-brief.md` 的題材與**戰役長度預期**設計（見 `PLAYBOOK.md`〈初始化〉〈戰役收尾〉）。用途：即使玩家的自由行動發散出支線，主線大綱確保戰役最終能抵達一個尾聲。屬 `game/private/director/`，靠目錄隔離保密——**內容永不得出現在任何玩家可見的敘事、摘要或輸出**（比照〈前線〉的資訊禁止清單精神）。
+
+自由格式 Markdown（以主持人使用效益優先，不遷就人類閱讀版式），建議涵蓋：
+
+- **大方向／前提**：本戰役的核心衝突與基調。
+- **潛在尾聲形狀**：一或多個可抵達的結局輪廓（非鎖死單一結局，隨玩家選擇調整）。
+- **主線里程碑**：抵達尾聲途中的關鍵節點，允許支線發散而不脫軌。
+
+戰役長度預期（session-brief B 段）決定里程碑密度與前線／倒數鐘配速：短團收斂、長團鋪展。收尾後玩家續開新弧時，更新或改寫本檔為新弧的大綱。
