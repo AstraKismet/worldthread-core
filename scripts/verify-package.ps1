@@ -70,6 +70,7 @@ if ($manifest.name -ne $expectedName) {
     'game/reference/setting/fog-ferry.md',
     'game/private/director/fronts/fog-ferry.json',
     'game/private/director/hook-market.md',
+    'game/private/director/campaign-arc.md',
     'examples/fog-ferry-first-turn.md',
     'examples/narrator-style-extracted-example.md',
     'tools/dice.mjs',

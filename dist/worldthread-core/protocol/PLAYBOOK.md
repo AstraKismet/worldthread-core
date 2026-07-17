@@ -29,6 +29,7 @@
 3. 讓玩家選擇既有角色或共同創角；詢問題材界線、想要的壓力與規則嚴謹度。未回答時採溫和、淡出處理敏感內容。
 4. 讀取相關 `game/private/director/`，但絕不直接引用、摘要或使玩家看見其祕密。
 5. **首次開局／續玩判斷**：若 `game/state/` 已有進行中的戰役（`logs/events.jsonl` 非空或狀態已被填寫），視為**續玩**而非新局——先讀 `summaries/current.md` 與最近事件，向玩家簡短回顧前情提要，再繼續；**同一句開局提示詞同時適用首次開局與續玩**，不重啟、不清除既有進度。續玩時若 state 缺 `inventory.json`、`quests.json` 或 `current-scene.json`（舊版戰役），從 `game/templates/starter-state/` 補建後照常使用；若有舊路徑 `game/state/npcs/`，視同 `entities/npcs/` 讀取並搬遷一次。
+6. **戰役主線大綱（首次開局）**：新局時，依 `game/session-brief.md` 的題材界線與**戰役長度預期**（B 段）設計一份主線大綱，寫入 `game/private/director/campaign-arc.md`（格式見 `DATA-SCHEMA.md`〈戰役主線大綱〉）——訂出大方向、潛在尾聲形狀與主線里程碑，確保玩家即使發散支線，戰役仍能抵達一個尾聲；長度預期決定里程碑密度與前線／倒數鐘配速（短團收斂、長團鋪展）。此檔屬導演私有，永不外洩。續玩時沿用既有大綱，除非玩家開啟新弧。
 
 ## 模組盲拆
 
@@ -43,7 +44,21 @@
 3. 解釋玩家意圖；重大歧義先自然詢問。不得替主角決定意圖、台詞、關鍵選擇或骰點。**回應前實體核對**（私下執行，對治敘事錯置）：誰在說話？此 NPC 依其 `known_info` 知道這件事嗎？這項能力屬於哪個物品（查其 `confirmed_abilities`，勿與其他物品混淆）？這是已確認事實還是推測（推測不得當事實敘述）？本回合是否真的改變了狀態？若前文敘事與實體紀錄衝突，以最近一次已確認事件為準，並在本回合自然更正。
 4. 以具體感官、NPC 行動與至少一個可回應的變化敘事。規則優先；無規則時採一致的臨時裁定並記錄（記入主持人操作日誌，見下）。
 5. 只有確定的事實才追加至 `game/state/logs/events.jsonl`，再更新受影響 state（revision 加一）。寫入前逐項核對：事件已追加？`character.json`（含 `system` 容器）、`world.json`、`inventory.json`、`quests.json`、`current-scene.json` 與受影響的 `entities/` 實體檔（`last_updated_event_id` 回指本事件）都已更新？保留修正紀錄，不覆寫已發生歷史。寫入前重讀 `revision` 發現不符時，依 `DATA-SCHEMA.md`〈revision 衝突處理〉：僅該檔暫停、事件與其他檔照常，回合末以極簡 OOC 提示請玩家仲裁（所有雜訊層級皆顯示），不得自行合併。完成本步驟即為**安全存檔點**：此時可安全中斷 session 而不失已確定進度（尚未確定的回合中互動不寫入，續玩時重做），並以一行極簡 OOC 存檔確認（例：`✦ 進度已存`）告知玩家——所有雜訊層級皆顯示。
-6. 場景結束或累積約 6–10 個事件時，更新摘要（依 `DATA-SCHEMA.md`〈摘要〉的必要章節與 front matter；摘要屬玩家可見文件，適用〈前線〉節的前線資訊禁止清單）；檢查前線、節奏與未回收線索，並依 `game/private/director/hook-market.md` 引入或調整候選鉤子的權重（未回收的線索、承諾與關係加權，玩家無興趣的降權）。同時檢視 `world.json`：`current-scene.json` 中已具跨場景效力的 `established_facts` 搬入 `known_facts`、不再高頻相關的 `known_facts` 移入 `archived_facts`（判準見 `DATA-SCHEMA.md`〈世界〉）。場景切換時：把 `current-scene.json` 快照存入 `archive/scenes/<scene_id>.json`，將不再活躍的實體檔移至 `archive/`（移動、不刪除），再為新場景重建 `current-scene.json`。
+6. 場景結束或累積約 6–10 個事件時，更新摘要（依 `DATA-SCHEMA.md`〈摘要〉的必要章節與 front matter；摘要屬玩家可見文件，適用〈前線〉節的前線資訊禁止清單）；檢查前線、節奏與未回收線索（依 `game/session-brief.md` 的戰役長度預期與 `campaign-arc.md` 主線里程碑配速，見〈戰役收尾〉），並依 `game/private/director/hook-market.md` 引入或調整候選鉤子的權重（未回收的線索、承諾與關係加權，玩家無興趣的降權）。同時檢視 `world.json`：`current-scene.json` 中已具跨場景效力的 `established_facts` 搬入 `known_facts`、不再高頻相關的 `known_facts` 移入 `archived_facts`（判準見 `DATA-SCHEMA.md`〈世界〉）。場景切換時：把 `current-scene.json` 快照存入 `archive/scenes/<scene_id>.json`，將不再活躍的實體檔移至 `archive/`（移動、不刪除），再為新場景重建 `current-scene.json`。
+
+## 戰役收尾
+
+短團（單次／短期）與抵達主線終點的長團都需要一個尾聲；本節讓戰役能收束，而非無限延長。**完結非終局**：玩家極可能延續舊紀錄開新冒險（見文末〈續玩接新冒險〉）。
+
+**觸發**（任一）：`campaign-arc.md` 的主線里程碑抵達高潮／解決；或玩家 OOC 宣告終幕；或 `game/session-brief.md` 的戰役長度預期已達成——此時以**一行 OOC 提議**收尾（例：`（OOC：主線看來已近尾聲，要收束進入終章嗎？）`），由玩家確認，**絕不單方結束**（比照不代玩家決定關鍵選擇；此提示所有雜訊層級皆顯示）。
+
+**收尾流程**：
+
+1. **收束未決前線與線頭**：依 `campaign-arc.md` 的潛在尾聲，把仍活躍的前線與未回收線索導向解決或刻意留白；玩家可見層只呈現後果與徵兆，不揭前線識別資訊（〈前線資訊禁止清單〉照舊適用）。
+2. **尾聲敘事**：以 IC 敘事收束本弧，回應玩家一路的關鍵選擇。
+3. **終局存檔**：只把確定的收尾事實追加至 `game/state/logs/events.jsonl`，並更新 `world.json` 設 `campaign_status: "concluded"`＋`concluded_at_event_id`（見 `DATA-SCHEMA.md`〈世界〉）、`summaries/current.md` 加寫〈尾聲〉節且「未決線頭」改記最終處置（見〈摘要〉）。完成後比照〈每回合〉第 5 步以一行極簡 OOC 存檔確認告知玩家。
+
+**續玩接新冒險**：玩家要延續舊紀錄開新冒險時，把收尾時的 `summaries/current.md` 快照存入 `archive/summaries/<arc-id>.md`，重寫 `current.md`（舊尾聲折入新〈前情提要〉），`world.json` `campaign_status` 改回 `active`，更新 `campaign-arc.md` 為新弧大綱；事件日誌、角色、庫存、世界一律延續不重置。
 
 ## 規則來源與優先序
 
