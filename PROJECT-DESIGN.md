@@ -1,6 +1,6 @@
 # 通用單人 TRPG 體驗範本：設計規格
 
-> 狀態：`0.4.0` 已實作；本文件為現行設計依據，並含 `0.5.0`（遊玩反饋改善：規則遵循、單人調整、存檔可見性、庫存／任務追蹤、資源機制提醒、角色卡 `system` 通用容器）之設計。正式專案名為 Worldthread／織世；發行套件名為 `worldthread-solo-adventure-template`；授權採 MIT License。
+> 狀態：`0.4.0` 已實作；本文件為現行設計依據，並含 `0.5.0`（遊玩反饋改善：規則遵循、單人調整、存檔可見性、庫存／任務追蹤、資源機制提醒、角色卡 `system` 通用容器）之設計。正式專案名為 Worldthread／織世；發行套件名為 `worldthread-core`；授權採 MIT License。
 
 ## 1. 目標與範圍
 
@@ -8,12 +8,14 @@
 
 範本提供資料結構、可攜協定、主持行為、記憶與發行流程；不綁定 Codex、雲端資料庫、嵌入模型或特定 RAG 服務，也不隨附未獲授權的規則書或設定素材。本範本不為行動裝置提供原生遊玩流程：行動裝置玩家應以遠端控制或類似方式，連回實際執行 AI 服務與檔案的環境。
 
+定位：**單人為主、雙形態演進中**。本專案是 Worldthread 生態系的**核心模組**（套件名 `worldthread-core` 由此而來），本身即為可直接遊玩的成品；衍生功能（bot 中繼多人、可視化戰役分析、web UI 等）屬另開專案，引用本專案的協定與資料契約為核心。現行完整支援的形態是「一位玩家＋一位 AI 主持人」的單人戰役；核心 schema 已為多人擴充預留——實體 `holder`、事件 `visibility` 與選用 `actor` 鍵皆以 id 指稱、不假設唯一主角（見 `DATA-SCHEMA.md` 多人架構預留註記）。多人目標形態為「中繼程式聚合多位玩家的頻道發言 ↔ AI 主持」的遠端多人：多人流程在中繼專案達到可用里程碑並完成定案前，不落地於本範本。
+
 ## 2. 發行與資料架構
 
-所有可分發內容位於 `dist/worldthread-solo-adventure-template/`，並且只從該資料夾封裝。發行結構如下：
+所有可分發內容位於 `dist/worldthread-core/`，並且只從該資料夾封裝。發行結構如下：
 
 ```text
-dist/worldthread-solo-adventure-template/
+dist/worldthread-core/
 ├─ README.md
 ├─ AGENTS.md                        # 代理入口：AI 主持人的入口指引與行為規範（工具中立）
 ├─ CLAUDE.md                        # Claude Code 入口：單行 @AGENTS.md 匯入
@@ -82,7 +84,7 @@ dist/worldthread-solo-adventure-template/
 
 玩家可見的戰役紀錄結構化存於 `game/state/`：`character.json`（角色卡；規則欄位一律收進 `system` 通用容器——`id`＋`stats`／`pools`／`tracks`／`tags`／`abilities` 五容器，讓下游工具不需理解個別規則系統即可讀取，形狀見 `DATA-SCHEMA.md`）、`inventory.json`（庫存與貨幣）、`quests.json`（任務與目標進度）、`current-scene.json`（場景級工作紀錄：威脅、線索、在場實體、已確認事實）、`entities/{items,npcs}/`（重要實體各一檔，單一事實來源：已確認能力／限制／已知情報與 `last_updated_event_id` 事件溯源）、`world.json`（戰役級事實）、`logs/events.jsonl`、`summaries/`、`archive/`（場景結束時封存不再活躍的場景快照與實體，移動不刪除）。回合末寫入前逐項核對受影響檔案皆已更新（含庫存與任務——物品得失、任務進度屬確定事實，與事件日誌同步）；寫入完成後以一行極簡 OOC 存檔確認告知玩家。
 
-主持每回合採**分層讀取**（current-scene → 主角 → 場景所列實體 → 最近事件與摘要；必要時才讀 archive／director），並在敘事前做**回應前實體核對**（誰在說話、此 NPC 依 `known_info` 知道嗎、此能力屬於哪個物品、事實還是推測、本回合是否真的改變狀態）——對治長局中物品能力錯置與 NPC 知識漂移。實體紀錄只能因玩家明確行動、骰判定、主持揭露或已確認劇情結果修改；**推測不升格**：未確認者記 `unknown_capabilities`／`open_questions`，經事件確認才移入 confirmed 欄位。NPC 的未揭露祕密放 `game/private/director/npcs/`（公私分層不破）。schema 不假設唯一主角（實體 `holder`、`visibility` 皆以 id 指稱），為未來多人擴充預留，但多人流程未實作、需先重議 §1 定位。
+主持每回合採**分層讀取**（current-scene → 主角 → 場景所列實體 → 最近事件與摘要；必要時才讀 archive／director），並在敘事前做**回應前實體核對**（誰在說話、此 NPC 依 `known_info` 知道嗎、此能力屬於哪個物品、事實還是推測、本回合是否真的改變狀態）——對治長局中物品能力錯置與 NPC 知識漂移。實體紀錄只能因玩家明確行動、骰判定、主持揭露或已確認劇情結果修改；**推測不升格**：未確認者記 `unknown_capabilities`／`open_questions`，經事件確認才移入 confirmed 欄位。NPC 的未揭露祕密放 `game/private/director/npcs/`（公私分層不破）。schema 不假設唯一主角（實體 `holder`、`visibility` 皆以 id 指稱），為未來多人擴充預留；多人方向已於 0.6.0 定案（見 §1 定位段與 `PROJECT-PLAN.md`〈階段 6〉多人項），多人流程本身仍未實作。
 
 採單一主持寫入者原則。狀態檔應具有 `revision` 和 `updated_at`，寫入前重新讀取；日誌採追加式，另設修正紀錄而非覆寫歷史。玩家可自行擲骰或採可審計的擲骰格式與來源；發行包附輸出契約相同的 Node 與 Python 擲骰工具，供主持端依環境可用性擇一呼叫，無任何工具可用且玩家不自擲時，AI 自骰為最終降級，必須據實標記 `source: "ai"`。
 

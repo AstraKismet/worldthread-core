@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string]$PackagePath = 'dist/worldthread-solo-adventure-template'
+    [string]$PackagePath = 'dist/worldthread-core'
 )
 
 $ErrorActionPreference = 'Stop'

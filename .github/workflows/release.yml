@@ -34,7 +34,7 @@ jobs:
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
         shell: pwsh
         run: |
-          $manifest = Get-Content -Raw dist/worldthread-solo-adventure-template/template.json | ConvertFrom-Json
+          $manifest = Get-Content -Raw dist/worldthread-core/template.json | ConvertFrom-Json
           $expected = "v$($manifest.version)"
           if ($env:TAG_NAME -ne $expected) {
             throw "Tag $($env:TAG_NAME) does not match template.json version ($expected)."
@@ -53,8 +53,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          $manifest = Get-Content -Raw dist/worldthread-solo-adventure-template/template.json | ConvertFrom-Json
-          $zipPath = "artifacts/worldthread-solo-adventure-template-v$($manifest.version).zip"
+          $manifest = Get-Content -Raw dist/worldthread-core/template.json | ConvertFrom-Json
+          $zipPath = "artifacts/worldthread-core-v$($manifest.version).zip"
           $ghArgs = @('release', 'create', $env:TAG_NAME,
                       $zipPath, "$zipPath.sha256",
                       '--title', "Worldthread $($env:TAG_NAME)",

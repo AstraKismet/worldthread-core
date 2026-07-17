@@ -2,7 +2,7 @@
 
 Worldthread（織世）是一個用來單人遊玩 TRPG 的配置範本。它讓具備資料夾讀寫能力的 AI 服務，以文字或語音轉寫主持長期戰役；使用者只需放入自己有權使用的規則、世界、角色與劇本素材，即可初始化並遊玩。
 
-本儲存庫是**範本的開發來源**。給一般使用者解壓、開局時閱讀的文件位於發行包中：[`dist/worldthread-solo-adventure-template/README.md`](dist/worldthread-solo-adventure-template/README.md)。
+本儲存庫是**範本的開發來源**。給一般使用者解壓、開局時閱讀的文件位於發行包中：[`dist/worldthread-core/README.md`](dist/worldthread-core/README.md)。
 
 ## 如何取得與開始遊玩
 
@@ -10,26 +10,26 @@ Worldthread（織世）是一個用來單人遊玩 TRPG 的配置範本。它讓
 
 ### 方式一：下載發行版（建議）
 
-1. 到本儲存庫的 [Releases 頁面](https://github.com/AstraKismet/worldthread-solo-adventure-template/releases)，下載最新版的 `worldthread-solo-adventure-template-vX.Y.Z.zip`（以及同名 `.sha256` 檔）。
+1. 到本儲存庫的 [Releases 頁面](https://github.com/AstraKismet/worldthread-core/releases)，下載最新版的 `worldthread-core-vX.Y.Z.zip`（以及同名 `.sha256` 檔）。
 2. （建議）驗證下載完整性，比對輸出與 `.sha256` 檔內容：
 
    ```powershell
    # Windows PowerShell
-   Get-FileHash .\worldthread-solo-adventure-template-vX.Y.Z.zip -Algorithm SHA256
+   Get-FileHash .\worldthread-core-vX.Y.Z.zip -Algorithm SHA256
    ```
 
    ```sh
    # macOS / Linux
-   shasum -a 256 -c worldthread-solo-adventure-template-vX.Y.Z.zip.sha256
+   shasum -a 256 -c worldthread-core-vX.Y.Z.zip.sha256
    ```
 
-3. 解壓縮到你想放戰役的位置，會得到一個 `worldthread-solo-adventure-template/` 資料夾。
+3. 解壓縮到你想放戰役的位置，會得到一個 `worldthread-core/` 資料夾。
 4. 閱讀資料夾內的 `README.md`，照「三分鐘開始」開局。
 
 ### 方式二：從原始碼取得
 
 1. 點 GitHub 頁面右上的 **Code ▾ → Download ZIP**，或 `git clone` 本儲存庫。
-2. 把 [`dist/worldthread-solo-adventure-template/`](dist/worldthread-solo-adventure-template/) 整個資料夾**複製到儲存庫外**你想放戰役的位置——不要直接在儲存庫裡開戰役，真實戰役狀態不屬於這裡。
+2. 把 [`dist/worldthread-core/`](dist/worldthread-core/) 整個資料夾**複製到儲存庫外**你想放戰役的位置——不要直接在儲存庫裡開戰役，真實戰役狀態不屬於這裡。
 3. 之後與方式一相同：讀複製出來的 `README.md`，照「三分鐘開始」開局。
 
 ### 需求
@@ -39,7 +39,7 @@ Worldthread（織世）是一個用來單人遊玩 TRPG 的配置範本。它讓
 
 ### 下一步
 
-- 想放入自己的規則書（含 PDF）？先讀發行包內的 [`ADDING-RULEBOOKS.md`](dist/worldthread-solo-adventure-template/ADDING-RULEBOOKS.md)。
+- 想放入自己的規則書（含 PDF）？先讀發行包內的 [`ADDING-RULEBOOKS.md`](dist/worldthread-core/ADDING-RULEBOOKS.md)。
 - 想跑含謎底的冒險模組又不想劇透自己？同一份文件的「盲拆流程」就是為此設計的。
 
 ## 設計目標
@@ -67,7 +67,7 @@ CI（封裝驗證與擲骰工具契約測試）在 Pull Request 與推送 `main`
 
 ```text
 .
-├─ dist/worldthread-solo-adventure-template/  # 唯一可發行內容
+├─ dist/worldthread-core/  # 唯一可發行內容
 │  ├─ README.md                               # 玩家／使用者入口
 │  ├─ ADDING-RULEBOOKS.md                     # 放入自有規則書的指南
 │  ├─ LICENSE                                 # MIT 授權
@@ -100,15 +100,15 @@ CI（封裝驗證與擲骰工具契約測試）在 Pull Request 與推送 `main`
 
 ```powershell
 git status --short
-Get-ChildItem -Recurse dist/worldthread-solo-adventure-template
+Get-ChildItem -Recurse dist/worldthread-core
 ```
 
 ## 開發與發行原則
 
-`dist/worldthread-solo-adventure-template/` 是唯一封裝來源；不要從儲存庫根目錄建立玩家 ZIP。公開版本只在該資料夾的 `template.json` 中定義，並採 SemVer（首版為 `0.1.0`）；Git tag 固定為 `v<版本號>`，推送 tag 即觸發發行流程。
+`dist/worldthread-core/` 是唯一封裝來源；不要從儲存庫根目錄建立玩家 ZIP。公開版本只在該資料夾的 `template.json` 中定義，並採 SemVer（首版為 `0.1.0`）；Git tag 固定為 `v<版本號>`，推送 tag 即觸發發行流程。
 
 專案採 GitHub Flow：改動使用短生命週期分支與 Pull Request，`main` 永遠保持可發行。開發代理的共同規範見 [AGENTS.md](AGENTS.md)。
 
 ## 授權與內容
 
-發行包與其原創範例採 [MIT License](dist/worldthread-solo-adventure-template/LICENSE)。使用者自行加入的規則書、設定、網頁摘錄與戰役資料，仍由其原始授權或權利條件約束；請只加入有權使用與分享的內容。
+發行包與其原創範例採 [MIT License](dist/worldthread-core/LICENSE)。使用者自行加入的規則書、設定、網頁摘錄與戰役資料，仍由其原始授權或權利條件約束；請只加入有權使用與分享的內容。
