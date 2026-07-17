@@ -1,7 +1,11 @@
+---
+source: Fate Core System, Chapter 7 "Challenges, Contests, & Conflicts" (fate-srd.com via brunobord/fate-srd-markdown mirror)
+license: CC-BY-3.0
+attribution: Evil Hat Productions, LLC — verbatim required notice in this folder's README.md and the package THIRD-PARTY-NOTICES.md
+modified: images removed, navigation links flattened to plain text, chapters recombined, heading levels normalized, this frontmatter added; rules text verbatim
+---
+
 # Challenges, Contests, & Conflicts
-
-> Source & license: CC-BY 3.0 (Fate Core System, Evil Hat Productions). See this folder's `README.md` and the package `THIRD-PARTY-NOTICES.md`. Text only; no trademarked logos/fonts/dice images. Rules text verbatim; only links/images/heading levels were reformatted.
-
 
 ## Challenges, Contests, & Conflicts
 
@@ -28,7 +32,6 @@ We have three ways for you to zoom in on the action in Fate:
   * Challenges, when one or more characters try to achieve something dynamic or complicated
   * Contests, when two or more characters are competing for a goal
   * Conflicts, when two or more characters are trying to directly harm each other
-
 
 ## Challenges
 
@@ -184,9 +187,6 @@ Because you’re always up against passive opposition in a challenge, you’ll
 never use the attack action. If you’re in a situation where it seems
 reasonable to roll an attack, you should start setting up for a conflict.
 
-  *[GM]: Game Master
-
-
 ## Contests
 
 **Whenever two or more characters have mutually exclusive goals, but they aren’t trying to harm each other directly, they’re in a contest.** Arm wrestling matches, races or other sports competitions, and public debates are all good examples of contests.
@@ -337,9 +337,6 @@ If someone tries to attack in a contest, then they’re doing direct harm, and
 it ceases to be a contest. You should immediately stop what you’re doing and
 start setting up for a conflict instead.
 
-  *[GM]: Game Master
-
-
 ## Conflicts
 
 In a conflict, characters are actively trying to harm one another. It could be
@@ -359,9 +356,9 @@ challenges. Here are the steps:
   * Set the scene, describing the environment the conflict takes place in, creating situation aspects and zones, and establishing who’s participating and what side they’re on.
   * Determine the turn order.
   * Start the first exchange:
-    * On your turn, take an action and then resolve it.
-    * On other people’s turns, defend or respond to their actions as necessary.
-    * At the end of everyone’s turn, start again with a new exchange.
+* On your turn, take an action and then resolve it.
+* On other people’s turns, defend or respond to their actions as necessary.
+* At the end of everyone’s turn, start again with a new exchange.
 
 You know the conflict is over when everyone on one of the sides has
 **conceded** or been **taken out.**
@@ -443,8 +440,7 @@ are perfect as aspects. If the GM described the scene as being poorly lit, a
 player should be able to invoke the Shadows to help on a Stealth roll even if
 she hadn’t previously established it as an aspect. If the feature would
 require some intervention on the part of the characters in the scene to become
-aspect-worthy, then that’s the purview of the create an advantage action
-. Usually the
+aspect-worthy, then that’s the purview of the create an advantage action . Usually the
 barn doesn’t catch On Fire! without someone kicking over
 the lantern. Usually.
 
@@ -564,8 +560,7 @@ an advantage on your turn, because that’s the point of a conflict—take your
 opponent out, or set things up to make it easier to take your opponent out.
 
 GMs, if you have a lot of nameless NPCs in your scene, feel free to have them
-use passive opposition to keep your dice rolling down. Also, consider using
-mobs
+use passive opposition to keep your dice rolling down. Also, consider using mobs
 instead of individual NPCs to keep things simple.
 
 However, if you have a secondary objective in the conflict scene, you might
@@ -645,8 +640,7 @@ second saves in you before you’ve got to face the music.
 On your character sheet, you have a number of stress boxes, each with a
 different shift value. By default, all characters get a 1-point and a 2-point
 box. You may get additional, higher-value stress boxes depending on some of
-your skills (usually Physique and Will
-).
+your skills (usually Physique and Will ).
 
 When you take stress, check off a stress box with a value equal to the shift
 value of the hit. If that box is already checked, check off a higher value
@@ -960,8 +954,7 @@ your sword.”
 
 #### Further Clarification on Conceding vs getting Taken Out
 
-The following text is from a comment in the Fate Core Google+
-Community by
+The following text is from a comment in the Fate Core Google+ Community by
 Leonard Balsera.
 
 Concession, as a mechanic, specifically faces outward to the real people
@@ -1293,11 +1286,6 @@ Amanda just starts setting up for the chase.
 > Even though the PCs have some consequences and are due some fate points,
 they won’t get them until after they get away, or if they get caught.
 
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## Teamwork
 
 Characters can help each other out on actions. There are two versions of
@@ -1359,6 +1347,3 @@ invocations).
 of the week, I’m one of them", says Ryan Macklin, one of the authors of Fate.
 In his article Revising Teamwork in Fate he offers up some seasoned thinking on Teamwork
 Rules.
-
-  *[PC]: Player Character
-

@@ -1,7 +1,11 @@
+---
+source: Fate Core System, Chapter 10 "The Long Game" (fate-srd.com via brunobord/fate-srd-markdown mirror)
+license: CC-BY-3.0
+attribution: Evil Hat Productions, LLC — verbatim required notice in this folder's README.md and the package THIRD-PARTY-NOTICES.md
+modified: images removed, navigation links flattened to plain text, chapters recombined, heading levels normalized, this frontmatter added; rules text verbatim
+---
+
 # The Long Game
-
-> Source & license: CC-BY 3.0 (Fate Core System, Evil Hat Productions). See this folder's `README.md` and the package `THIRD-PARTY-NOTICES.md`. Text only; no trademarked logos/fonts/dice images. Rules text verbatim; only links/images/heading levels were reformatted.
-
 
 ## The Long Game
 
@@ -28,8 +32,7 @@ the first in a series of books. That’s when you have a campaign.
 
 When you have multiple arcs that are connected and told in a sequence, and
 that have an overarching story or theme that runs through all of them, you
-have a campaign. Campaigns are long, taking months or even years to complete
- (if you ever do).
+have a campaign. Campaigns are long, taking months or even years to complete  (if you ever do).
 
 Of course, that doesn’t need to be as scary as it might sound. Yes, a campaign
 is long and large and complex. You don’t, however, need to come up with the
@@ -42,7 +45,6 @@ that planning more than one arc at a time is often frustrating and futile.
 Planning the second arc of a campaign based on the events of the first arc,
 how it turned out, and what your players did, though...well, that can make for
 very satisfying play.
-
 
 ## Building An Arc
 
@@ -100,11 +102,6 @@ Then go through the same process of picking opposing NPCs, keeping in mind
 that their influence is supposed to be more far-reaching in an arc than in a
 single scenario.
 
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## Building A Campaign
 
 Again, the easiest way to do this is not to bother—just let your scenarios and
@@ -134,9 +131,6 @@ They’ll also need to make sure that none of their personal enemies or The Scar
 Triad can interfere with whatever they need to do in order to stop the doom.
 That gives her a good idea of what arcs are going to make up the campaign.
 
-  *[PC]: Player Character
-
-
 ## Advancement & Change
 
 Your characters aren’t going to remain static through the entire campaign. As
@@ -158,8 +152,7 @@ collectively called milestones.
 
 A milestone is a moment during the game where you have the chance to change or
 advance your character. They are called milestones because they usually happen
-at significant “break points” in the action of a game—the end of a session,
-the end of a scenario, and the end of a story arc, respectively.
+at significant “break points” in the action of a game—the end of a session, the end of a scenario, and the end of a story arc, respectively.
 
 Usually, those break points immediately follow some significant event in the
 story that justifies your character changing in response to events. You might
@@ -460,11 +453,6 @@ everyone’s still on the same page about the game. And GMs, remember—the more
 you give the players a chance to actively invest in the game world, the more
 it’ll pay off for you when you’re running the game.
 
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## World Advancement
 
 The characters are not the only ones who change in response to events in the
@@ -632,8 +620,3 @@ relevant after that. He was resentful and got in their way a few times, but he
 didn’t advance as they did so the PCs quickly outclassed him. The last time
 they had a run-in with Sir Hanley, they spanked him pretty hard and sent him
 running off to lick his wounds.
-
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-

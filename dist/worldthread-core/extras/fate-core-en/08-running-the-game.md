@@ -1,7 +1,11 @@
+---
+source: Fate Core System, Chapter 8 "Running the Game" (fate-srd.com via brunobord/fate-srd-markdown mirror)
+license: CC-BY-3.0
+attribution: Evil Hat Productions, LLC — verbatim required notice in this folder's README.md and the package THIRD-PARTY-NOTICES.md
+modified: images removed, navigation links flattened to plain text, chapters recombined, heading levels normalized, this frontmatter added; rules text verbatim
+---
+
 # Running the Game
-
-> Source & license: CC-BY 3.0 (Fate Core System, Evil Hat Productions). See this folder's `README.md` and the package `THIRD-PARTY-NOTICES.md`. Text only; no trademarked logos/fonts/dice images. Rules text verbatim; only links/images/heading levels were reformatted.
-
 
 ## Running the Game
 
@@ -58,15 +62,13 @@ what kind of personality he or she has, what’s on sale that day. You determine
 the weather when the PCs pull up to that dark cave.
 
 Fortunately, you don’t have to do this in a vacuum—you have a lot of tools to
-help you decide what would be appropriate. The process we outline in Game
-Creation should provide you with a
+help you decide what would be appropriate. The process we outline in Game Creation should provide you with a
 lot of context about the game you’re running, whether that’s in the form of
 aspects like current and impending issues, specific locations that you might
 visit, or NPCs with strong agendas that you can use.
 
 The PCs’ aspects also help you decide how to make the world respond to them.
-As stated in the Aspects and Fate Points section, the best aspects have a
-double edge to them. You have a lot of power to exploit that double edge by
+As stated in the Aspects and Fate Points section, the best aspects have a double edge to them. You have a lot of power to exploit that double edge by
 using event-based compels. That way, you kill two birds with one stone—you add
 detail and surprise to your game world, but you also keep the PCs at the
 center of the story you’re telling.
@@ -156,13 +158,7 @@ the prompts that give your group a reason to play this game to begin with—what
 problems they face, what issues they have to resolve, whom they’re opposing,
 and what they’ll have to go through in order to win the day.
 
-This job gets a whole section all on its own. See Scenes, Sessions, and
-Scenarios.
-
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
+This job gets a whole section all on its own. See Scenes, Sessions, and Scenarios.
 
 ## What To Do During Game Creation
 
@@ -272,11 +268,6 @@ or something else that falls outside the confines of the mundane? Either way,
 you’re going to want to figure that out now, before play begins. See the
 Extras section for more on what
 extras are and how you can make use of them in your game.
-
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
 
 ## What To Do During Play
 
@@ -517,8 +508,7 @@ You want to let the player do the work, not make them.
 
 ### Setting Difficulties
 
-When you’re setting passive opposition for an action, keep in mind the
-difficulty “break points” mentioned in Actions and Outcomes—anything that’s two or more
+When you’re setting passive opposition for an action, keep in mind the difficulty “break points” mentioned in Actions and Outcomes—anything that’s two or more
 steps above the PC’s skill is probably going to cost them fate points, and
 anything that’s two or more below the PC’s skill will be a breeze.
 
@@ -540,8 +530,7 @@ letting them shine in a particular moment and reminding us why this character
 is in the spotlight. You can also set lower difficulties during periods when
 you know the PCs are low on fate points, giving them the chance to take
 compels in order to get more. You should also set lower difficulties on
-anything that’s in the way of the PC’s getting to the main action of a scene
-—you don’t want
+anything that’s in the way of the PC’s getting to the main action of a scene —you don’t want
 them to get stalled at the evil overlord’s drawbridge if the point of the
 scene is confronting the evil overlord!
 
@@ -1168,8 +1157,7 @@ stress. Amanda checks his lone stress box and describes him sacrificing his
 shield to deflect the blast.
 
 Attacking a whole zone or everyone in a scene is something you’re going to
-have to judge by circumstance, like any other stretch use of a
-skill. Depending on the circumstances of your setting, this
+have to judge by circumstance, like any other stretch use of a skill. Depending on the circumstances of your setting, this
 might be a totally normal thing to do (for example, because everyone uses
 grenades and explosives), it might be impossible, or it might require a stunt.
 As long as you can justify it, you don’t need to apply any special rules—you
@@ -1211,8 +1199,7 @@ an Athletics contest. If it makes sense
 for the hazard in question to take a good deal of effort to surpass, give it a
 stress track and let it take a mild consequence or two. In other words, cleave
 to whatever makes narrative sense—if a fire is too big for a PC to put out,
-the scene should focus on avoidance or escape, and work like a challenge
-.
+the scene should focus on avoidance or escape, and work like a challenge .
 
 > Cynere, Landon, and Zird are exploring the Caverns of Kazak-Thorn, in
 pursuit of one of the demonic opponents that Cynere’s been so interested in
@@ -1373,11 +1360,6 @@ to say it does?”
 Your main goal should be to enlist the players as partners in bringing the
 drama, rather than being the sole provider.
 
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## Creating and Playing the Opposition (NPCs)
 
 One of your most important jobs as a GM is creating the NPCs who will oppose
@@ -1399,8 +1381,7 @@ First of all, keep in mind that you’re never obligated to give any NPC a full
 sheet like the ones the PCs have. Most of the time, you’re not going to need
 to know that much information, because the NPCs aren’t going to be the center
 of attention like the PCs are. It’s better to focus on writing down exactly
-what you need for that NPC’s encounter with the PCs, and then fill in the
-blanks on the fly (just like PCs can) if that NPC ends up becoming more
+what you need for that NPC’s encounter with the PCs, and then fill in the blanks on the fly (just like PCs can) if that NPC ends up becoming more
 important in the campaign.
 
 ### The NPC Types
@@ -1552,18 +1533,18 @@ them any more mechanically complex. If you want to, of course, go ahead and
 promote them to a supporting NPC. But otherwise, simply giving that courtier a
 name and a motivation doesn’t mean he can’t go down in one punch.
 
-**Tavern-Keeper (Average) **  
-Aspects: I Don’t Want No Trouble in My Place  
+**Tavern-Keeper (Average) **
+Aspects: I Don’t Want No Trouble in My Place
 Skills: Average (+1) Contacts
 
-￼￼**Trained**** Thug (Fair) **  
+￼￼**Trained**** Thug (Fair) **
 Aspects: The Ways of the Streets, Violent
-Criminal  
+Criminal
 Skills: Fair (+2) Fight, Average (+1) Athletics and Physique
 
-**Collegia Arcana Court Mage (Good)**  
+**Collegia Arcana Court Mage (Good)**
 Aspects: Haughty Demeanor, Devoted to the
-Arcane Arts  
+Arcane Arts
 Skills: Good (+3) Lore, Fair (+2) Deceive, Average (+1) Will and Empathy￼
 
 #### Supporting NPCs
@@ -1606,26 +1587,26 @@ desperate, conceding a conflict is a viable course of action. A PC concession
 here and there can raise the stakes and introduce new complications
 organically, both of which make for a more dramatic, engaging story.
 
-**Old Finn, Landon’s mentor **  
+**Old Finn, Landon’s mentor **
 Aspects: Retired Vinfeld Militia Captain, Too
-Old For This Shit, Landon’s Mentor  
+Old For This Shit, Landon’s Mentor
 Skills: Great (+4) Shoot, Good (+3) Fight, Fair (+2) Will, Average (+1)
-Athletics  
+Athletics
 Stunts: Battlefield Expert. Can use Fight to create advantages in large-scale
 tactical situations.
 
-**Teran the Swift, Thief Extraordinaire**  
+**Teran the Swift, Thief Extraordinaire**
 Aspects: Cutpurse and Scoundrel, I Just Can’t
-Help Myself   
+Help Myself
 Skills: Superb (+5) Burglary, Great (+4) Stealth, Good (+3) Lore, Fair (+2)
-Fight, Average (+1) Physique [Note: 3 physical stress boxes]  
+Fight, Average (+1) Physique [Note: 3 physical stress boxes]
 Stunts: Inside Man. +2 to Stealth in an indoor, urban environment.
 
-**Og the Strong **  
+**Og the Strong **
 Aspects: Og Smash!, Og Not Terribly
-Bright  
+Bright
 Skills: Fantastic (+6) Fight, Superb (+5) Physique [Note: 4 physical stress
-boxes, 1 extra mild consequence for physical conflicts], Great (+4) Athletics  
+boxes, 1 extra mild consequence for physical conflicts], Great (+4) Athletics
 Stunts: none
 
 #### Main NPCs
@@ -1674,7 +1655,7 @@ at Fantastic.
 Likewise, a particularly significant NPC might have more than five aspects to
 highlight their importance to the story.
 
-**Barathar, Smuggler Queen of the Sindral Reach **  
+**Barathar, Smuggler Queen of the Sindral Reach **
 Aspects:
 
   * Smuggler Queen of the Sindral Reach
@@ -1694,7 +1675,7 @@ Skills:
   * Fair (+2) Crafts and Stealth
   * Average (+1) Lore and Physique
 
-Stress: 3 physical boxes, 4 mental boxes  
+Stress: 3 physical boxes, 4 mental boxes
 Stunts:
 
   * **Takes One to Know One**. Use Deceive instead of Empathy to create an advantage in social situations.
@@ -1758,8 +1739,3 @@ well equipped to see through a clever deception, however, or handle a magical
 assault on his mind. Zird, on the other hand, is best threatened by the
 biggest, nastiest bruiser possible, someone who can strike at him before he
 has a chance to bring his magic to bear.
-
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-

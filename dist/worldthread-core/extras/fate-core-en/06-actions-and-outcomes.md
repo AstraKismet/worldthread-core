@@ -1,7 +1,11 @@
+---
+source: Fate Core System, Chapter 6 "Actions & Outcomes" (fate-srd.com via brunobord/fate-srd-markdown mirror)
+license: CC-BY-3.0
+attribution: Evil Hat Productions, LLC — verbatim required notice in this folder's README.md and the package THIRD-PARTY-NOTICES.md
+modified: images removed, navigation links flattened to plain text, chapters recombined, heading levels normalized, this frontmatter added; rules text verbatim
+---
+
 # Actions & Outcomes
-
-> Source & license: CC-BY 3.0 (Fate Core System, Evil Hat Productions). See this folder's `README.md` and the package `THIRD-PARTY-NOTICES.md`. Text only; no trademarked logos/fonts/dice images. Rules text verbatim; only links/images/heading levels were reformatted.
-
 
 ## Actions & Outcomes
 
@@ -34,8 +38,7 @@ That’s when it’s time to take out the dice.
 
 > Cynere needs to bribe her way past the guards keeping her from entering the
 city of Thaalar. Amanda says she’ll do this as a straight-up overcome action,
-because the guards are nameless NPCs anyway and not really worth a conflict
-.
+because the guards are nameless NPCs anyway and not really worth a conflict .
 
 >
 
@@ -97,18 +100,12 @@ can’t provide proactive resistance (like if they’re unaware of what the PC i
 doing). Follow your gut—use the type of opposition that fits the circumstances
 or makes the scene more interesting.
 
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## Four Outcomes
 
 **When you roll the dice, either you’re going to fail, tie, succeed, or succeed with style.**
 
 Every roll you make in a Fate game results in one of four outcomes, generally
-speaking. The specifics may change a little depending on what kind of action
-you’re taking, but all the game
+speaking. The specifics may change a little depending on what kind of action you’re taking, but all the game
 actions fit this general pattern.
 
 ### Fail
@@ -200,11 +197,6 @@ otherwise just can’t decide what the difficulty should be, pick Fair (+2).
 It’s in the middle of a PC’s range of skills, so it provides a decent
 challenge for every skill level except Great (+4), and you want to give PCs a
 chance to show off their peak skill anyway.
-
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
 
 ## Four Actions
 
@@ -316,8 +308,7 @@ place. If the former, are you attaching that situation aspect to a character
 or to the environment?
 
 Opposition might be active or passive, depending on the circumstances. If your
-target is another character, their roll always counts as a defend action
-.
+target is another character, their roll always counts as a defend action .
 
 If you’re using create an advantage to make a new aspect…
 
@@ -428,8 +419,7 @@ opposition on an attack means you’ve caught your target unaware or otherwise
 unable to make a full effort to resist you, or the NPC isn’t important enough
 to bother with dice.
 
-In addition, passive or not, the opposition always counts as a defend
- action so you can
+In addition, passive or not, the opposition always counts as a defend  action so you can
 look at these two actions as being inexorably intertwined.
 
   * **When you fail at an attack**, you don’t cause any harm to your target. (It also means that your target succeeded on the defend action, which could get you saddled with other effects.)
@@ -527,7 +517,3 @@ and gets a +1, for a total of Great (+4). Ryan rolls for Zird and gets a +2,
 tying at Great (+4). Zird doesn’t have to deal with taking a hit, but he does
 grant Skortch a boost, which Amanda decides to call Momentarily
 Tripped Up.
-
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-

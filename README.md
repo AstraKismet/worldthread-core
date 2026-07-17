@@ -54,14 +54,15 @@ Worldthread（織世）是一個用來單人遊玩 TRPG 的配置範本。它讓
 
 ## 目前狀態
 
-目前版本為 `0.2.0`，發行內容：
+目前版本以 [`dist/worldthread-core/template.json`](dist/worldthread-core/template.json) 與 [Releases 頁面](https://github.com/AstraKismet/worldthread-core/releases) 為準。發行內容概要：
 
-- 可攜主持手冊、資料 schema、RAG 與語音協定；規則書使用指南與盲拆流程。
+- 可攜主持手冊、資料 schema、RAG 與語音協定；規則書使用指南與盲拆流程；發行包內建 AI 主持入口（AGENTS.md／CLAUDE.md）。
 - 三種預設說書人：溫和引路人、均衡織局者、風暴守望者。
 - 完全原創的低魔奇幻邊境謎案範例：「霧渡口的失竊鐘聲」。
+- `extras/` 規則範例庫：Fate Core／FAE 中英四套（CC-BY 3.0，擇一啟用）＋ Fate System Toolkit 設計參考（英文）。
 - 既有角色、共同創角流程、可複製初始狀態、無法寫檔時的降級格式，與可審計擲骰工具（Node 與 Python 雙實作，同種子輸出逐位元一致，由契約測試夾具鎖定）。
 
-CI（封裝驗證與擲骰工具契約測試）在 Pull Request 與推送 `main` 時自動執行；發行由 `v*` tag 觸發（重驗證 → ZIP＋SHA-256 → GitHub Release）。`main` 分支保護尚未啟用。
+CI（封裝驗證與擲骰工具契約測試）在 Pull Request 與推送 `main` 時自動執行；發行由 `v*` tag 觸發（重驗證 → ZIP＋SHA-256 → GitHub Release）。`main` 已啟用分支保護（必走 PR＋CI 綠才可合併）。
 
 ## 儲存庫結構
 
@@ -69,11 +70,14 @@ CI（封裝驗證與擲骰工具契約測試）在 Pull Request 與推送 `main`
 .
 ├─ dist/worldthread-core/  # 唯一可發行內容
 │  ├─ README.md                               # 玩家／使用者入口
+│  ├─ AGENTS.md / CLAUDE.md                   # AI 主持入口與行為規範
 │  ├─ ADDING-RULEBOOKS.md                     # 放入自有規則書的指南
-│  ├─ LICENSE                                 # MIT 授權
+│  ├─ LICENSE                                 # MIT 授權（框架與原創範例）
+│  ├─ THIRD-PARTY-NOTICES.md                  # 隨附第三方素材（Fate）授權標示
 │  ├─ template.json                           # 唯一公開版本來源
 │  ├─ protocol/                               # 平台中立的主持與資料協定
 │  ├─ tools/                                  # 玩家工具（擲骰、規則書轉檔提示詞）
+│  ├─ extras/                                 # 規則範例庫（Fate 中英四套＋Toolkit 設計參考）
 │  ├─ game/reference/                         # 原始規則、世界與範例素材
 │  ├─ game/private/director/                  # 僅主持人可讀的祕密與前線
 │  ├─ game/templates/                         # 可複製的狀態與說書人設定

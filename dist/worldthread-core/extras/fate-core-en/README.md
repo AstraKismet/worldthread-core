@@ -36,5 +36,8 @@ activation / replacement steps and dice notes live in [`../README.md`](../README
 
 > Fate™ and Fate Dice™ are trademarks of Evil Hat Productions, LLC.
 
-English text sourced from the CC-BY presentation at fate-srd.com. Full third-party
+English text sourced from the CC-BY presentation at fate-srd.com via the
+brunobord/fate-srd-markdown mirror. Each chapter file carries a YAML frontmatter
+block (`source`／`license`／`attribution`／`modified`) so RAG chunks built from it
+inherit provenance per `protocol/RAG-PROTOCOL.md`. Full third-party
 notices: [`../../THIRD-PARTY-NOTICES.md`](../../THIRD-PARTY-NOTICES.md).

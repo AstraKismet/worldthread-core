@@ -1,10 +1,11 @@
+---
+source: Fate Accelerated Edition (fate-srd.com via brunobord/fate-srd-markdown mirror)
+license: CC-BY-3.0
+attribution: Evil Hat Productions, LLC — verbatim required notice in this folder's README.md and the package THIRD-PARTY-NOTICES.md
+modified: images removed, navigation links flattened to plain text, chapters recombined, heading levels normalized, this frontmatter added; rules text verbatim
+---
+
 # Fate Accelerated Edition (SRD, English)
-
-> Source & license: CC-BY 3.0. This work is based on Fate Core System and Fate Accelerated Edition (found at http://www.faterpg.com), products of Evil Hat Productions, LLC, developed, authored, and edited by Leonard Balsera, Brian Engard, Jeremy Keller, Ryan Macklin, Mike Olson, Clark Valentine, Amanda Valentine, Fred Hicks, and Rob Donoghue, and licensed for our use under the Creative Commons Attribution 3.0 Unported license.
-> Fate™ and Fate Dice™ are trademarks of Evil Hat Productions, LLC.
-> Text only; no trademarked logos/fonts/dice images. See this folder's `README.md` and the package `THIRD-PARTY-NOTICES.md`.
-
-
 
 ## Get Started!
 
@@ -40,7 +41,6 @@ sided dice will work. If you're using regular dice, you read 5 or 6 as
   * **Tokens for fate points.** These can be poker chips, beads, pennies, or anything similar. Get a handful—about 30 or 40.
 
 Next, let’s talk about how to use Fate Accelerated to tell stories together.
-
 
 ## Telling Stories Together
 
@@ -107,12 +107,6 @@ choice.
 That’s how you tell great stories together—by not being afraid for your
 character to make mistakes, and by making choices that make the story more
 interesting for everyone at the table—not just you.
-
-  *[GM]: Game Master
-  *[FAE]: Fate Accelerated
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
 
 ## Who Do You Want To Be?
 
@@ -216,8 +210,7 @@ six approaches:
 
 Each approach is rated with a bonus.** Choose one at Good (+3), two at Fair
 (+2), two at Average (+1), and one at Mediocre (+0)**. You can improve these
-later. What each approach means and how you use them can be found in How to
-Do Stuff: Outcomes, Approaches, and Actions.
+later. What each approach means and how you use them can be found in How to Do Stuff: Outcomes, Approaches, and Actions.
 
 #### The Ladder
 
@@ -226,37 +219,37 @@ the result of a roll, difficulty ratings for simple checks, etc.
 
 Here’s the ladder:
 
-+8| Legendary  
----|---  
-+7| Epic  
-+6| Fantastic  
-+5| Superb  
-+4| Great  
-+3| Good  
-+2| Fair  
-+1| Average  
-0| Mediocre  
--1| Poor  
--2| Terrible  
-  
++8| Legendary
+---|---
++7| Epic
++6| Fantastic
++5| Superb
++4| Great
++3| Good
++2| Fair
++1| Average
+0| Mediocre
+-1| Poor
+-2| Terrible
+
 Your approaches can say a lot about who you are. Here are some examples:
 
-  * **The Brute**:  
+  * **The Brute**:
 Forceful +3, Careful and Flashy +2, Sneaky and Quick +1, Clever +0
 
-  * **The All-Star**:  
+  * **The All-Star**:
 Quick +3, Forceful and Flashy +2, Clever and Careful +1, Sneaky +0
 
-  * **The Trickster**:  
+  * **The Trickster**:
 Clever +3, Sneaky and Flashy +2, Forceful and Quick +1, Careful +0
 
-  * **The Guardian**:  
+  * **The Guardian**:
 Careful +3, Forceful and Clever +2, Sneaky and Quick +1, Flashy +0
 
-  * **The Thief**:  
+  * **The Thief**:
 Sneaky +3, Careful and Quick +2, Clever and Flashy +1, Forceful +0
 
-  * **The Swashbuckler**:  
+  * **The Swashbuckler**:
 Flashy +3, Quick and Clever +2, Forceful and Sneaky +1, Careful +0
 
 #### Stunts and Refresh
@@ -287,10 +280,6 @@ experienced member of your game group be your guide; if someone is new to the
 game and only takes one to start with, that’s what everyone should do. If
 you’re all experienced, and you want to start with more powerful characters,
 just take all three to start and off you go.
-
-  *[FAE]: Fate Accelerated
-  *[NPC]: Non-Player Character
-
 
 ## How To Do Stuff: Outcomes, Actions, and Approaches
 
@@ -335,9 +324,9 @@ Fate Dice in a set of four. Each die will come up as +,
 0, or -, and you add them
 together to get the total of the roll. For example:
 
--+0+ = +1  
-+-00 = 0  
-+++- = +2  
+-+0+ = +1
++-00 = 0
++++- = +2
 -000 = −1
 
 **Deck of Fate**: The Deck of Fate is a deck of cards that copies the statistical spread of Fate Dice. You can choose to use them instead of dice—either one works great.
@@ -519,13 +508,7 @@ applies, add that too. That’s your total. Compare it to what your opponent
 
 ### Decide Whether to Modify the Roll
 
-Finally, decide whether you want to alter your roll by invoking aspects
-—this is discussed a lot in Aspects and Fate Points.
-
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
+Finally, decide whether you want to alter your roll by invoking aspects —this is discussed a lot in Aspects and Fate Points.
 
 ## Challenges, Contests, and Conflicts
 
@@ -648,11 +631,6 @@ take one of the four actions. Resolve
 the action to determine the outcome. The conflict is over when only one side
 has characters still in the fight.
 
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## Ouch! Damage, Stress, and Consequences
 
 When you’re hit by an attack, the severity of the hit is the difference
@@ -758,7 +736,6 @@ point you may want to change the name of the aspect to better fit what’s going
 on in the story. For instance, after you get some medical help,
 Painful Broken Leg might make more sense if you change it
 to Hobbling on Crutches.
-
 
 ## Aspects & Fate Points
 
@@ -945,11 +922,6 @@ your character’s life more interesting and get you fate points—so it’s oka
 that one’s a little more one-dimensional, but other character and situation
 aspects should be double-edged.
 
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## Stunts
 
 **Stunts** are tricks, maneuvers, or techniques your character has that change how an approach works for your character. Generally this means you get a bonus in certain situations, but sometimes it gives you some other ability or characteristic. A stunt can also reflect specialized, high-quality, or exotic equipment that your character has access to that gives them a frequent edge over other characters.
@@ -1008,14 +980,12 @@ started.
 
 These templates exist to give you an idea of how stunts should be constructed,
 but don’t feel constrained to follow them exactly if you have a good idea. If
-you’d like to read more about the construction of stunts, see Skills and
-Stunts" ) in Fate Core.
+you’d like to read more about the construction of stunts, see Skills and Stunts" ) in Fate Core.
 
 #### Tool for Stunt Inspiration
 
 If you're having trouble coming up with a stunt, give the Stuntmaker a go. It will generate random Fate Core style stunts to
 inspire you! (Just be sure to vet them with the table before using them.)
-
 
 ## Getting Better at Doing Stuff: Character Advancement
 
@@ -1095,10 +1065,6 @@ and a minor milestone. In addition, you may doall of the following:
 
   * Take an additional point of refresh, which you may immediately use to purchase a stunt if you wish.
   * Rename your character’s high concept (optional).
-
-  *[FAE]: Fate Accelerated
-  *[NPC]: Non-Player Character
-
 
 ## Being the Gamemaster
 
@@ -1244,16 +1210,10 @@ Bad (-2) at: Thinking ahead, fighting when outnumbered
 
 Stress: O O (4 thugs)
 
-Fate Core has a way of handling this, called mobs (see the “Creating the
-Opposition" )” section of the Running the Game section in
+Fate Core has a way of handling this, called mobs (see the “Creating the Opposition" )” section of the Running the Game section in
 Fate Core). Feel free to use that option if you prefer. Note that it may lead
 to very strong mobs, unless you start with extremely weak mooks—if you want to
 give your PCs a serious challenge, that could be one way to do it.
-
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
 
 ## Example Characters
 
@@ -1468,4 +1428,3 @@ Moderate (4):
 Severe (6):
 
 REFRESH: 3
-

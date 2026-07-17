@@ -1,7 +1,11 @@
+---
+source: Fate Core System, Chapter 11 "Extras" (fate-srd.com via brunobord/fate-srd-markdown mirror)
+license: CC-BY-3.0
+attribution: Evil Hat Productions, LLC — verbatim required notice in this folder's README.md and the package THIRD-PARTY-NOTICES.md
+modified: images removed, navigation links flattened to plain text, chapters recombined, heading levels normalized, this frontmatter added; rules text verbatim
+---
+
 # Extras
-
-> Source & license: CC-BY 3.0 (Fate Core System, Evil Hat Productions). See this folder's `README.md` and the package `THIRD-PARTY-NOTICES.md`. Text only; no trademarked logos/fonts/dice images. Rules text verbatim; only links/images/heading levels were reformatted.
-
 
 ## Extras
 
@@ -47,10 +51,6 @@ Extras extend the Bronze rule even further.
 
 If you're looking for a little more guidance with the Bronze Rule, check out
 "The Limitations of the Bronze Rule" by Ryan Macklin.
-
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-
 
 ## Creating An Extra
 
@@ -271,8 +271,7 @@ or other supernatural effects.
 
 ### Extras and Advancement
 
-Extras advance a lot like their base elements do, according to the milestones
- in The Long Game. That
+Extras advance a lot like their base elements do, according to the milestones  in The Long Game. That
 gives us a set of base guidelines:
 
   * An extra’s aspect can change at any minor milestone, or at a major milestone if it’s tied into your high concept.
@@ -282,10 +281,6 @@ gives us a set of base guidelines:
 Of course many extras use more than one element. It is recommended that you
 allow the players in your game to develop the separate pieces of such an extra
 at different milestones, in order to minimize confusion during play.
-
-  *[GM]: Game Master
-  *[PC]: Player Character
-
 
 ## More Examples of Extras
 
@@ -406,11 +401,11 @@ who practice kung-fu._
 
 ##### Extra: Energy Blast
 
-**Costs**: 2 points of refresh  
+**Costs**: 2 points of refresh
 You can use Shoot to blast other people with energy, without needing a gun or
 other implement. You have free rein to decide what your blast is like, whether
 it’s some elemental force or just undefined bolts of light. (This doesn’t cost
-refresh, because you can already use Shoot for attacks.)  
+refresh, because you can already use Shoot for attacks.)
 You get +2 when using your energy blasts to make attacks or create advantages,
 and they hit for Weapon:2. If your setting has mundane weapons, this power has
 a Weapon value that’s 2 higher than the strongest mundane weapons available.
@@ -425,11 +420,11 @@ to all bonuses.
 
 ##### Extra: Super-Speed
 
-**Costs**: 3 points of refresh  
+**Costs**: 3 points of refresh
 You always go first in a conflict exchange. If someone else in the conflict
-has Super-Speed, compare skills as normal.  
+has Super-Speed, compare skills as normal.
 You take a +2 on all defense rolls with Athletics, or in contests relying
-purely on speed.  
+purely on speed.
 Except for absolute barriers like solid walls, you ignore all situation
 aspects that impede movement, and can place yourself in any zone you want at
 the start of every conflict exchange, because you had enough time to get
@@ -437,15 +432,15 @@ there.
 
 ##### Extra: Super-Resilience
 
-**Costs**: 1–3 refresh  
+**Costs**: 1–3 refresh
 You have Armor:2 on any defense roll against physical damage. Each additional
 point of refresh adds 2 to that total.
 
 ##### Extra: X-Ray Vision
 
-**Costs**: 2 refresh  
+**Costs**: 2 refresh
 You don’t roll Notice or Investigate actions if the object of your search is
-hidden behind an opaque object—just assume you automatically succeed.  
+hidden behind an opaque object—just assume you automatically succeed.
 This also helps you stay hidden, because you can see when people are looking
 for you and where they are. +2 to Stealth to avoid detection.
 
@@ -512,31 +507,31 @@ invokes.
 
 ##### Extra: Demonbane, The Enchanted Sword
 
-**Permissions**: Finding the sword during the game  
-**Costs**: None  
+**Permissions**: Finding the sword during the game
+**Costs**: None
 The sword Demonbane has an aspect called Slayer of Demon-Kind. If you are the
 sword’s bearer, you can invoke this aspect when fighting or opposing demons.
 You may also be subject to a compel due to the sword’s enchantment; it
 continually pushes its bearers to destroy demons with total abandon, and may
 cause you to lose sight of other objectives, prevent you from escaping a
-demon’s notice, or other complications.  
+demon’s notice, or other complications.
 In addition, invoking the sword’s aspect has another pair of special effects:
 it can banish any nameless NPC demon instantly, with no conflict or contest,
 and it can reveal the presence of a concealed demon under any circumstances.
 
 ##### Extra: Brace Jovannich’s Dueling Pistol
 
-**Permissions**: Possessing the aspect The Legacy of Brace  
-**Costs**: One aspect slot (for the permission aspect) and one point of refresh  
+**Permissions**: Possessing the aspect The Legacy of Brace
+**Costs**: One aspect slot (for the permission aspect) and one point of refresh
 Brace Jovannich is the most feared, most respected gunfighter the world of
 Aedeann has ever known. His gun, known worldwide for the slaying and maiming
 of hundreds, is yours now. Only you know why you don’t just throw it in a
-canal and save yourself the trouble of its reputation.  
+canal and save yourself the trouble of its reputation.
 Prepare for compels on that aspect when people recognize the gun and require
 proof that you’re worthy of it, vengeance for the wrongs it’s been a part of,
 or other kinds of unwanted attention. On the other hand, besides the obvious
 combat benefits, you can invoke the aspect when you’re using Brace’s fearsome
-reputation to your advantage.  
+reputation to your advantage.
 The pistol gives you a +2 bonus to any Shoot attack made in a one-on-one duel.
 This is formal duels, not just singling someone out in a normal gunfight—you
 challenge or get challenged by someone, there are seconds, etc., etc. If
@@ -567,7 +562,7 @@ your niche will probably go really bad for you.
 
 ##### Extra: Interface
 
-**Permissions**: Possession of an interface package (assumed if you take the skill)  
+**Permissions**: Possession of an interface package (assumed if you take the skill)
 **Costs**: Skill ranks
 
 The Interface skill allows you interact with computers and teched-up objects
@@ -585,7 +580,7 @@ bar brawl. Of course, that means the machine can also do that stuff to you.
 
 ##### Extra: Media
 
-**Permissions**: Choosing “The Media” archetype at character creation  
+**Permissions**: Choosing “The Media” archetype at character creation
 **Costs**: Skill ranks and refresh, for associated stunts
 
 Others can spread gossip and rumors, but you have your finger on the pulse of
@@ -622,7 +617,7 @@ where that matters, like feudal Japan.
 
 ##### Extra: Resources, Revisited
 
-**Permissions**: None, anyone can take the skill  
+**Permissions**: None, anyone can take the skill
 **Costs**: Skill ranks
 
 At creation, all characters get a special mild (A 20-spot From a
@@ -665,9 +660,9 @@ invest collectively in one awesome ship.
 
 ##### Extra: _The Galerider_
 
-**Permissions**: None; understood as part of the game’s conceit  
-**Costs**: Skill ranks, refresh, and aspect slots, invested by several characters  
-**Aspects**: Fastest Ship in the Fleet, Hidden Cargo Compartments, Lord Tamarin Wants To Sink Her  
+**Permissions**: None; understood as part of the game’s conceit
+**Costs**: Skill ranks, refresh, and aspect slots, invested by several characters
+**Aspects**: Fastest Ship in the Fleet, Hidden Cargo Compartments, Lord Tamarin Wants To Sink Her
 **Skills**: (representing the ship’s crew; PCs can use their own skills if higher)
 
 Good (+3) Notice
@@ -684,7 +679,7 @@ get to build a separate character sheet for their nation state.
 
 ##### Extra: The Plenary of Ghiraul
 
-**Permissions**: None; assumed as part of the game’s premise  
+**Permissions**: None; assumed as part of the game’s premise
 **Costs**: A special pool of aspects, skill ranks, and stunts
 
 This small nation-state is known for its vast spy network and laws which
@@ -820,22 +815,15 @@ discover what you need to know through magic. If someone is suffering a deep,
 dark depression that no normal care can address, create an advantage with
 Change to alter their mood.
 
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## Feedback Heroes
 
 3Jane, John A, Scott Acker, Jordan Adams, Ryan Aech, Dan Alexander, Danny
 Alexander, Jens Alfke, Carl Anderson, Alexandre Antonov, Devon Apple, Mark
-Arndt, Arrghus, Michael Atlin, Wille Backman, Kevin Bates, J B Bell, Richard
-Bellingham, Garrison Benson, Michael R.
+Arndt, Arrghus, Michael Atlin, Wille Backman, Kevin Bates, J B Bell, Richard Bellingham, Garrison Benson, Michael R.
 Bernstein, Billchuck, Don Bisdorf, Peter
 Blake, Ron Blessing, Adam Blinkinsop, bodhranist, McKay Bonham, Jérémie
 “Blacky” Bouillon, Brett Bowen, Michael Bowman, Guy Bowring, Ezra Bradford,
-Mick Bradley, Fabrice Breau, Jean-Baptiste Breton, Bill Burdick, Francisco
-Bustos, Jason Campbell, Sean
+Mick Bradley, Fabrice Breau, Jean-Baptiste Breton, Bill Burdick, Francisco Bustos, Jason Campbell, Sean
 Carroll, Nick Carter, Richard Chilton, Krzysztof Chyla, Coboney, Bill Collins,
 Cameron Corniuk, Danni Coy, Creature, cthos, Josh Culbertson, Patrick Curtin,
 Carsten Damm, Darryl, James Dawsey, Thomas Deeny, Martin Dickson, Rob
@@ -874,11 +862,9 @@ David Thackaberry, John Tobin, Tom X. Tobin, Alan Tsang, Joshua Turton, Carrie
 Ulrich, Shea Lafayette Valentine, Leroy Van Camp III, Kevin Veale, Paul
 Vermeren, Nathan W., Ralf Wagner, Josh Ward, John Weber, Greg Weir, Marko
 Wenzel, Beat Wieland, Mitch A. Williams, Jan Willms, Gordon Wincott, Xavon
-Wrentaile, wusemajor, Savage Yinn, Kris Zaragoza, Jacob Z-Dawg
-Zimmerman, zombiecalypse
+Wrentaile, wusemajor, Savage Yinn, Kris Zaragoza, Jacob Z-Dawg Zimmerman, zombiecalypse
 
 ### ​Your Name on the List?
 
 If your name is on the list above and you'd like to have it linked to you,
 just tell us via the Contact Us form.
-

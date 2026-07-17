@@ -1,7 +1,11 @@
+---
+source: Fate Core System, Chapter 1 "The Basics" (fate-srd.com via brunobord/fate-srd-markdown mirror)
+license: CC-BY-3.0
+attribution: Evil Hat Productions, LLC — verbatim required notice in this folder's README.md and the package THIRD-PARTY-NOTICES.md
+modified: images removed, navigation links flattened to plain text, chapters recombined, heading levels normalized, this frontmatter added; rules text verbatim
+---
+
 # The Basics
-
-> Source & license: CC-BY 3.0 (Fate Core System, Evil Hat Productions). See this folder's `README.md` and the package `THIRD-PARTY-NOTICES.md`. Text only; no trademarked logos/fonts/dice images. Rules text verbatim; only links/images/heading levels were reformatted.
-
 
 ## Basics
 
@@ -38,11 +42,7 @@ _Legends of Anglerre_, also use the Fate system.
 
 This is a new version of Fate, which was developed to update and streamline
 the system. You’ll recognize some of what’s in here, but some rules have
-changed as have some terminology. You can find a guide to all the changes
- that have been made.
-
-  *[GM]: Game Master
-
+changed as have some terminology. You can find a guide to all the changes  that have been made.
 
 ## What You Need To Play
 
@@ -65,7 +65,6 @@ sided dice will work. If you’re using regular dice, you read 5 or 6 as
 
   * **Tokens to represent fate points**. Poker chips, glass beads, or anything similar will work. You’ll want to have at least thirty or more of these on hand, just to make sure you have enough for any given game. You can use pencil marks on your character sheet in lieu of tokens, but physical tokens add a little more fun.
   * **Index cards.** These are optional, but they’re very handy for recording aspects during play.
-
 
 ## Players & Gamemasters
 
@@ -93,11 +92,6 @@ a wizard who, by contrast, has absolutely no love for swords.
 Check out Game Creation to see how
 this game came about. There are character sheets for the example PCs for you
 to check out. (Currently no example character sheets. -Site Editor)
-
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
 
 ## The Character Sheet
 
@@ -196,9 +190,6 @@ points you get at the start of every game session to spend for your character.
 Your total resets to this number unless you had more fate points at the end of
 the last session.
 
-  *[PC]: Player Character
-
-
 ## Taking Action, Dice, & The Ladder
 
 Players, some of the things you’ll do in a Fate game require you to **roll
@@ -226,9 +217,9 @@ and +2.
 
 Here are some sample dice totals:
 
--+0+ = +1  
-+-00 =  
-+++- = +2  
+-+0+ = +1
++-00 =
++++- = +2
 -000 = −1
 
 The result on the dice isn’t your final total, however. If your character has
@@ -242,36 +233,36 @@ means? Glad you asked.
 
 For folks who love stats, here are the odds for rolling certain results.
 
-Result| Odd of rolling| Odd of rolling this or higher  
----|---|---  
--4| 1.23%| 100%  
--3| 4.94%| 98.77%  
--2| 12.35%| 93.83%  
--1| 19.75%| 81.48%  
-0| 23.46%| 61.73%  
-1| 19.75%| 38.27%  
-2| 12.35%| 18.52%  
-3| 4.94%| 6.17%  
-4| 1.23%| 1.23%  
-  
+Result| Odd of rolling| Odd of rolling this or higher
+---|---|---
+-4| 1.23%| 100%
+-3| 4.94%| 98.77%
+-2| 12.35%| 93.83%
+-1| 19.75%| 81.48%
+0| 23.46%| 61.73%
+1| 19.75%| 38.27%
+2| 12.35%| 18.52%
+3| 4.94%| 6.17%
+4| 1.23%| 1.23%
+
 ### The Ladder
 
 Fate uses a ladder of adjectives and numbers to rate the dice results, a
 character’s skills and the result of a roll.Here’s the ladder:
 
-+8| Legendary  
----|---  
-+7| Epic  
-+6| Fantastic  
-+5| Superb  
-+4| Great  
-+3| Good  
-+2| Fair  
-+1| Average  
-+0| Mediocre  
--1| Poor  
--2| Terrible  
-  
++8| Legendary
+---|---
++7| Epic
++6| Fantastic
++5| Superb
++4| Great
++3| Good
++2| Fair
++1| Average
++0| Mediocre
+-1| Poor
+-2| Terrible
+
 It doesn’t really matter which side of the ladder you use—some people remember
 the words better, some people remember the numbers better, and some people
 like using both. So you could say, “I got a Great,” or “I got a +4,” and it
@@ -298,8 +289,7 @@ lot, something extra happens (like doing more harm to your opponent in a
 fight).
 
 If you don’t beat the opposition, either you don’t succeed at your action, you
-succeed at a cost, or something else happens to complicate the outcome
-. Some game actions have special
+succeed at a cost, or something else happens to complicate the outcome . Some game actions have special
 results when you fail at the roll.
 
 When you beat a roll or a set obstacle, the difference between your opposition
@@ -340,10 +330,6 @@ though—you’ll still have to deal with it on your way out.”
 
 > Lenny replies, “Just another day at the office,” and Landon continues his
 trek through the catacombs.
-
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-
 
 ## Fate Points
 
@@ -439,8 +425,7 @@ surprise.
 
 ### Compels
 
-Sometimes (in fact, probably often), you’ll find yourself in a situation
-where an aspect complicates your character’s life and creates unexpected
+Sometimes (in fact, probably often), you’ll find yourself in a situation where an aspect complicates your character’s life and creates unexpected
 drama. When that happens, the GM will suggest a potential complication that
 might arise. This is called a compel.
 
@@ -503,10 +488,6 @@ Ictherya, outlander.”
 
 > Lenny shakes his head. Amanda grins the grin of the devil.
 
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-
-
 ## Start Playing
 
 These are the basic things you need to know to play Fate. The following
@@ -518,6 +499,3 @@ how to get your game off the ground.
   * The Game Creation chapter takes you through the process of setting up your game, so that should probably be your next stop. Then Character Creation will show you how to make the characters you’ll play.
   * Players, you’ll eventually want to read Actions and Outcomes and The Long Game, to help you get a better handle on the nuts and bolts of doing stuff and developing your character during play.
   * GMs, you’re going to want to familiarize yourselves with the whole book, but Running the Game and Scenes, Sessions, and Scenarios are of particular importance to you.
-
-  *[GM]: Game Master
-

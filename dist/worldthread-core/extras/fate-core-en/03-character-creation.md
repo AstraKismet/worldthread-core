@@ -1,7 +1,11 @@
+---
+source: Fate Core System, Chapter 3 "Character Creation" (fate-srd.com via brunobord/fate-srd-markdown mirror)
+license: CC-BY-3.0
+attribution: Evil Hat Productions, LLC — verbatim required notice in this folder's README.md and the package THIRD-PARTY-NOTICES.md
+modified: images removed, navigation links flattened to plain text, chapters recombined, heading levels normalized, this frontmatter added; rules text verbatim
+---
+
 # Character Creation
-
-> Source & license: CC-BY 3.0 (Fate Core System, Evil Hat Productions). See this folder's `README.md` and the package `THIRD-PARTY-NOTICES.md`. Text only; no trademarked logos/fonts/dice images. Rules text verbatim; only links/images/heading levels were reformatted.
-
 
 ## Character Creation
 
@@ -41,9 +45,6 @@ stunts. Then you’re ready to play!
   * **Stunts:** Pick or invent three to five stunts.
   * **Refresh:** Determine how many fate points you start play with.
   * **Stress and Consequences:** Determine how much of a beating your character can take.
-
-  *[GM]: Game Master
-
 
 ## Your Character Idea
 
@@ -129,8 +130,7 @@ maybe someone else at the table can help you come up with an aspect. And if
 you’re still stuck, leave it for now—you’ll have plenty of time during play to
 refine it.
 
-And if you really need to, it’s okay to leave some blank. Look at Quick
-Character Creation for
+And if you really need to, it’s okay to leave some blank. Look at Quick Character Creation for
 more on leaving parts of your character sheet blank.
 
 High concepts can have overlap among the characters, as long as you have
@@ -320,10 +320,6 @@ That fits nicely.
 appropriately ridiculous wizardly name. Then he pauses for a moment before
 adding “…the Arcane,” because he sees Zird as the sort of guy who would demand
 to be known as “Zird the Arcane.”
-
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-
 
 ## The Phase Trio
 
@@ -581,11 +577,6 @@ only two, consider the following ideas:
 If you only have one player, skip phases two and three, leaving the aspects
 blank to be filled in during play.
 
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## Skills
 
 ### Pick and rate your character’s skills.
@@ -613,8 +604,7 @@ In this build of Fate, character creation was designed to be as quick and
 accessible as possible, so the pyramid is standard. If you want to use the
 columns, go ahead—you get 20 skill points.
 
-Skill columns didn’t completely go away. It’s just reserved for advancement
-.
+Skill columns didn’t completely go away. It’s just reserved for advancement .
 
 #### The Skill Cap
 
@@ -654,9 +644,6 @@ have them, or because he wants a positive score in them when everyone’s
 separated. That ends up being Fight, Resources, Contacts, and Notice.
 
 **Note:** a few skills have special benefits, notably those skills that affect the number of stress boxes and consequences you have available. If you know you want a certain number of those, put those skills on the pyramid first.
-
-  *[PC]: Player Character
-
 
 ## Stunts & Refresh
 
@@ -700,9 +687,6 @@ refresh means they’ll need to take several early in every session in order to
 have a decent supply (think _Die Hard_). Also, the higher your refresh, the
 more likely it is that players will buy stunts.
 
-  *[PC]: Player Character
-
-
 ## Stress & Consequences
 
 **Determine how much of a beating your character can take.**
@@ -734,8 +718,7 @@ injuries and traumas you can’t just shake off after the dust settles.
 
 ### Adding Tracks and Slots
 
-Certain skills and some stunts can add to these defaults. See the Skills and
-Stunts section for
+Certain skills and some stunts can add to these defaults. See the Skills and Stunts section for
 more on that. For the sake of quick reference, these are the skills in _Hearts
 of Steel_ that alter stress and consequences:
 
@@ -777,9 +760,6 @@ Will, though, is good for one bonus mental stress box.
 or above, each has the default number of consequences: one mild, one moderate,
 and one severe.
 
-  *[PC]: Player Character
-
-
 ## You’re All Set!
 
 At the end of this process, you should have a character with:
@@ -800,10 +780,6 @@ and turn those into thrilling scenarios for the players to experience.
 Players, check out the next section for more on how to use your aspects, or
 jump straight to Actions and Outcomes to learn more about how to use your skills to
 do stuff.
-
-  *[GM]: Game Master
-  *[PC]: Player Character
-
 
 ## Quick Character Creation
 
@@ -887,4 +863,3 @@ actually have it until you gain a fate point and spend it.
 
 You’ll also need to reduce your refresh by one for the next session for each
 extra stunt you take.
-

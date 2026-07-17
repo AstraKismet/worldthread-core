@@ -1,12 +1,15 @@
+---
+source: Fate Core System, Chapter 12 "Veteran's Guide" (fate-srd.com via brunobord/fate-srd-markdown mirror)
+license: CC-BY-3.0
+attribution: Evil Hat Productions, LLC — verbatim required notice in this folder's README.md and the package THIRD-PARTY-NOTICES.md
+modified: images removed, navigation links flattened to plain text, chapters recombined, heading levels normalized, this frontmatter added; rules text verbatim
+---
+
 # Veteran's Guide
-
-> Source & license: CC-BY 3.0 (Fate Core System, Evil Hat Productions). See this folder's `README.md` and the package `THIRD-PARTY-NOTICES.md`. Text only; no trademarked logos/fonts/dice images. Rules text verbatim; only links/images/heading levels were reformatted.
-
 
 ## Veteran's Guide
 
-This is a new version of Fate, which was developed by Evil Hat
-Productions to update and streamline
+This is a new version of Fate, which was developed by Evil Hat Productions to update and streamline
 the system. Here’s a guide to the major changes to the system from previous
 versions like _Spirit of the Century_ and _The Dresden Files Roleplaying
 Game_.
@@ -44,4 +47,3 @@ Game_.
 ### Extras
 
   * **These exist.** Whereas each previous Fate game had a specific way of dealing with powers and gadgets and stuff, now there are a variety of options for you to choose from (as befits the toolkit nature of the system).
-

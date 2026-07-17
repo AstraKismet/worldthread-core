@@ -1,7 +1,11 @@
+---
+source: Fate Core System, Chapter 9 "Scenes, Sessions, & Scenarios" (fate-srd.com via brunobord/fate-srd-markdown mirror)
+license: CC-BY-3.0
+attribution: Evil Hat Productions, LLC — verbatim required notice in this folder's README.md and the package THIRD-PARTY-NOTICES.md
+modified: images removed, navigation links flattened to plain text, chapters recombined, heading levels normalized, this frontmatter added; rules text verbatim
+---
+
 # Scenes, Sessions, & Scenarios
-
-> Source & license: CC-BY 3.0 (Fate Core System, Evil Hat Productions). See this folder's `README.md` and the package `THIRD-PARTY-NOTICES.md`. Text only; no trademarked logos/fonts/dice images. Rules text verbatim; only links/images/heading levels were reformatted.
-
 
 ## Scenes, Sessions, & Scenarios
 
@@ -22,10 +26,6 @@ scenarios.
   * Set Up The First Scene
   * Defining Scenes
   * The Scenario In Play
-
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
 
 ## Defining Scenarios
 
@@ -64,11 +64,6 @@ relate directly to the previous scenario or present a whole new problem.
   * Establish the Opposition
   * Set the First Scene
 
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## Find Problems
 
 Creating a scenario begins with finding a problem for the PCs to deal with. A
@@ -92,8 +87,7 @@ forefront of play.
 Because of all these aspects, you already have a ton of story potential
 sitting right in front of you—now, you just have to unlock it.
 
-You can look at an aspect-related problem as a very large-scale kind of event
-compel. The setup is a little more work, but the structure is
+You can look at an aspect-related problem as a very large-scale kind of event compel. The setup is a little more work, but the structure is
 similar—having an aspect suggests or implies something problematic for the PC
 or multiple PCs, but unlike a compel, it’s something they can’t easily resolve
 or deal with in the moment.
@@ -293,10 +287,6 @@ vengeance. Therefore, an attack on his hometown by Cult agents on the prowl
 for more indoctrinated servants as preparation for the End Times would
 probably be a big problem for him.
 
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## Ask Story Questions
 
 Now that you have a really grabby problem, you can flesh the situation out a
@@ -421,9 +411,6 @@ foreshadowing or to set up stuff you’re going to do in the following scenario.
 In fact, that’s exactly how you make strong arcs—you have a pile of related story questions,
 and you take two or three scenarios to answer them all.
 
-  *[PC]: Player Character
-
-
 ## Establish the Opposition
 
 You might have already come up with an NPC or group of NPCs who is/are
@@ -448,8 +435,7 @@ allows you to develop each NPC’s personality a bit more, making him more
 multi-dimensional as you reconcile his whole set of motives.
 
 For each NPC that you have, decide whether you need to make them a supporting
-or main. Stat them up according to the guidelines given in Running the Game
-.
+or main. Stat them up according to the guidelines given in Running the Game .
 
 > An Arcane Conspiracy: Opposition
 
@@ -530,10 +516,6 @@ When you’re establishing your NPCs for your scenario, you don’t have to have
 everything set in stone when you get to the table—whatever you don’t know, you
 can always establish by letting the advantages the players create become the
 NPCs’ aspects.
-
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
 
 ## Set Up The First Scene
 
@@ -652,10 +634,6 @@ you’ll be a wanted woman if you don’t sign—and you’re infamous enough th
 know no one’s going to believe how you came by them.” (2 fate points for
 Infamous Girl with Sword and Tempted by Shiny
 Things.)
-
-  *[GM]: Game Master
-  *[PC]: Player Character
-
 
 ## Defining Scenes
 
@@ -881,10 +859,6 @@ trial for crimes against creation? How about we start with your mom, ugly!”
 
 > Amanda tosses Lily a fate point. “Nice.”
 
-  *[GM]: Game Master
-  *[PC]: Player Character
-
-
 ## The Scenario In Play
 
 So, now you should be ready to begin: you have a problem that can’t be
@@ -1004,7 +978,3 @@ with the players.
 
 The end of a scenario usually triggers a significant milestone. When this
 happens, you should also see if the game world needs advancing too.
-
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-

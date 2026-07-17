@@ -32,3 +32,5 @@ Fate Core System 的繁體中文全文，依 CC-BY 3.0 合法收錄，拆為 12 
 > Fate™ and Fate Dice™ are trademarks of Evil Hat Productions, LLC.
 
 繁體中文譯文取自同好翻譯站 <https://sites.google.com/site/faterpg/>（譯者 Kika Asylum、ChengHan Jiang、洪偉），採**創用 CC 姓名標示 3.0 台灣**授權，再散布須一併保留譯者標示。完整第三方授權見 [`../../THIRD-PARTY-NOTICES.md`](../../THIRD-PARTY-NOTICES.md)。
+
+每章檔首附 YAML frontmatter（`source`／`license`／`attribution`／`modified`），RAG 分塊時依 `protocol/RAG-PROTOCOL.md` 由此繼承授權欄位。

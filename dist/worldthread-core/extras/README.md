@@ -8,6 +8,9 @@
 | 命運快速版 FAE | 繁體中文 | 單檔（輕量） | [`fate-accelerated-zh/`](fate-accelerated-zh/README.md) |
 | Fate Core System | English | 12 章＋索引 | [`fate-core-en/`](fate-core-en/README.md) |
 | Fate Accelerated Edition | English | 單檔 | [`fate-accelerated-en/`](fate-accelerated-en/README.md) |
+| Fate System Toolkit（設計參考） | English | 9 章＋索引 | [`fate-system-toolkit-en/`](fate-system-toolkit-en/README.md) |
+
+**Fate System Toolkit 的定位不同**：它不是可啟用的規則系統，而是官方的 Fate 改造設計指南（自製魔法系統、載具／怪物／超能等子系統、規模與財富機制）。**不要**把它複製進 `game/reference/rules/` 當作裁定系統；主持人在玩家想把特定題材機制壓到 Fate 上、或裁定無前例可循時，把它當設計參考引用（引用時記入 `ruling`）。下方「擇一啟用」規則不適用於它。無繁中譯本。
 
 ## 如何啟用／替換（本節為唯一權威說明，其他檔案指向這裡）
 
@@ -28,5 +31,7 @@
 ## 授權
 
 `extras/` 內全部採 **CC-BY 3.0**，只含文字、不含商標 logo／字型／骰面圖像。再散布須保留規定標示——完整條款見各子資料夾 `README.md` 與發行包根目錄 [`THIRD-PARTY-NOTICES.md`](../THIRD-PARTY-NOTICES.md)。
+
+每個內容檔檔首附 **YAML frontmatter**（`source`／`license`／`attribution`／`modified`）：依 `protocol/RAG-PROTOCOL.md`，主持人建 RAG 分塊時由此繼承授權欄位，使衍生快取仍可追溯來源與授權。
 
 關於本包為何把核心版拆成 12 章、快速版維持單檔（以及你自己的規則書該不該拆章），見 [`../ADDING-RULEBOOKS.md`](../ADDING-RULEBOOKS.md) 的〈拆章基準〉。

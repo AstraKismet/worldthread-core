@@ -1,6 +1,6 @@
 # 可攜檢索協定
 
-`game/rag/` 是可再生快取，不是唯一真相。每個分塊有穩定 `id`、`source`、`tags`、`visibility`（`public`、`player`、`director`）、`summary` 與 `updated_at`。選配鍵 `license`、`attribution`、`modified`：來源素材具授權標示義務（如 CC BY）時隨分塊保留，使衍生資料仍可追溯來源與授權。檢索只可在同等或更低權限範圍內進行：玩家回覆不得使用 director 分塊的祕密。
+`game/rag/` 是可再生快取，不是唯一真相。每個分塊有穩定 `id`、`source`、`tags`、`visibility`（`public`、`player`、`director`）、`summary` 與 `updated_at`。選配鍵 `license`、`attribution`、`modified`：來源素材具授權標示義務（如 CC BY）時隨分塊保留，使衍生資料仍可追溯來源與授權；來源檔檔首有 YAML frontmatter 同名欄位（如 `extras/` 隨附規則與依 `ADDING-RULEBOOKS.md` 轉出的檔案）時，分塊直接繼承之。檢索只可在同等或更低權限範圍內進行：玩家回覆不得使用 director 分塊的祕密。
 
 重建時掃描 `game/reference/`、`game/state/`、`game/private/director/`，保留來源相對路徑。先以關鍵字／標籤取得候選，再讀取原檔確認上下文。刪除 `game/rag/` 不得損失任何遊戲事實。
 

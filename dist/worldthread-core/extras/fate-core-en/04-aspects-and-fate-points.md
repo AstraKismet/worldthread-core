@@ -1,7 +1,11 @@
+---
+source: Fate Core System, Chapter 4 "Aspects & Fate Points" (fate-srd.com via brunobord/fate-srd-markdown mirror)
+license: CC-BY-3.0
+attribution: Evil Hat Productions, LLC — verbatim required notice in this folder's README.md and the package THIRD-PARTY-NOTICES.md
+modified: images removed, navigation links flattened to plain text, chapters recombined, heading levels normalized, this frontmatter added; rules text verbatim
+---
+
 # Aspects & Fate Points
-
-> Source & license: CC-BY 3.0 (Fate Core System, Evil Hat Productions). See this folder's `README.md` and the package `THIRD-PARTY-NOTICES.md`. Text only; no trademarked logos/fonts/dice images. Rules text verbatim; only links/images/heading levels were reformatted.
-
 
 ## Aspects & Fate Points
 
@@ -19,13 +23,9 @@ GMs and players, you both have a pool of points called fate points you can use t
 game. You represent these with tokens, as we mentioned in The Basics. Players,
 you start with a certain number of points every scenario, equal to your
 character’s refresh. You’ll also reset to your refresh rate if you ended a
-mid-scenario session with fewer fate points than your rate. GMs, you get a
-budget of fate points to spend in every scene.
+mid-scenario session with fewer fate points than your rate. GMs, you get a budget of fate points to spend in every scene.
 
 When your aspects come into play, you will usually spend or gain a fate point.
-
-  *[GM]: Game Master
-
 
 ## Types of Aspects
 
@@ -38,8 +38,7 @@ last.
 
 Game aspects are permanent fixtures of the game, hence the name. While they
 might change over time, they’re never going to go away. If you’ve already gone
-through game creation, you’ve already defined these—the current or impending
-issues that you came
+through game creation, you’ve already defined these—the current or impending issues that you came
 up with. They describe problems or threats that exist in the world, which are
 going to be the basis for your game’s story.
 
@@ -86,8 +85,7 @@ it’ll be very clear, and sometimes you’ll need to justify how you’re using
 aspect to make sense based on what’s happening in the scene. GMs, you’re the
 final arbiter on what claims on an aspect are valid.
 
-Sometimes situation aspects become obstacles that characters need to overcome
-. Other times they give
+Sometimes situation aspects become obstacles that characters need to overcome . Other times they give
 you justification to provide active opposition against someone else’s action.
 
 ### Consequences
@@ -116,8 +114,7 @@ it’s relevant and could help them out.
 
 #### A Clarification About Boosts from Ryan Macklin and Leonard Balsera
 
-The following was posted on Ryan Macklin's Web
-site for clearer
+The following was posted on Ryan Macklin's Web site for clearer
 language that shows the intent and utility of Boosts. The article also
 includes a bit of design history about boosts.
 
@@ -188,11 +185,6 @@ they’re often given names mislead you.
 
 “Fate Boosts Revisited” from ryanmacklin.com © 2014 Leonard Balsera and Ryan Macklin.
 
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## What Aspects Do
 
 In Fate, aspects do two major things: **they tell you what’s important about
@@ -250,10 +242,6 @@ individual, and you want to play that up, right? So when the opportunity comes
 up to make your character more awesome by invoking, go for it! When you see an
 opportunity to influence the story by suggesting a compel for your character,
 do it! The game will be much richer for it as a whole.
-
-  *[GM]: Game Master
-  *[PC]: Player Character
-
 
 ## Making A Good Aspect
 
@@ -512,11 +500,6 @@ jumpstart your own train of thought. If everyone has a bit of input on
 everyone else’s characters, the game will benefit from that sense of mutual
 investment.
 
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## Invoking & Compelling Aspects
 
 ### Invoking Aspects
@@ -539,8 +522,7 @@ choose one of these benefits:
 Rerolling the dice is a little riskier than just getting the +2 bonus, but has
 the potential for greater benefit. We recommend you reserve this option for
 when you’ve rolled a –3 or a –4 on the dice, to maximize the chance that
-you’ll get a beneficial result from rerolling. The odds are better that way
-.
+you’ll get a beneficial result from rerolling. The odds are better that way .
 
 It doesn’t matter when you invoke the aspect, but usually it’s best to wait
 until after you’ve rolled the dice to see if you’re going to need the benefit.
@@ -677,17 +659,12 @@ On Fire even if one character deliberately created it as
 an advantage, because no one actually controls that aspect. (Unless you’re
 talking about magic or something else that grants control, hence “usually.”)
 
-This section—_Hostile Invocations_—is an excerpt from Ryan Macklin's _Fateful
-Concepts: Hacking Contests_ and is released under
-a Creative Commons Attribution 3.0 Unported
-license. If you find this useful
+This section—_Hostile Invocations_—is an excerpt from Ryan Macklin's _Fateful Concepts: Hacking Contests_ and is released under
+a Creative Commons Attribution 3.0 Unported license. If you find this useful
 consider buying the e-book.
 
 To use this text, include the following attribution in your work: “This work
-is based on Fateful Concepts: Hacking Contests by Ryan
-Macklin, licensed for our use under the Creative
-Commons Attribution 3.0 Unported
-license.”
+is based on Fateful Concepts: Hacking Contests by Ryan Macklin, licensed for our use under the Creative Commons Attribution 3.0 Unported license.”
 
 ### Compelling Aspects
 
@@ -903,11 +880,6 @@ Dust everywhere, so it makes sense that, unfortunately, while he might
 be able to find the information he’s looking for, the bounty hunter pursuing
 him will know that he was here. Damn his luck.
 
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## Using Aspects For Roleplaying
 
 Finally, aspects have a passive use that you can draw on in almost every
@@ -986,8 +958,7 @@ Vinfeld.
 
 ### Removing Or Changing An Aspect
 
-Game and character aspects change through advancement. See the Milestones
- section for that.
+Game and character aspects change through advancement. See the Milestones  section for that.
 
 If you want to get rid of a situation aspect, you can do it in one of two
 ways: roll an overcome action specifically for the purpose of getting rid of
@@ -1081,11 +1052,6 @@ Owl, Tougher Than He Looks, and Wheels
 Within Wheels. If the PCs discover a couple of these, or see them on
 the table, they might start to suspect the NPC, but it’s not going to ruin the
 mystery of the scenario right away.
-
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
 
 ## Fate Point Economy
 
@@ -1203,8 +1169,3 @@ Cynere.
 her skin intact. She has taken two consequences in the conflict, meaning that
 she gets three fate points for conceding. Those three fate points carry over
 to the next scene.
-
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-

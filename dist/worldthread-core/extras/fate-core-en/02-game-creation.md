@@ -1,7 +1,11 @@
+---
+source: Fate Core System, Chapter 2 "Game Creation" (fate-srd.com via brunobord/fate-srd-markdown mirror)
+license: CC-BY-3.0
+attribution: Evil Hat Productions, LLC — verbatim required notice in this folder's README.md and the package THIRD-PARTY-NOTICES.md
+modified: images removed, navigation links flattened to plain text, chapters recombined, heading levels normalized, this frontmatter added; rules text verbatim
+---
+
 # Game Creation
-
-> Source & license: CC-BY 3.0 (Fate Core System, Evil Hat Productions). See this folder's `README.md` and the package `THIRD-PARTY-NOTICES.md`. Text only; no trademarked logos/fonts/dice images. Rules text verbatim; only links/images/heading levels were reformatted.
-
 
 ## Game Creation
 
@@ -84,10 +88,6 @@ is_.
   * **Skills and Stunts:** Decide what sorts of things characters in the setting are likely to want to do.
   * **Character Creation:** Make the PCs.
 
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## Setting Up Your Game
 
 ### Setting Up Your Game
@@ -103,7 +103,6 @@ enough of an idea that answering those questions doesn’t draw a blank.
 
 First, we’ll start by talking about your setting. We’ll handle the specifics
 on the protagonists later, in Character Creation.
-
 
 ## Making the Setting Work in Fate
 
@@ -143,7 +142,6 @@ there’s a difference between the two guys. Also, because he wants to play
 someone who is more bookish (for contrast). Everyone’s on board with this, and
 they move on.
 
-
 ## A Game’s Scale
 
 ### Decide how epic or personal your story will be.
@@ -162,7 +160,6 @@ you’ve probably seen in long-running novel series or television shows.)
 as a small-scale game, where they might travel from town to town, but the
 problems they have to deal with are local—like a thieves’ guild or the
 regent’s vile machinations.
-
 
 ## The Setting’s Big Issues
 
@@ -280,7 +277,6 @@ of the cult have different ideas of what the doom is going to be.
 
 Issue—Two Conflicting Prophecies
 
-
 ## Faces & Places
 
 ### Decide who the important people and locations are.
@@ -354,11 +350,6 @@ Shop owner in Riverton.
 
 Stubborn because I'm right.
 
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## Make Characters
 
 ### Each player makes a protagonist.
@@ -388,4 +379,3 @@ situations, but you’ll want to look over them to see if any don’t apply or i
 there’s a skill you need to add.
 
 Adding a skill is covered in more detail in the Extras section.
-

@@ -1,15 +1,18 @@
+---
+source: Fate Core System, Chapter 5 "Skills & Stunts" (fate-srd.com via brunobord/fate-srd-markdown mirror)
+license: CC-BY-3.0
+attribution: Evil Hat Productions, LLC — verbatim required notice in this folder's README.md and the package THIRD-PARTY-NOTICES.md
+modified: images removed, navigation links flattened to plain text, chapters recombined, heading levels normalized, this frontmatter added; rules text verbatim
+---
+
 # Skills & Stunts
-
-> Source & license: CC-BY 3.0 (Fate Core System, Evil Hat Productions). See this folder's `README.md` and the package `THIRD-PARTY-NOTICES.md`. Text only; no trademarked logos/fonts/dice images. Rules text verbatim; only links/images/heading levels were reformatted.
-
 
 ## Skills & Stunts
 
 ### Defining Skills
 
 A **skill** is a word that describes a broad family of competency at
-something—such as Athletics, Fight
-, or Deceive—which your character might have gained through innate talent,
+something—such as Athletics, Fight , or Deceive—which your character might have gained through innate talent,
 training, or years of trial and error. Skills are the basis for everything
 your character actually does in the game that involves challenge and chance
 (and dice).
@@ -39,8 +42,7 @@ that you don’t have to flip all the way over there right now.
 
 There are also some special effects that some skills perform, such as giving
 you additional stress boxes
-for a conflict. See Physique and Will
- in the default skill list below for examples.
+for a conflict. See Physique and Will  in the default skill list below for examples.
 
 Even though there are only four actions that all skills adhere to, the skill
 in question lends context to the action. For example, both Burglary and Crafts
@@ -97,9 +99,6 @@ rate by one.
 
 If you're having trouble coming up with a stunt, give the Stuntmaker a go. It will generate random stunts to inspire you!
 (Just be sure to vet them with the table before using them.)
-
-  *[PC]: Player Character
-
 
 ## Building Stunts
 
@@ -158,8 +157,7 @@ actions.
 
 The usual bonus is +2 to the skill total. However, if you want, you can also
 express the bonus as two shifts of additional effect after the roll succeeds,
-if that makes more sense. Remember, higher shifts on a roll allow your action
-to be more effective in certain ways.
+if that makes more sense. Remember, higher shifts on a roll allow your action to be more effective in certain ways.
 
 You can also use this to establish any effect worth two shifts as an
 additional benefit of succeeding at the skill roll. This might be Fair (+2)
@@ -193,8 +191,7 @@ under which a skill can be used and what happens when you use them. Stunts can
 break those, allowing your character to stretch the boundaries of the
 possible.
 
-The only limit to this is that a stunt can’t change any of the basic rules
- for aspects in terms of invoking, compelling, and the fate point
+The only limit to this is that a stunt can’t change any of the basic rules  for aspects in terms of invoking, compelling, and the fate point
 economy. Those always remain the same.
 
 Here are some stunts that create rules exceptions:
@@ -372,9 +369,6 @@ Here are some potential options for branching off of that stunt:
 Every one of those stunts thematically relates to very quick, spontaneous uses
 of Deceive, but they each have a different flavor of awesome.
 
-  *[GM]: Game Master
-
-
 ## Default Skill List
 
 Here is a basic list of example skills for you to use in your Fate games along
@@ -387,27 +381,27 @@ Each skill description contains a list of game actions that you can use the
 skill for. This list is not necessarily exhaustive—see our guidelines for what
 to do with edge cases.
 
-Skill| Overcome| Create an Advantage| Attack| Defend  
----|---|---|---|---  
-Athletics| X| X|  | X  
-Burglary| X| X|  |  
-Contacts| X| X|  | X  
-Crafts| X| X|  |  
-Deceive| X| X|  | X  
-Drive| X| X|  | X  
-Empathy| X| X|  | X  
-Fight| X| X| X| X  
-Investigate| X| X|  |  
-Lore| X| X|  |  
-Notice| X| X|  | X  
-Physique| X| X|  | X  
-Provoke| X| X| X|  
-Rapport| X| X|  | X  
-Resources| X| X|  |  
-Shoot| X| X| X|  
-Stealth| X| X|  | X  
-Will| X| X|  | X  
-  
+Skill| Overcome| Create an Advantage| Attack| Defend
+---|---|---|---|---
+Athletics| X| X|  | X
+Burglary| X| X|  |
+Contacts| X| X|  | X
+Crafts| X| X|  |
+Deceive| X| X|  | X
+Drive| X| X|  | X
+Empathy| X| X|  | X
+Fight| X| X| X| X
+Investigate| X| X|  |
+Lore| X| X|  |
+Notice| X| X|  | X
+Physique| X| X|  | X
+Provoke| X| X| X|
+Rapport| X| X|  | X
+Resources| X| X|  |
+Shoot| X| X| X|
+Stealth| X| X|  | X
+Will| X| X|  | X
+
 #### Creating Setting With Skills
 
 Skills are one of your primary mechanical ways to reinforce the setting you’re
@@ -427,9 +421,7 @@ of abilities available in your world.
 Some of the skills, like Shoot and Crafts, imply the need for gear. It is
 presumed by default that if you have a skill, you also have the tools you need
 to use it, and that the effectiveness of those tools is built into the skill
-result. If you want to make gear special, you’ll want to look at the Extras
- section.
-
+result. If you want to make gear special, you’ll want to look at the Extras  section.
 
 ## Athletics
 
@@ -475,7 +467,6 @@ against them.
   * **Hardcore Parkour**. +2 to overcome actions with Athletics if you are in a chase across rooftops or a similarly precarious environment.
   * **Dazing Counter**. When you succeed with style on a defend action against an opponent’s Fight roll, you automatically counter with some sort of nerve punch or stunning blow. You get to attach the Dazed situation aspect to your opponent with a free invoke, instead of just a boost.
 
-
 ## Burglary
 
 The Burglary skill covers your character’s aptitude for stealing things and
@@ -507,7 +498,6 @@ skill, so there’s not a lot of opportunity to use it to defend
   * **Always a Way Out**. +2 on Burglary rolls made to create an advantage whenever you’re trying to escape from a location.
   * **Security Specialist**. You don’t have to be present to provide active opposition to someone trying to overcome security measures you put in place or worked on. (Normally, a character would roll against passive opposition for that.)
   * **Talk the Talk**. You can use Burglary in place of Contacts whenever you’re dealing specifically with other thieves and burglars.
-
 
 ## Contacts
 
@@ -552,7 +542,6 @@ with Investigate attempts to find you.
   * **Ear to the Ground.** Whenever someone initiates a conflict against you in an area where you’ve built a network of contacts, you use Contacts instead of Notice to determine turn order, because you got tipped off in time.
   * **Rumormonger.** +2 to create an advantage when you plant vicious rumors about someone else.
   * **The Weight of Reputation.** You can use Contacts instead of Provoke to create advantages based on the fear generated by the sinister reputation you’ve cultivated for yourself and all the shady associates you have. You should have an appropriate aspect to pair with this stunt.
-
 
 ## Crafts
 
@@ -619,9 +608,6 @@ If building constructs and creating items is a big part of your game, check
 out Extras for a discussion of what might
 result from the use of Crafts.
 
-  *[GM]: Game Master
-
-
 ## Deceive
 
 Deceive is the skill about lying to and misdirecting people.
@@ -687,10 +673,6 @@ his rage, or you embarrass him by making a spectacle around him in public.
 As long as you get your advantage, you’re fine. Use it as an opportunity to
 create story with other people, instead of shutting them down.
 
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## Drive
 
 The Drive skill is all about operating vehicles and things that go fast.
@@ -710,11 +692,9 @@ vehicles).
 
 The advice is the same as for Crafts—don’t go nuts with reskinning this skill
 unless it makes a real, tangible difference in your game. Especially consider
-the option of having one skill that’s modified by stunts (see Building Stunts
-).
+the option of having one skill that’s modified by stunts (see Building Stunts ).
 
-O**Overcome**: Drive is the equivalent of Athletics
- when you’re in a vehicle—you use it to
+O**Overcome**: Drive is the equivalent of Athletics  when you’re in a vehicle—you use it to
 successfully accomplish movement in the face of difficult circumstances, like
 rough terrain, small amounts of clearance, or stunt driving. Obviously, Drive
 is also ripe for contests, especially chases and races.
@@ -743,7 +723,6 @@ someone trying to move past you in a vehicle.
   * **Hard to Shake**. +2 to Drive whenever you’re pursuing another vehicle in a chase scene.
   * **Pedal to the Metal**. You can coax more speed out of your vehicle than seems possible. Whenever you’re engaged in any contest where speed is the primary factor (such as a chase or race of some kind) and you tie with your Drive roll, it’s considered a success.
   * **Ramming Speed!** When ramming another vehicle, you ignore two shifts of damage. So if you ram and hit for four shifts, you only take two yourself.
-
 
 ## Empathy
 
@@ -782,9 +761,6 @@ creating social advantages against you in general.
   * **Lie Whisperer**. +2 to all Empathy rolls made to discern or discover lies, whether they’re directed at you or someone else.
   * **Nose for Trouble**. You can use Empathy instead of Notice to determine your turn order in a conflict, provided you’ve gotten a chance to observe or speak to those involved for at least a few minutes beforehand during this scene.
   * **Psychologist**. Once per session you can reduce someone else’s consequence by one level of severity (severe to moderate, moderate to mild, mild to nothing at all) by succeeding on an Empathy roll with a difficulty of Fair (+2) for a mild consequence, Good (+3) for moderate, or Great (+4) for severe. You need to talk with the person you’re treating for at least half an hour in order for them to receive the benefits of this stunt, and you can’t use it on yourself. (Normally, this roll would only start the recovery process, instead of changing the consequence level.)
-
-  *[NPC]: Non-Player Character
-
 
 ## Fight
 
@@ -841,7 +817,6 @@ etc.), but again, we recommend you not go too crazy with this unless it’s
 really important to your setting. Specialized weapon use can also be modeled
 by using extras.
 
-
 ## Investigate
 
 Investigate is the skill you use to find things out. It’s a counterpart to
@@ -878,7 +853,6 @@ D**Defend**: Same here.
   * **Attention to Detail**. You can use Investigate instead of Empathy to defend against Deceive attempts. What others discover through gut reactions and intuition, you learn through careful observation of microexpressions.
   * **Eavesdropper**. On a successful Investigate roll to create an advantage by eavesdropping on a conversation, you can discover or create one additional aspect (though this doesn’t give you an extra free invocation).
   * **The Power of Deduction**. Once per scene you can spend a fate point (and a few minutes of observation) to make a special Investigate roll representing your potent deductive faculties. For each shift you make on this roll you discover or create an aspect, on either the scene or the target of your observations, though you may only invoke one of them for free.
-
 
 ## Lore
 
@@ -926,7 +900,6 @@ D**Defend**: Lore isn’t used to defend.
   * **Shield of Reason**. You can use Lore as a defense against Provoke attempts, provided you can justify your ability to overcome your fear through rational thought and reason.
   * **Specialist**. Choose a field of specialization, such as herbology, criminology, or zoology. You get a +2 to all Lore rolls relating to that field of specialization.
 
-
 ## Notice
 
 The Notice skill involves just that—noticing things. It’s a counterpart to
@@ -972,9 +945,6 @@ you’re being observed.
   * **Body Language Reader**. You can use Notice in place of Empathy to learn the aspects of a target through observation.
   * **Reactive Shot**. You can use Notice instead of Shoot to make quick, reactive shots that don’t involve a lot of aiming. However, because you’re having a knee-jerk reaction, you’re not allowed to concretely identify your target before using this stunt. So, for example, you might be able to shoot at someone you see moving in the bushes with this stunt, but you won’t be able to tell if it’s friend or foe before you pull the trigger. Choose carefully!
 
-  *[GM]: Game Master
-
-
 ## Physique
 
 The Physique skill is a counterpart to Athletics, representing the character’s
@@ -987,12 +957,10 @@ In your game, you might not find this distinction necessary to make with
 separate skills—though you might still let players make that distinction with
 stunts and aspects.
 
-O**Overcome**: You can use Physique to overcome any
-obstacles that require the application
+O**Overcome**: You can use Physique to overcome any obstacles that require the application
 of brute force—most often to overcome a situation aspect on a zone—or any
 other physical impedance, like prison bars or locked gates. Of course,
-Physique is the classic skill for arm-wrestling matches and other contests
- of applied strength, as well as marathons
+Physique is the classic skill for arm-wrestling matches and other contests  of applied strength, as well as marathons
 or other endurance-based challenges.
 
 C**Create an Advantage**: Physique has a lot of
@@ -1018,7 +986,6 @@ heavy and brace it to stop someone from getting through.
   * **Grappler**. +2 to Physique rolls made to create advantages on an enemy by wrestling or grappling with them.
   * **Take the Blow**. You can use Physique to defend against Fight attacks made with fists or blunt instruments, though you always take 1 shift of stress on a tie.
   * **Tough as Nails**. Once per session, at the cost of a fate point, you can reduce the severity of a moderate consequence that’s physical in nature to a mild consequence (if your mild consequence slot is free), or erase a mild consequence altogether.
-
 
 ## Provoke
 
@@ -1060,11 +1027,6 @@ make you better at avoiding it yourself. You need Will for that.
   * **Provoke Violence**. When you create an advantage on an opponent using Provoke, you can use your free invocation to become the target of that character’s next relevant action, drawing their attention away from another target.
   * **Okay, Fine!** You can use Provoke in place of Empathy to learn a target’s aspects, by bullying them until they reveal one to you. The target defends against this with Will. (If the GM thinks the aspect is particularly vulnerable to your hostile approach, you get a +2 bonus.)
 
-  *[GM]: Game Master
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
-
 ## Rapport
 
 The Rapport skill is all about making positive connections to people and
@@ -1097,10 +1059,6 @@ That requires Will.
   * **Best Foot Forward**. Twice per session, you may upgrade a boost you receive with Rapport into a full situation aspect with a free invocation.
   * **Demagogue**. +2 to Rapport when you’re delivering an inspiring speech in front of a crowd. (If there are named NPCs or PCs in the scene, you may target them all simultaneously with one roll rather than dividing up your shifts.)
   * **Popular**. If you’re in an area where you’re popular and well-liked, you can use Rapport in place of Contacts. You may be able to establish your popularity by spending a fate point to declare a story detail, or because of prior justification.
-
-  *[NPC]: Non-Player Character
-  *[PC]: Player Character
-
 
 ## Resources
 
@@ -1154,9 +1112,7 @@ plan on making material wealth a major part of your game.
 #### Alternate Thoughts on the Resources Skill
 
 The Resources skill is a one that some folks may want to tweak or modify. Ryan
-Macklin has posted an article with this thoughts at One Rethinking of the
-Resources Skill.
-
+Macklin has posted an article with this thoughts at One Rethinking of the Resources Skill.
 
 ## Shoot
 
@@ -1201,7 +1157,6 @@ Hail of Bullets, for example).
   * **Quick on the Draw**. You can use Shoot instead of Notice to determine turn order in any physical conflict where shooting quickly would be useful.
   * **Uncanny Accuracy**. Once per conflict, stack an additional free invoke on an advantage you’ve created to represent the time you take to aim or line up a shot (like In My Sights).
 
-
 ## Stealth
 
 The Stealth skill allows you to avoid detection, both when hiding in place and
@@ -1231,7 +1186,6 @@ an Investigate attempt from someone trying to track you.
   * **Ninja Vanish**. Once per scene, you can vanish while in plain sight by spending a fate point, using a smoke pellet or other mysterious technique. This places the Vanished boost on you. While you’re vanished, no one can attack or create an advantage on you until after they’ve succeeded at an overcome roll with Notice to suss out where you went (basically meaning they have to give up an exchange to try). This aspect goes away as soon as you invoke it, or someone makes that overcome roll.
   * **Slippery Target**. Provided you’re in darkness or shadow, you can use Stealth to defend against Shoot attacks from enemies that are at least one zone away.
 
-
 ## Will
 
 The Will skill represents your character’s general level of mental fortitude,
@@ -1256,8 +1210,7 @@ aspects on yourself, representing a state of deep concentration or focus.
 
 A**Attack**: Will isn’t really used for attacks. That
 said, in settings where you allow psychic abilities, full-on psychic conflict
-might be something you can do with this skill. That’s the sort of thing that
-would be added to Will by taking a stunt or extra.
+might be something you can do with this skill. That’s the sort of thing that would be added to Will by taking a stunt or extra.
 
 D**Defend**: Will is the main skill you use to defend
 against mental attacks from Provoke, representing your control over your
@@ -1270,4 +1223,3 @@ reactions.
   * **Strength From Determination**. Use Will instead of Physique on any overcome rolls representing feats of strength.
   * **Hard Boiled**. You can choose to ignore a mild or moderate consequence for the duration of the scene. It can’t be compelled against you or invoked by your enemies. At the end of the scene it comes back worse, though; if it was a mild consequence it becomes a moderate consequence, and if it was already moderate, it becomes severe.
   * **Indomitable**. +2 to defend against Provoke attacks specifically related to intimidation and fear.
-
