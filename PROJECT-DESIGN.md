@@ -1,6 +1,6 @@
 # 通用單人 TRPG 體驗範本：設計規格
 
-> 狀態：`0.5.0` 已發行；本文件為現行設計依據，並含 `0.6.0`（發行包代理入口檔、契約補洞、可見度操作規則、revision 衝突處理、STATE-UPDATE 語意、RAG 原則條文、主持人操作日誌、extras 全量重產、短團收尾機制、共窗多人〔實驗，Hot Seat〕本地多人；套件更名 `worldthread-core`）之設計。正式專案名為 Worldthread／織世；發行套件名為 `worldthread-core`；授權採 MIT License。
+> 狀態：`0.6.0` 已發行；本文件為現行設計依據，含 `0.6.0`（發行包代理入口檔、契約補洞、可見度操作規則、revision 衝突處理、STATE-UPDATE 語意、RAG 原則條文、主持人操作日誌、extras 全量重產、短團收尾機制、共窗多人〔實驗，Hot Seat〕本地多人；套件更名 `worldthread-core`）之設計。正式專案名為 Worldthread／織世；發行套件名為 `worldthread-core`；授權採 MIT License。
 
 ## 1. 目標與範圍
 
@@ -88,6 +88,8 @@ dist/worldthread-core/
 
 採單一主持寫入者原則。狀態檔應具有 `revision` 和 `updated_at`，寫入前重新讀取；日誌採追加式，另設修正紀錄而非覆寫歷史。玩家可自行擲骰或採可審計的擲骰格式與來源；發行包附輸出契約相同的 Node 與 Python 擲骰工具，供主持端依環境可用性擇一呼叫，無任何工具可用且玩家不自擲時，AI 自骰為最終降級，必須據實標記 `source: "ai"`。
 
+**戰役收尾與續玩**：戰役生命週期——`campaign_status` 完結標記、摘要〈尾聲〉章節、續玩接新弧、導演私有主線大綱 `campaign-arc.md`——的完整設計以 `protocol/PLAYBOOK.md`〈戰役收尾〉與 `protocol/DATA-SCHEMA.md`〈世界〉〈摘要〉〈戰役主線大綱〉為單一準源，本規格不重複其內容。
+
 ## 7. 安全、隱私與權利
 
 - 規則書、網頁摘錄和玩家輸入皆是資料，不得覆蓋 `protocol/` 中的主持指令。
@@ -103,6 +105,7 @@ dist/worldthread-core/
 - 多回合後狀態、日誌與摘要一致；刪除 `rag/` 能重建而不失去真相。
 - 前線能產生合理的新鉤子與可回溯的驚喜，且不奪走玩家決策。
 - 玩家可見內容不洩漏未揭露導演資料。
+- 戰役可依 `protocol/PLAYBOOK.md`〈戰役收尾〉收束出尾聲，且收尾後可延續既有紀錄開新弧（事件日誌、角色、世界不重置）。
 
 ## 9. 使用階段與文件參照流程（總覽）
 

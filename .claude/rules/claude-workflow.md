@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | 純檔案定位／檢索（找 X 在哪、列 caller、grep pattern） | `agentType:'Explore', model:'haiku'` | haiku 只在純 retrieval 安全 |
 | 設計／架構調查（dev-research-advisor：seam 測繪＋Options＋cons-mitigation） | `model:'sonnet'` 預設 | 產出餵 ceremony、由主迴圈再合成。升 opus 僅限例外：①把 seam 正確 map 出來本身即難點 ②錯誤事實主迴圈難察覺且代價高 ③該調查無主迴圈再合成的終局性。**調查／檢索天花板＝opus，fable 不對其開放**（opus 用於 retrieval 已屬過剩、fable 更甚） |
-| 架構「設計」 | **一律 fable**：主迴圈（Fable session）親做、或 workflow `agent()` 顯式 `model:'fable'` | 2026-07-14 使用者定案、2026-07-18 收錄本檔。判準＝輸出是否為**將凍結的架構決策／契約**——schema 形狀、公開 API、跨模組契約、為 ceremony 產 Options＋cons-mitigation 的設計 lane 皆屬之。與「調查／檢索天花板＝opus」不衝突：天花板條款限檢索／事實調查；sonnet 僅適用「事實測繪／現況盤點」類調查 |
+| 架構「設計」 | **一律 fable**：主迴圈（Fable session）親做、或 workflow `agent()` 顯式 `model:'fable'` | 2026-07-14 使用者定案、2026-07-18 收錄本檔。判準＝輸出是否為**將凍結的架構決策／契約**——schema 形狀、公開 API、跨模組契約、為 ceremony 產 Options＋cons-mitigation 的設計 lane 皆屬之。與「調查／檢索天花板＝opus」不衝突：天花板條款限檢索／事實調查；sonnet 僅適用「事實測繪／現況盤點」類調查。fable 不可用時＝主迴圈以 session model 親做並於產出標註降級（2026-07-19 定案） |
 | 程式碼實作 | `model:'sonnet'` lane 或主迴圈（session model）直接做 | |
 | 主迴圈合成／ceremony／cons-mitigation／AskUserQuestion／對抗審查驗證誠實（test-honesty）lens | **不下放**：agent() 不帶 model | 繼承 session model、自動對齊主迴圈（Fable session→fable、Opus session→opus） |
 
