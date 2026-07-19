@@ -76,6 +76,9 @@ if ($manifest.name -ne $expectedName) {
     'tools/dice.mjs',
     'tools/dice.py',
     'tools/dice.fixtures.jsonl',
+    'tools/healthcheck.mjs',
+    'tools/healthcheck.py',
+    'tools/healthcheck.fixtures.jsonl',
     'tools/convert-rulebook-prompt.md',
     'tools/extract-narrator-style-prompt.md'
 ) | ForEach-Object { Assert-File $_ }

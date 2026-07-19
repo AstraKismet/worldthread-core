@@ -50,11 +50,19 @@
 {"id":"evt-0001","at":"1970-01-01T00:00:00Z","scene_id":"fog-ferry-opening","kind":"fact","facts":["鐘塔的鐘在黎明前失竊。"],"visibility":"player"}
 ```
 
-修正事件以 `kind: "correction"`，並以 `corrects` 鍵指向原事件的 `id`；修正是追加，不是改寫。**visibility 繼承**：correction 的 `visibility` 必須等於被修正事件的 `visibility`——修正只改內容、不改可見度；若某事實需要改變可見度（如導演祕密進入玩家可知範圍），那是「揭露」不是「修正」，以新的 `kind: "fact"` 事件記載，原事件不動：
+修正事件以 `kind: "correction"`，並以 `corrects` 鍵指向被修正的原事件 `id`；修正是追加，不是改寫。**`corrects` 一律指向非 correction 的原事件**：要撤銷或再次修正一則先前的修正時，**寫一則新的 correction、再次指向同一個原事件**（不指向前一則 correction）；同一原事件若有多則 correction，**以最新（事件序最後）的一則為有效版本**。讀取端因此只需取「指向某原事件的最新 correction」即可解析有效內容，無需沿鏈回溯、也不會出現二階修正鏈。**visibility 繼承**：correction 的 `visibility` 必須等於被修正事件的 `visibility`——修正只改內容、不改可見度；若某事實需要改變可見度（如導演祕密進入玩家可知範圍），那是「揭露」不是「修正」，以新的 `kind: "fact"` 事件記載，原事件不動：
 
 ```json
 {"id":"evt-0009","at":"1970-01-01T00:00:00Z","scene_id":"fog-ferry-opening","kind":"correction","corrects":"evt-0007","facts":["更正：失竊的是鐘舌，鐘體仍在。"],"visibility":"player"}
 ```
+
+若稍後發現**某則修正本身有誤**、要撤銷或再修正，同樣寫一則新的 correction **再次指向被修正的原事件**（而非指向前一則 correction）。以另一條修正鏈為例：原事件 `evt-0020` 曾以 `evt-0023` 修正，之後發現 `evt-0023` 有誤，寫 `evt-0031` **再次指向 `evt-0020`**：
+
+```json
+{"id":"evt-0031","at":"1970-01-01T00:00:00Z","scene_id":"fog-ferry-opening","kind":"correction","corrects":"evt-0020","facts":["再更正：河霧其實整日未散。"],"visibility":"player"}
+```
+
+此時指向 `evt-0020` 的最新 correction 為 `evt-0031`，即有效版本；`evt-0023` 自動被取代（不刪除、留在日誌）。**溯源欄位指向有效事件**：實體／世界／場景檔的 `last_updated_event_id`、`established_at_event_id` 等溯源欄位，應指向仍有效的確立或修正事件，不指向已被後續 correction 取代的修正。
 
 ## 擲骰紀錄
 

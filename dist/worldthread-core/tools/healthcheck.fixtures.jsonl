@@ -1,0 +1,6 @@
+{"name": "valid.json", "content": "{\"a\":1,\"b\":[2,3]}", "kind": "json", "expect_ok": true, "expect_line": null}
+{"name": "bad-bracket.json", "content": "{\"relationships\":[{\"rel\":\"awakens\"]}", "kind": "json", "expect_ok": false, "expect_line": null}
+{"name": "valid.jsonl", "content": "{\"id\":\"evt-0001\"}\n{\"id\":\"evt-0002\"}\n", "kind": "jsonl", "expect_ok": true, "expect_line": null}
+{"name": "bad-line.jsonl", "content": "{\"id\":1}\n{\"id\":2\n{\"id\":3}", "kind": "jsonl", "expect_ok": false, "expect_line": 2}
+{"name": "blanks.jsonl", "content": "\n{\"id\":1}\n\n", "kind": "jsonl", "expect_ok": true, "expect_line": null}
+{"name": "nested/deep.json", "content": "{\"ok\":true}", "kind": "json", "expect_ok": true, "expect_line": null}
