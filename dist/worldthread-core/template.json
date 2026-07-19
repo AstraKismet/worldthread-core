@@ -1,7 +1,7 @@
 {
   "name": "worldthread-core",
   "display_name": "Worldthread／織世：單人 TRPG 範本",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "language": "zh-Hant",
   "license": "MIT",
   "entrypoint": "README.md",
