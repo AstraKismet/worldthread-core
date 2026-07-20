@@ -12,17 +12,34 @@ HELP = """用法：python healthcheck.py [路徑]
 
   遞迴掃描 [路徑]（省略時預設 game/state）下所有 .json 與 .jsonl 檔，
   逐檔輸出一行 JSON 回報是否可解析，末行輸出彙總；路徑亦可為單一檔案。
-  任何檔案解析失敗時結束碼為 1，全部通過為 0。
+  同時檢查玩家可見檔是否夾帶導演私有檔的識別字串（見下）。
+  任何檔案未通過時結束碼為 1，全部通過為 0。
 
-輸出每行：{"file":<相對路徑>,"kind":"json"|"jsonl","ok":<布林>,"line":<行號|null>}
-  line 僅 .jsonl 失敗時給出第一個壞行的 1-based 行號，其餘為 null。
+輸出每行：{"file":<相對路徑>,"kind":"json"|"jsonl","ok":<布林>,"line":<行號|null>,"leak":<字串|null>}
+  line 僅 .jsonl 解析失敗時給出第一個壞行的 1-based 行號，其餘為 null。
+  leak 為命中的私有識別字串，未命中為 null。
 末行：{"summary":{"scanned":N,"ok":N,"failed":N}}
+
+私有識別字串檢查：
+  依 DATA-SCHEMA〈主持人操作日誌〉，game/private/director/ 底下任何檔案的存在、
+  檔名與紀錄 id 都不得出現在玩家可見輸出。逐檔判定：位於 game/private/ 或 tools/
+  之內的檔案略過本檢查（私有檔本來就會提及自己；夾具檔以 marker 字面為測試資料）。
 
 選項：
   --help  顯示本說明並結束。
 
 本工具僅讀取、不修改任何檔案；它是輔助自查、非寫入驗證的替代（見 PLAYBOOK〈每回合〉第 5 步）。
 """
+
+# 導演私有檔的識別字串：出現在玩家可見檔即違反公私分層（DATA-SCHEMA〈主持人操作日誌〉）。
+PRIVATE_MARKERS = ["host-log", "hlog-", "campaign-arc", "hook-market", "fronts/", "private/director"]
+
+
+# 這些位置提及私有檔名屬正常，不套用上述檢查：
+# game/private/ 內的私有檔本來就會提及自己；tools/ 內的夾具檔以 marker 字面為測試資料。
+def leak_exempt(abs_path):
+    norm = "/" + os.path.abspath(abs_path).replace(os.sep, "/") + "/"
+    return "/game/private/" in norm or "/tools/" in norm
 
 
 def write_out(text):
@@ -56,14 +73,21 @@ def collect(root):
     return entries
 
 
-# 檢查單一檔案，回傳 {kind, ok, line}。
-def check(abs_path):
+# 檢查單一檔案，回傳 {kind, ok, line, leak}。
+# check_leak 為 False 時（該檔位於 game/private/ 或 tools/ 內）略過私有字串檢查。
+def check(abs_path, check_leak):
     kind = "jsonl" if abs_path.endswith(".jsonl") else "json"
     try:
         with open(abs_path, "r", encoding="utf-8") as handle:
             text = handle.read()
     except Exception:
-        return {"kind": kind, "ok": False, "line": None}
+        return {"kind": kind, "ok": False, "line": None, "leak": None}
+    leak = None
+    if check_leak:
+        for marker in PRIVATE_MARKERS:
+            if marker in text:
+                leak = marker
+                break
     if kind == "jsonl":
         lines = text.split("\n")
         for i, raw in enumerate(lines):
@@ -73,13 +97,13 @@ def check(abs_path):
             try:
                 json.loads(line)
             except Exception:
-                return {"kind": kind, "ok": False, "line": i + 1}
-        return {"kind": kind, "ok": True, "line": None}
+                return {"kind": kind, "ok": False, "line": i + 1, "leak": leak}
+        return {"kind": kind, "ok": leak is None, "line": None, "leak": leak}
     try:
         json.loads(text)
-        return {"kind": kind, "ok": True, "line": None}
+        return {"kind": kind, "ok": leak is None, "line": None, "leak": leak}
     except Exception:
-        return {"kind": kind, "ok": False, "line": None}
+        return {"kind": kind, "ok": False, "line": None, "leak": leak}
 
 
 def dumps(obj):
@@ -110,12 +134,23 @@ def main():
     failed = 0
     out = []
     for e in entries:
-        r = check(e["abs"])
+        # 逐檔判定豁免：祖先目錄掃描時，私有檔與夾具檔仍各自豁免。
+        r = check(e["abs"], not leak_exempt(e["abs"]))
         if r["ok"]:
             ok += 1
         else:
             failed += 1
-        out.append(dumps({"file": e["rel"], "kind": r["kind"], "ok": r["ok"], "line": r["line"]}))
+        out.append(
+            dumps(
+                {
+                    "file": e["rel"],
+                    "kind": r["kind"],
+                    "ok": r["ok"],
+                    "line": r["line"],
+                    "leak": r["leak"],
+                }
+            )
+        )
     out.append(dumps({"summary": {"scanned": len(entries), "ok": ok, "failed": failed}}))
     write_out("\n".join(out) + "\n")
     sys.exit(1 if failed > 0 else 0)

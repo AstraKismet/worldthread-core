@@ -1,6 +1,13 @@
-{"name": "valid.json", "content": "{\"a\":1,\"b\":[2,3]}", "kind": "json", "expect_ok": true, "expect_line": null}
-{"name": "bad-bracket.json", "content": "{\"relationships\":[{\"rel\":\"awakens\"]}", "kind": "json", "expect_ok": false, "expect_line": null}
-{"name": "valid.jsonl", "content": "{\"id\":\"evt-0001\"}\n{\"id\":\"evt-0002\"}\n", "kind": "jsonl", "expect_ok": true, "expect_line": null}
-{"name": "bad-line.jsonl", "content": "{\"id\":1}\n{\"id\":2\n{\"id\":3}", "kind": "jsonl", "expect_ok": false, "expect_line": 2}
-{"name": "blanks.jsonl", "content": "\n{\"id\":1}\n\n", "kind": "jsonl", "expect_ok": true, "expect_line": null}
-{"name": "nested/deep.json", "content": "{\"ok\":true}", "kind": "json", "expect_ok": true, "expect_line": null}
+{"name": "valid.json", "content": "{\"a\":1,\"b\":[2,3]}", "kind": "json", "expect_ok": true, "expect_line": null, "expect_leak": null, "parse_ok": true}
+{"name": "bad-bracket.json", "content": "{\"relationships\":[{\"rel\":\"awakens\"]}", "kind": "json", "expect_ok": false, "expect_line": null, "expect_leak": null, "parse_ok": false}
+{"name": "valid.jsonl", "content": "{\"id\":\"evt-0001\"}\n{\"id\":\"evt-0002\"}\n", "kind": "jsonl", "expect_ok": true, "expect_line": null, "expect_leak": null, "parse_ok": true}
+{"name": "bad-line.jsonl", "content": "{\"id\":1}\n{\"id\":2\n{\"id\":3}", "kind": "jsonl", "expect_ok": false, "expect_line": 2, "expect_leak": null, "parse_ok": false}
+{"name": "blanks.jsonl", "content": "\n{\"id\":1}\n\n", "kind": "jsonl", "expect_ok": true, "expect_line": null, "expect_leak": null, "parse_ok": true}
+{"name": "nested/deep.json", "content": "{\"ok\":true}", "kind": "json", "expect_ok": true, "expect_line": null, "expect_leak": null, "parse_ok": true}
+{"name": "leak-notes.json", "content": "{\"notes\":[\"四問尚未確認，見 host-log hlog-0001\"]}", "kind": "json", "expect_ok": false, "expect_line": null, "expect_leak": "host-log", "parse_ok": true}
+{"name": "leak-ruling.jsonl", "content": "{\"id\":\"evt-0001\",\"ruling\":\"依 campaign-arc 的里程碑判定\"}\n", "kind": "jsonl", "expect_ok": false, "expect_line": null, "expect_leak": "campaign-arc", "parse_ok": true}
+{"name": "leak-and-badline.jsonl", "content": "{\"id\":1,\"note\":\"見 hook-market\"}\n{\"id\":2\n", "kind": "jsonl", "expect_ok": false, "expect_line": 2, "expect_leak": "hook-market", "parse_ok": false}
+{"name": "leak-hlog-only.json", "content": "{\"notes\":[\"詳見 hlog-0007 的裁定\"]}", "kind": "json", "expect_ok": false, "expect_line": null, "expect_leak": "hlog-", "parse_ok": true}
+{"name": "leak-fronts-path.json", "content": "{\"notes\":[\"見 fronts/river-dread 的倒數鐘\"]}", "kind": "json", "expect_ok": false, "expect_line": null, "expect_leak": "fronts/", "parse_ok": true}
+{"name": "leak-privdir-path.jsonl", "content": "{\"id\":\"evt-0001\",\"ruling\":\"依 private/director 內的設定判定\"}\n", "kind": "jsonl", "expect_ok": false, "expect_line": null, "expect_leak": "private/director", "parse_ok": true}
+{"name": "leak-and-badjson.json", "content": "{\"notes\":\"見 host-log\"", "kind": "json", "expect_ok": false, "expect_line": null, "expect_leak": "host-log", "parse_ok": false}

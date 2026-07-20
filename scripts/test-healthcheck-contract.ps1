@@ -144,6 +144,9 @@ try {
         $expLine = if ($null -eq $fx.expect_line) { $null } else { [int]$fx.expect_line }
         $actLine = if ($null -eq $obj.line) { $null } else { [int]$obj.line }
         Assert-True ($actLine -eq $expLine) "$($fx.name): line=$actLine, expected $expLine"
+        $expLeak = if ($null -eq $fx.expect_leak) { $null } else { [string]$fx.expect_leak }
+        $actLeak = if ($null -eq $obj.leak) { $null } else { [string]$obj.leak }
+        Assert-True ($actLeak -eq $expLeak) "$($fx.name): leak=$actLeak, expected $expLeak"
     }
 
     # === Block 2: clean subset -> exit 0 ===
@@ -151,6 +154,66 @@ try {
     Assert-True ($rc.Node.ExitCode -eq 0) "clean: node exit $($rc.Node.ExitCode), expected 0"
     Assert-True ($rc.Python.ExitCode -eq 0) "clean: python exit $($rc.Python.ExitCode), expected 0"
     Assert-True ($rc.Node.StdOut -ceq $rc.Python.StdOut) "clean: node and python stdout differ"
+
+    # === Block 2b: private-dir exemption (leak markers allowed under game/private/) ===
+    # A tree ending in game/private must skip the private-marker check entirely:
+    # private files legitimately mention host-log / campaign-arc etc.
+    $leakFixtures = @($fixtures | Where-Object { $null -ne $_.expect_leak })
+    Assert-True ($leakFixtures.Count -gt 0) "no leak fixtures found; private-exemption block would be vacuous"
+    $privRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("wt-healthcheck-priv-" + [System.Guid]::NewGuid().ToString('N'))
+    $privTarget = Join-Path (Join-Path $privRoot 'game') 'private'
+    New-Item -ItemType Directory -Force -Path $privTarget | Out-Null
+    try {
+        Write-Fixtures $privTarget $leakFixtures
+        # Only fixtures whose sole defect is a leak marker; parse-valid ones must now pass.
+        $parseOkLeaks = @($leakFixtures | Where-Object { $_.parse_ok })
+        Assert-True ($parseOkLeaks.Count -gt 0) "no parse-clean leak fixtures; private-exempt assertions would be vacuous"
+        $badLineLeaks = @($leakFixtures | Where-Object { -not $_.parse_ok })
+        Assert-True ($badLineLeaks.Count -gt 0) "no unparseable leak fixtures; exemption-vs-parse assertions would be vacuous"
+        $rp = Invoke-Both @($privTarget)
+        Assert-True ($rp.Node.StdOut -ceq $rp.Python.StdOut) "private-exempt: node and python stdout differ"
+        $rpByFile = @{}
+        foreach ($outLine in ($rp.Node.StdOut -split "`n")) {
+            $t = $outLine.Trim()
+            if ($t -eq '') { continue }
+            $o = $t | ConvertFrom-Json
+            if (-not ($o.PSObject.Properties.Name -contains 'summary')) { $rpByFile[$o.file] = $o }
+        }
+        # Exemption must only disable the leak check; parse failures still surface.
+        foreach ($fx in $badLineLeaks) {
+            $o = $rpByFile[$fx.name]
+            Assert-True ($null -ne $o) "private-exempt: missing result for $($fx.name)"
+            if ($null -ne $o) {
+                Assert-True (-not [bool]$o.ok) "private-exempt: $($fx.name) ok=$($o.ok), expected false (parse failure still detected)"
+                $expL = if ($null -eq $fx.expect_line) { $null } else { [int]$fx.expect_line }
+                $actL = if ($null -eq $o.line) { $null } else { [int]$o.line }
+                Assert-True ($actL -eq $expL) "private-exempt: $($fx.name) line=$actL, expected $expL"
+                Assert-True ($null -eq $o.leak) "private-exempt: $($fx.name) leak=$($o.leak), expected null"
+            }
+        }
+        $expRpExit = if ($badLineLeaks.Count -gt 0) { 1 } else { 0 }
+        Assert-True ($rp.Node.ExitCode -eq $expRpExit) "private-exempt: node exit $($rp.Node.ExitCode), expected $expRpExit"
+        Assert-True ($rp.Python.ExitCode -eq $expRpExit) "private-exempt: python exit $($rp.Python.ExitCode), expected $expRpExit"
+        foreach ($fx in $parseOkLeaks) {
+            $lineObj = ($rp.Node.StdOut -split "`n" | Where-Object { $_.Trim() -ne '' } | ForEach-Object { $_ | ConvertFrom-Json } | Where-Object { $_.file -eq $fx.name })
+            Assert-True ($null -ne $lineObj) "private-exempt: missing result for $($fx.name)"
+            Assert-True ([bool]$lineObj.ok) "private-exempt: $($fx.name) ok=$($lineObj.ok), expected true (leak check skipped)"
+            Assert-True ($null -eq $lineObj.leak) "private-exempt: $($fx.name) leak=$($lineObj.leak), expected null"
+        }
+        # Same fixtures outside game/private must still be flagged.
+        $outRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("wt-healthcheck-pub-" + [System.Guid]::NewGuid().ToString('N'))
+        New-Item -ItemType Directory -Force -Path $outRoot | Out-Null
+        try {
+            Write-Fixtures $outRoot $parseOkLeaks
+            $ro = Invoke-Both @($outRoot)
+            Assert-True ($ro.Node.ExitCode -eq 1) "private-exempt control: node exit $($ro.Node.ExitCode), expected 1"
+            Assert-True ($ro.Node.StdOut -ceq $ro.Python.StdOut) "private-exempt control: node and python stdout differ"
+        } finally {
+            Remove-Item -LiteralPath $outRoot -Recurse -Force -ErrorAction SilentlyContinue
+        }
+    } finally {
+        Remove-Item -LiteralPath $privRoot -Recurse -Force -ErrorAction SilentlyContinue
+    }
 
     # === Block 3: single-file mode (file field == basename) ===
     $oneFile = Join-Path $tempClean 'valid.json'
@@ -186,10 +249,10 @@ try {
 
     if ($script:failures.Count -gt 0) {
         $script:failures | ForEach-Object { Write-Host "FAIL $_" }
-        throw "Healthcheck contract test failed: $($script:failures.Count) failure(s) across $($fixtures.Count) fixtures + 6 blocks."
+        throw "Healthcheck contract test failed: $($script:failures.Count) failure(s) across $($fixtures.Count) fixtures + 7 blocks."
     }
 
-    Write-Host "Healthcheck contract test passed: $($fixtures.Count) fixtures + 6 blocks (dir-scan/clean-exit0/single-file/missing-path/help/unknown-flag), node == python byte-identical."
+    Write-Host "Healthcheck contract test passed: $($fixtures.Count) fixtures + 7 blocks (dir-scan/clean-exit0/private-exempt/single-file/missing-path/help/unknown-flag), node == python byte-identical."
 }
 finally {
     Remove-Item -LiteralPath $tempRoot -Recurse -Force -ErrorAction SilentlyContinue
