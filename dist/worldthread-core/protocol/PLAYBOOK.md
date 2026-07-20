@@ -13,7 +13,7 @@
 
 - `安靜`（預設）：IC 敘事零系統雜訊。僅在功能必要時附一行極簡 OOC 標記（骰值結果、無法寫檔的 `STATE-UPDATE`、回合末存檔確認）；絕不敘述「我先讀了什麼、要更新什麼、用哪個工具、為何改用另一支」。
 - `標準`：骰值結果附簡短 OOC 說明；仍不敘述工具與檔案過程。
-- `除錯`：顯示 `revision`、檔名、工具呼叫等完整 bookkeeping，供開發或排錯；正常遊玩不建議。
+- `除錯`：顯示 `revision`、檔名、工具呼叫等完整 bookkeeping，供開發或排錯（**唯一硬性排除**：`game/private/director/` 內任何檔案的存在、檔名與紀錄 id 不受本層級開放，見 `DATA-SCHEMA.md`〈主持人操作日誌〉「私有檔案的存在本身即機密」）；正常遊玩不建議。
 
 **不受雜訊層級管制的兩項 OOC**（所有層級皆顯示，因為它們屬於玩家的信任與決策權，不是系統雜訊）：
 
@@ -43,7 +43,7 @@
 2. 檢索相關規則和素材；啟用完整規則系統時，先查 `game/state/rules-quickref.md` 定位機制，再回查規則書原文作為 `ruling` 引用依據；若有 rag，依 `RAG-PROTOCOL.md` 使用，並回查來源檔。**資源選項提示**：進入擲骰或關鍵判定前，對照速查卡的資源機制表——若玩家有可影響本次結果的資源可用（消耗品、燒屬性、命運點等），以一行 OOC 提示選項與代價，交由玩家決定；此提示屬玩家決策權，所有雜訊層級皆顯示，不得代玩家決定是否花費。
 3. 解釋玩家意圖；重大歧義先自然詢問。不得替主角決定意圖、台詞、關鍵選擇或骰點。（共窗多人模式下逐一釐清各 PC 的意圖與行動歸屬、輪流給 spotlight，見〈共窗多人〉。）**回應前實體核對**（私下執行，對治敘事錯置）：誰在說話？此 NPC 依其 `known_info` 知道這件事嗎？這項能力屬於哪個物品（查其 `confirmed_abilities`，勿與其他物品混淆）？這是已確認事實還是推測（推測不得當事實敘述）？本回合是否真的改變了狀態？若前文敘事與實體紀錄衝突，以最近一次已確認事件為準，並在本回合自然更正。
 4. 以具體感官、NPC 行動與至少一個可回應的變化敘事。規則優先；無規則時採一致的臨時裁定並記錄（記入主持人操作日誌，見下）。
-5. 只有確定的事實才追加至 `game/state/logs/events.jsonl`，再更新受影響 state（revision 加一）。寫入前逐項核對：事件已追加？`character.json`（含 `system` 容器）、`world.json`、`inventory.json`、`quests.json`、`current-scene.json` 與受影響的 `entities/` 實體檔（`last_updated_event_id` 回指本事件）都已更新？保留修正紀錄，不覆寫已發生歷史。**寫入即驗證可解析**：每寫入一個 `.json`／`.jsonl`（或降級輸出的 `STATE-UPDATE` 內容），寫完立即確認其可被解析（`.json` 整檔解析一次、`.jsonl` 逐行解析）；解析失敗即重寫，絕不留下無法解析的狀態檔——下游工具會整檔略過壞檔。可用 `tools/healthcheck.mjs`／`tools/healthcheck.py` 對 `game/state/` 批次自查（見〈狀態健檢〉）。寫入前重讀 `revision` 發現不符時，依 `DATA-SCHEMA.md`〈revision 衝突處理〉：僅該檔暫停、事件與其他檔照常，回合末以極簡 OOC 提示請玩家仲裁（所有雜訊層級皆顯示），不得自行合併。完成本步驟即為**安全存檔點**：此時可安全中斷 session 而不失已確定進度（尚未確定的回合中互動不寫入，續玩時重做），並以一行極簡 OOC 存檔確認（例：`✦ 進度已存`）告知玩家——所有雜訊層級皆顯示。
+5. 只有確定的事實才追加至 `game/state/logs/events.jsonl`，再更新受影響 state（revision 加一）。寫入前逐項核對：事件已追加？`character.json`（含 `system` 容器）、`world.json`、`inventory.json`、`quests.json`、`current-scene.json` 與受影響的 `entities/` 實體檔（`last_updated_event_id` 回指本事件）都已更新？保留修正紀錄，不覆寫已發生歷史。本回合若寫了 `kind: "correction"`：先讀原事件的 `facts`、逐項重述或明確捨棄，`facts` 須完整重述原事件此刻仍成立的全部內容（未提及者視為不再成立，見 `DATA-SCHEMA.md`〈事件日誌〉），並把受影響的 `established_facts` 等 state 欄位以最新有效版本**取代**、不得與已被取代的舊描述並存。本回合是否有偏離協定的處置？有則依〈規則來源與優先序〉寫 `host-log`（`violation`／`boundary`）。**寫入即驗證可解析**：每寫入一個 `.json`／`.jsonl`（或降級輸出的 `STATE-UPDATE` 內容），寫完立即確認其可被解析（`.json` 整檔解析一次、`.jsonl` 逐行解析）；解析失敗即重寫，絕不留下無法解析的狀態檔——下游工具會整檔略過壞檔。可用 `tools/healthcheck.mjs`／`tools/healthcheck.py` 對 `game/state/` 批次自查（見〈狀態健檢〉）。寫入前重讀 `revision` 發現不符時，依 `DATA-SCHEMA.md`〈revision 衝突處理〉：僅該檔暫停、事件與其他檔照常，回合末以極簡 OOC 提示請玩家仲裁（所有雜訊層級皆顯示），不得自行合併。完成本步驟即為**安全存檔點**：此時可安全中斷 session 而不失已確定進度（尚未確定的回合中互動不寫入，續玩時重做），並以一行極簡 OOC 存檔確認（例：`✦ 進度已存`）告知玩家——所有雜訊層級皆顯示。
 6. 場景結束或累積約 6–10 個事件時，更新摘要（依 `DATA-SCHEMA.md`〈摘要〉的必要章節與 front matter；摘要屬玩家可見文件，適用〈前線〉節的前線資訊禁止清單）；檢查前線、節奏與未回收線索（依 `game/session-brief.md` 的戰役長度預期與 `campaign-arc.md` 主線里程碑配速，見〈戰役收尾〉），並依 `game/private/director/hook-market.md` 引入或調整候選鉤子的權重（未回收的線索、承諾與關係加權，玩家無興趣的降權）。同時檢視 `world.json`：`current-scene.json` 中已具跨場景效力的 `established_facts` 搬入 `known_facts`、不再高頻相關的 `known_facts` 移入 `archived_facts`（判準見 `DATA-SCHEMA.md`〈世界〉）。場景切換時（判準見 `DATA-SCHEMA.md`〈場景與 `scene_id`〉——地點或時間段改變、且舊場景的威脅／線索／出口大多不再適用即屬切換，存疑時傾向切換）：把 `current-scene.json` 快照存入 `archive/scenes/<scene_id>.json`，將不再活躍的實體檔移至 `archive/`（移動、不刪除），再為新場景重建 `current-scene.json`。
 
 ## 戰役收尾
@@ -99,7 +99,7 @@
 
 ## 狀態健檢
 
-寫入 `game/state/` 後若要批次確認沒有無法解析的檔案，可呼叫發行包內附的健檢工具（零依賴、雙執行環境，輸出契約相同）：能執行 Node 18+ 用 `node tools/healthcheck.mjs game/state`；能執行 Python 3.8+ 用 `python tools/healthcheck.py game/state`（部分系統指令名為 `python3`）。工具遞迴掃描目標目錄（省略時預設 `game/state`）下的 `.json`／`.jsonl`，逐檔輸出一行 JSON（鍵 `file`／`kind`／`ok`／`line`，`line` 為 `.jsonl` 第一個解析失敗的行號、否則 `null`），末行為彙總 `{"summary":{...}}`；有任何檔案解析失敗時結束碼為 1。此工具僅**讀取**、不修改任何檔案，供主持人或玩家回報問題前自查；它是輔助而非替代——每次寫入時仍應遵〈每回合〉第 5 步「寫入即驗證可解析」。
+寫入 `game/state/` 後若要批次確認沒有無法解析的檔案，可呼叫發行包內附的健檢工具（零依賴、雙執行環境，輸出契約相同）：能執行 Node 18+ 用 `node tools/healthcheck.mjs game/state`；能執行 Python 3.8+ 用 `python tools/healthcheck.py game/state`（部分系統指令名為 `python3`）。工具遞迴掃描目標目錄（省略時預設 `game/state`）下的 `.json`／`.jsonl`，逐檔輸出一行 JSON（鍵 `file`／`kind`／`ok`／`line`／`leak`，`line` 為 `.jsonl` 第一個解析失敗的行號、否則 `null`），末行為彙總 `{"summary":{...}}`；有任何檔案未通過時結束碼為 1。除可解析性外，它同時檢查玩家可見檔是否夾帶導演私有檔的識別字串（`host-log`／`hlog-`／`campaign-arc`／`hook-market`／`private/director`），命中即 `ok:false` 並於 `leak` 回報命中的字串——對應〈主持人操作日誌〉「私有檔案的存在本身即機密」；豁免為**逐檔判定**：位於 `game/private/` 或 `tools/` 之內的檔案略過此項檢查（私有檔本來就會提及自己；`tools/` 的夾具檔以這些字串為測試資料）。`archive/` 底下的封存與衝突備份檔一樣會被掃描並計入彙總，屬預期——它們是歷史紀錄，同樣不得夾帶私有識別字串。此工具僅**讀取**、不修改任何檔案，供主持人或玩家回報問題前自查；它是輔助而非替代——每次寫入時仍應遵〈每回合〉第 5 步「寫入即驗證可解析」。
 
 ## 主動但公平
 
