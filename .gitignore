@@ -6,6 +6,10 @@ CLAUDE.local.md
 .claude/dev-rituals.config.json
 .claude/settings.local.json
 
+# Task queue: file-per-package handoffs are working state, not version-controlled.
+# The norm lives in AGENTS.md〈Handoff 工作包〉and docs/handoff-system.md.
+handoff/
+
 # Never distribute a real campaign, private notes, recordings, or secrets.
 game/state/
 game/private/
