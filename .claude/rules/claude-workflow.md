@@ -1,24 +1,30 @@
 # Claude Code 專屬：Workflow 編排與 subagent 分發規範
 
-> 本檔僅供 Claude Code 使用（其他代理請忽略）。使用者 2026-07-14 定案、2026-07-18 擴充定案（架構設計＝fable、對抗審查格式、驗收紀律）、2026-07-20 擴充定案（降級產出台帳）；另一專案的具體示例已改寫為本專案原生條文。
+> 本檔僅供 Claude Code 使用（其他代理請忽略）。使用者 2026-07-14 定案、2026-07-18 擴充定案（架構設計、對抗審查格式、驗收紀律）、2026-07-20 擴充定案（降級產出台帳）、**2026-07-26 修訂定案（fable 使用範圍收斂至資安領域、架構設計改 opus）**；另一專案的具體示例已改寫為本專案原生條文。
 
 ## Model 分發階梯（四級：haiku＜sonnet＜opus＜fable）
 
-主迴圈＝session model；依狀況每 session 於 Fable/Opus 間切換。**fable 級要視為不一定能使用。**
+主迴圈＝session model，常態為 **opus**。**fable 僅用於資安研究與資安相關設計**（見下表該列），其餘工作一律不派 fable——2026-07-26 使用者定案，理由＝Opus 5 能力提升後，架構設計等原本上派 fable 的工作以 opus 執行即足。fable 級仍要視為不一定能使用。
 
 | 工作類型 | 派發方式 | 說明 |
 | --- | --- | --- |
 | 純檔案定位／檢索（找 X 在哪、列 caller、grep pattern） | `agentType:'Explore', model:'haiku'` | haiku 只在純 retrieval 安全 |
-| 設計／架構調查（dev-research-advisor：seam 測繪＋Options＋cons-mitigation） | `model:'sonnet'` 預設 | 產出餵 ceremony、由主迴圈再合成。升 opus 僅限例外：①把 seam 正確 map 出來本身即難點 ②錯誤事實主迴圈難察覺且代價高 ③該調查無主迴圈再合成的終局性。**調查／檢索天花板＝opus，fable 不對其開放**（opus 用於 retrieval 已屬過剩、fable 更甚） |
-| 架構「設計」 | **一律 fable**：主迴圈（Fable session）親做、或 workflow `agent()` 顯式 `model:'fable'` | 2026-07-14 使用者定案、2026-07-18 收錄本檔。判準＝輸出是否為**將凍結的架構決策／契約**——schema 形狀、公開 API、跨模組契約、為 ceremony 產 Options＋cons-mitigation 的設計 lane 皆屬之。與「調查／檢索天花板＝opus」不衝突：天花板條款限檢索／事實調查；sonnet 僅適用「事實測繪／現況盤點」類調查。fable 不可用時＝主迴圈以 session model 親做並於產出標註降級（2026-07-19 定案） |
+| 設計／架構調查（dev-research-advisor：seam 測繪＋Options＋cons-mitigation） | `model:'sonnet'` 預設 | 產出餵 ceremony、由主迴圈再合成。升 opus 僅限例外：①把 seam 正確 map 出來本身即難點 ②錯誤事實主迴圈難察覺且代價高 ③該調查無主迴圈再合成的終局性。**調查／檢索天花板＝opus**（opus 用於 retrieval 已屬過剩）；非資安主題不派 fable |
+| 架構「設計」 | **一律 opus**：主迴圈（Opus session）親做、或 workflow `agent()` 顯式 `model:'opus'` | 2026-07-14 使用者定案「架構設計上派最高階」、2026-07-18 收錄本檔、**2026-07-26 定案改為 opus**（Opus 5 能力提升，不再上派 fable）。判準不變＝輸出是否為**將凍結的架構決策／契約**——schema 形狀、公開 API、跨模組契約、為 ceremony 產 Options＋cons-mitigation 的設計 lane 皆屬之。與「調查／檢索天花板＝opus」不衝突：天花板條款設的是檢索／事實調查的**上限**，本列設的是設計工作的**下限**；sonnet 僅適用「事實測繪／現況盤點」類調查 |
+| **資安研究／資安相關設計**（威脅模型、攻擊面與信任邊界分析、密碼學／認證授權設計、漏洞與利用分析、資安審查） | **一律 fable**：主迴圈（Fable session）親做、或 `agent()` 顯式 `model:'fable'` | 2026-07-26 使用者定案：**fable 的唯一適用領域**。fable 不可用時＝以 opus 親做、產出標註降級並登記台帳（見〈降級產出台帳〉） |
 | 程式碼實作 | `model:'sonnet'` lane 或主迴圈（session model）直接做 | |
-| 主迴圈合成／ceremony／cons-mitigation／AskUserQuestion／對抗審查驗證誠實（test-honesty）lens | **不下放**：agent() 不帶 model | 繼承 session model、自動對齊主迴圈（Fable session→fable、Opus session→opus） |
+| 主迴圈合成／ceremony／cons-mitigation／AskUserQuestion／對抗審查驗證誠實（test-honesty）lens | **不下放**：agent() 不帶 model | 繼承 session model、自動對齊主迴圈（常態 Opus session→opus；資安主題的 Fable session→fable） |
 
 理由：調查產出被主迴圈再合成、事實準確度才是紅線；dev-research-advisor 的判斷／cons-mitigation 用 sonnet 才不逼主迴圈重做。
 
-## 降級產出台帳（2026-07-20 使用者定案）
+## 降級產出台帳（2026-07-20 使用者定案；2026-07-26 隨 fable 收斂修訂）
 
-fable 不可用而由主迴圈降級親做的**架構設計**，除了在產出處標註降級之外，**必須登記進台帳**：`DEGRADED-DESIGN-REGISTRY.local.md`（repo 根、`.gitignore` 排除；本條慣例入版控、台帳本身屬工作狀態不入版控）。不登記＝日後無從得知哪些設計該回頭覆核。
+未以該工作類型應有階級產出的成果，除了在產出處標註降級之外，**必須登記進台帳**：`DEGRADED-DESIGN-REGISTRY.local.md`（repo 根、`.gitignore` 排除；本條慣例入版控、台帳本身屬工作狀態不入版控）。不登記＝日後無從得知哪些設計該回頭覆核。**兩種登記情形**：
+
+- **架構設計未達 opus**：應由 opus 產出的架構設計改由更低階模型（sonnet／haiku）產出。
+- **資安設計未達 fable**：應由 fable 產出的資安研究／資安相關設計因 fable 不可用而以 opus 代做。
+
+🔴 **過渡條文（2026-07-26 使用者定案）**：台帳中既有登記為「**待 fable 覆核**」的架構設計條目，**一律改排以當前版本 opus 重作／覆核**——不再等待 fable。逐筆把「覆核者」改記為 opus 後照〈覆核作業〉辦理；此變更本身不改變各條目的覆核 gate 與風險等級。
 
 **登記欄位**：id（永不重用）／日期／產出物（檔案＋節次）／設計內容一句話／實際使用模型／降級原因／風險等級（是否將凍結成契約、有無下游消費者）／**覆核 gate**／狀態／覆核紀錄。
 
@@ -27,16 +33,16 @@ fable 不可用而由主迴圈降級親做的**架構設計**，除了在產出�
 - **已凍結進協定的設計**：錯了要改版、有下游成本，但至少經過驗證與對抗審查。
 - **尚未定案、要送進 ceremony 的 Options＋cons-mitigation**：**使用者是從這些選項裡挑的**——選項集若因降級而漏了方案或誤判 cons，定案就建立在殘缺基礎上，且事後看不出來。**此類 gate 一律為「開板前」。**
 
-**狀態值**：`待覆核`／`已覆核-無需修改`／`已覆核-已修改`／`已失效`。**「已失效」不可省**——設計被後續變更取代時即標記，否則台帳只增不減、無法收斂，也會浪費 fable 額度覆核死條目。
+**狀態值**：`待覆核`／`已覆核-無需修改`／`已覆核-已修改`／`已失效`。**「已失效」不可省**——設計被後續變更取代時即標記，否則台帳只增不減、無法收斂，也會浪費覆核成本在死條目上。
 
 **不算降級產出、不必登記**：使用者親自定案的決策（那是人的決定，不是模型產出）；事實測繪／現況盤點類調查（依天花板條款本就 sonnet 即可）；程式碼實作。
 
-**覆核作業（Fable session 的「升級回去」）**：讀台帳 → 依 gate 與風險排序 → 逐筆重新推導該設計 → 標記狀態並寫覆核紀錄；判定需修改者，修正一律走正常變更流程（分支＋PR），不在覆核當下逕改。
+**覆核作業（「升級回去」）**：**由當前版本的 opus session 執行**（架構設計條目）或 fable session 執行（資安條目）——讀台帳 → 依 gate 與風險排序 → 逐筆重新推導該設計 → 標記狀態並寫覆核紀錄；判定需修改者，修正一律走正常變更流程（分支＋PR），不在覆核當下逕改。**覆核＝重新推導，不是重讀後點頭**：條目若原本就由當時的 opus 產出，仍須以現行 opus 重作一次推導才可標記已覆核。
 
 ## Fork 與 model 覆寫
 
 - ⚠ model 覆寫對 fork **無效**（fork 恆繼承父＝主迴圈 model、成本同級）→ 可下放的 fan-out 一律顯式 `agentType`＋`model`，勿用 fork 做檢索／機械工作。
-- workflow `agent()` 覆寫須顯式帶 `model` 才生效（enum 含 `'fable'`）。
+- workflow `agent()` 覆寫須顯式帶 `model` 才生效（enum 含 `'fable'`，但依〈Model 分發階梯〉**只有資安領域才派 fable**）。
 - `agent()` 必須顯式 `agentType`（ultracode／workflow 不會自動挑自建 agent；先對照 dev-rituals 索引挑對的 specialist）。
 
 ## Task brief 撰寫（零設計研究雙刃）
@@ -61,7 +67,7 @@ task brief 固定格式，必須 distill：
 ## 對抗審查格式
 
 - 每輪實作後 fan-out **3 獨立 reviewer**，lens：①**驗證誠實（test-honesty）**〔最關鍵：假綠、恆真斷言、守衛短路跳過斷言、數值逐項核算、確定性；不得把未跑過的驗證宣稱為綠〕②**correctness 或 docs-accuracy**〔依變更性質二擇一：協定／文件變更→docs-accuracy、腳本／CI 變更→correctness〕③**contract-integration**〔契約完整性：DATA-SCHEMA 鍵名、`template.json` 版本單一來源、visibility 三值 enum 不擴充、衍生專案 checksum 契約、PLAYBOOK／DATA-SCHEMA／發行包 README／session-brief／DESIGN 交叉引用一致〕。
-- **model**：①驗證誠實＝主迴圈同級（`agent()` 不帶 `model` 繼承 session model；假綠守門、不下放）；②③預設 `sonnet`，高風險工作項（schema 契約、公私分層、revision 衝突／擲骰確定性）可升 `opus`。
+- **model**：①驗證誠實＝主迴圈同級（`agent()` 不帶 `model` 繼承 session model；假綠守門、不下放）；②③預設 `sonnet`，高風險工作項（schema 契約、公私分層、revision 衝突／擲骰確定性）可升 `opus`；審查標的屬資安研究／資安設計時，該 lens 可升 `fable`。
 - reviewer **唯讀主樹、不可 `isolation:'worktree'`**（worktree 看不到未 commit 改動）；**reviewer 不得 Edit／不得動檔**（mutation 親證與所有修正一律主迴圈做）。
 - 每 finding 標 **BLOCKER／MAJOR／MINOR／NIT**＋file:line＋具體修法；末給明確 **verdict（SAFE／NOT SAFE）**＋單一最重要 finding。schema 強制 StructuredOutput；agent StructuredOutput 失敗 → 改無 schema 的 prose Agent 重跑。
 - 主迴圈採納 BLOCKER／MAJOR（＋值得的 MINOR）→ 修 → 重親驗。
