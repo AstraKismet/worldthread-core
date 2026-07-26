@@ -99,7 +99,7 @@
 
 ## 狀態健檢
 
-寫入 `game/state/` 後若要批次確認沒有無法解析的檔案，可呼叫發行包內附的健檢工具（零依賴、雙執行環境，輸出契約相同）：能執行 Node 18+ 用 `node tools/healthcheck.mjs game/state`；能執行 Python 3.8+ 用 `python tools/healthcheck.py game/state`（部分系統指令名為 `python3`）。工具遞迴掃描目標目錄（省略時預設 `game/state`）下的 `.json`／`.jsonl`，逐檔輸出一行 JSON（鍵 `file`／`kind`／`ok`／`line`／`leak`，`line` 為 `.jsonl` 第一個解析失敗的行號、否則 `null`），末行為彙總 `{"summary":{...}}`；有任何檔案未通過時結束碼為 1。除可解析性外，它同時檢查玩家可見檔是否夾帶導演私有檔的識別字串（`host-log`／`hlog-`／`campaign-arc`／`hook-market`／`private/director`），命中即 `ok:false` 並於 `leak` 回報命中的字串——對應〈主持人操作日誌〉「私有檔案的存在本身即機密」；豁免為**逐檔判定**：位於 `game/private/` 或 `tools/` 之內的檔案略過此項檢查（私有檔本來就會提及自己；`tools/` 的夾具檔以這些字串為測試資料）。`archive/` 底下的封存與衝突備份檔一樣會被掃描並計入彙總，屬預期——它們是歷史紀錄，同樣不得夾帶私有識別字串。此工具僅**讀取**、不修改任何檔案，供主持人或玩家回報問題前自查；它是輔助而非替代——每次寫入時仍應遵〈每回合〉第 5 步「寫入即驗證可解析」。
+寫入 `game/state/` 後若要批次確認沒有無法解析的檔案，可呼叫發行包內附的健檢工具（零依賴、雙執行環境，輸出契約相同）：能執行 Node 18+ 用 `node tools/healthcheck.mjs game/state`；能執行 Python 3.8+ 用 `python tools/healthcheck.py game/state`（部分系統指令名為 `python3`）。工具遞迴掃描目標目錄（省略時預設 `game/state`）下的 `.json`／`.jsonl`，逐檔輸出一行 JSON（鍵 `file`／`kind`／`ok`／`line`／`leak`，`line` 為 `.jsonl` 第一個解析失敗的行號、否則 `null`），末行為彙總 `{"summary":{...}}`；有任何檔案未通過時結束碼為 1。除可解析性外，它同時檢查玩家可見檔是否夾帶導演私有檔的識別字串（`host-log`／`hlog-`／`campaign-arc`／`hook-market`／`fronts/`／`private/director`），命中即 `ok:false` 並於 `leak` 回報命中的字串——對應〈主持人操作日誌〉「私有檔案的存在本身即機密」；豁免為**逐檔判定**：位於 `game/private/` 或 `tools/` 之內的檔案略過此項檢查（私有檔本來就會提及自己；`tools/` 的夾具檔以這些字串為測試資料）。`archive/` 底下的封存與衝突備份檔一樣會被掃描並計入彙總，屬預期——它們是歷史紀錄，同樣不得夾帶私有識別字串。此工具僅**讀取**、不修改任何檔案，供主持人或玩家回報問題前自查；它是輔助而非替代——每次寫入時仍應遵〈每回合〉第 5 步「寫入即驗證可解析」。
 
 ## 主動但公平
 
