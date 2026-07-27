@@ -24,25 +24,11 @@ Worldthread（織世）是一個**平台中立的單人 TRPG 範本**：使用�
 
 ## 結構速覽
 
-```text
-.
-├─ AGENTS.md / CLAUDE.md            # 代理入口（本檔／Claude 匯入層）
-├─ PROJECT-DESIGN.md                # 設計規格
-├─ PROJECT-PLAN.md                  # 建置計畫與風險登錄
-├─ docs/handoff-system.md           # handoff 工作包完整指南／可攜源（權威規則見〈Handoff 工作包〉節）
-├─ handoff/                         # 任務佇列（gitignored、不入庫；一包一檔、ls 即看板）
-├─ scripts/verify-package.ps1       # 封裝驗證腳本（PowerShell，已定案維持）
-├─ .github/workflows/               # ci.yml（PR 與 main push 驗證）、release.yml（v* tag 發行）
-└─ dist/worldthread-core/   # 唯一可發行內容
-   ├─ template.json                 # 唯一公開版本來源
-   ├─ protocol/                     # PLAYBOOK、DATA-SCHEMA、RAG、VOICE、adapters
-   ├─ game/reference|private|templates/
-   └─ examples/
-```
+目錄結構以 repo 現況為準（`ls` 即得），帶用途註解的完整版見 `README.md`〈儲存庫結構〉，本檔不重複。以下邊界無法由結構推導，另有出處：`dist/worldthread-core/` 是唯一可發行內容與唯一封裝來源（紅線 2）、`handoff/` 不入庫（見〈Handoff 工作包〉節）、本機不追蹤檔案清單見〈本機、不追蹤的檔案〉節。
 
 ## 驗證
 
-- 本機完整驗證：`./scripts/verify-package.ps1 -OutputDirectory artifacts`（PowerShell；與 Windows PowerShell 5 相容，CI 用 pwsh 執行同一腳本）。改動 `dist/` 內任何內容後必跑。
+- 本機完整驗證：`./scripts/verify-package.ps1 -OutputDirectory artifacts`（**PowerShell 實作已定案維持**，非待議事項；與 Windows PowerShell 5 相容，CI 用 pwsh 執行同一腳本）。改動 `dist/` 內任何內容後必跑。
 - 驗證涵蓋：SemVer、必要結構、UTF-8／JSON、Markdown 本地連結、禁止項（狀態／快取／音檔／金鑰樣式），並試建 ZIP。
 - 產出的 `artifacts/` 已被 `.gitignore` 排除，不要提交。
 
