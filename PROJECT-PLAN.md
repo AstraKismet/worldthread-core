@@ -99,7 +99,7 @@
 
   **③ 2026-07-26（0.6.3 實際發行資產，HANDOFF-001）**：三棵獨立樹 Run 3／Run 3b（續玩拆獨立 run）／Run 4，三位未被告知目標的 sonnet 主持人，逐回合快照 33 份。**R2 通過**（衝突備份與被覆蓋原文逐位元相同）、**R1 行為面通過**（六 marker 全樹零命中、負向注入證明新檢查有效）、**N1 部分通過**（矛盾並存已消除，但完整重述漏一項仍成立子事實）；場景切換難判例、收尾提議等確認、`campaign_status: concluded` 磁碟證據三格由失敗翻正。三 lens 全部 NOT SAFE、收斂到一則主迴圈假綠（已親驗並修正）。
 
-  **仍未關閉、屬後續工作（不阻擋本項驗收）**：🔴 新 BLOCKER＝前線 `id` 經**檔名**洩漏到玩家可見層（`archive/summaries/<arc-id>.md` 取用私有識別碼，機械檢查因只掃內容而完全無感）；`revision` 遞增停擺（Run 4 自仲裁後 6 次跨 3 檔，有下游 lost update 風險）；時間戳造假（三位主持人中兩位）；角色檔 `id`／`last_updated_event_id` 條文自我打結；`PLAYBOOK:102` marker 清單漏 `fronts/`。完整逐項與落地成本分類見 `ACCEPTANCE-0.6.x.local.md`〈L93 續〉。
+  **仍未關閉、屬後續工作（不阻擋本項驗收）**：🔴 新 BLOCKER＝前線 `id` 經**檔名**洩漏到玩家可見層（`archive/summaries/<arc-id>.md` 取用私有識別碼，機械檢查因只掃內容而完全無感）；`revision` 遞增停擺（Run 4 自仲裁後 6 次跨 3 檔，有下游 lost update 風險）；時間戳造假（三位主持人中兩位）；角色檔 `id`／`last_updated_event_id` 條文自我打結。（原列第五項「`PLAYBOOK:102` marker 清單漏 `fronts/`」**已修正（PR #37）**——條文側已補齊為六項、與雙實作工具逐項逐序一致；⚠ **尚未隨任何 tag 出貨**，已發行的 v0.6.3 資產仍是五項，須隨下一個 tag 才送達下游消費者。此為事實更新，非驗收勾銷。）完整逐項與落地成本分類見 `ACCEPTANCE-0.6.x.local.md`〈L93 續〉。
 
   結果檔：`worldthread-playground/0.6.3-run3-20260726/`、`0.6.3-run3b-continue-20260726/`、`0.6.3-run4-20260726/` 各自的 `PLAYTEST-RESULT-*.local.md`。A2 定調不變（回應速度／出戲感僅由真人主觀回報）。）
 - [x] **journal 相依守則（D2＋B6）**：局部閘門延伸——僅動 `system`／`entities`／visibility／`campaign_status` 的工作項須核對 journal（可視化衍生專案）回饋，並設等待期限（動工前無回饋＝按現況推進、事後補核）；**journal 屬另開專案，core 端不逕改其內容**；core 發行檢查清單（本機檔）加 sibling 消費者同步提醒行（B6）。（**使用者 2026-07-26 驗收通過**；閘門已實際運作於 `0.6.2`／`0.6.3` 兩次 DATA-SCHEMA 變動的 release note 標示。）
