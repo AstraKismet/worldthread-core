@@ -112,7 +112,7 @@ blocked-cleared: []      # 已清除的阻塞（附清除日期），供稽核
 - **驗證留痕** → commit message body（🔴 **不落會被刪的包內**：對抗審查三份 verdict＋單一最重要 finding 一律寫入該輪實作 commit）。
 - **git**：`handoff/` 全目錄 gitignore；工作產出照專案常規 commit（里程碑式）；包的刪除不留 git 痕跡——這是特性不是缺陷（佇列狀態不值得版控，規範與定案才值得）。
 - **session-handoff skill／dev-rituals**：③A 定案下 skill 職能不變（仍更新敘事檔），`dev-rituals.config.json` 的 `handoffFile` 仍指向敘事檔；skill 只更新敘事檔的脈絡／狀態、**不重建佇列**。⚠ 若未來改走「整併退場」（③B、須改 skill target）須另出具給其他用同 skill 專案的遷移指示文件。
-- **降級產出台帳**：`DEGRADED-DESIGN-REGISTRY.local.md` 結構上即一個包佇列，屬本系統首批遷移對象之一。
+- **降級產出 registry**：`DEGRADED-DESIGN-REGISTRY.local.md` 結構上即一個包佇列，屬本系統首批遷移對象之一。
 - **未來遷移 issue 系統**：frontmatter 即 issue 欄位對映（title／labels／milestone／blocked-by→依賴）；屆時「建包」→開 issue、「刪包」→關 issue，模板與生命週期不變。
 
 ## 8. 移植到其他專案的 checklist
