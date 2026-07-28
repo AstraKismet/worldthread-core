@@ -68,7 +68,7 @@ if ($manifest.name -ne $expectedName) {
     'game/reference/characters/lin-yao.md',
     'game/reference/rules/lightweight-rulings.md',
     'game/reference/setting/fog-ferry.md',
-    'game/private/director/fronts/fog-ferry.json',
+    'game/private/director/fronts/echo-weaver.json',
     'game/private/director/hook-market.md',
     'game/private/director/campaign-arc.md',
     'examples/fog-ferry-first-turn.md',
