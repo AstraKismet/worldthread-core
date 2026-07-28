@@ -80,7 +80,7 @@ task brief 固定格式，必須 distill：
 - 每 finding 標 **BLOCKER／MAJOR／MINOR／NIT**＋file:line＋具體修法；末給明確 **verdict（SAFE／NOT SAFE）**＋單一最重要 finding。schema 強制 StructuredOutput；agent StructuredOutput 失敗 → 改無 schema 的 prose Agent 重跑。
 - 主迴圈採納 BLOCKER／MAJOR（＋值得的 MINOR）→ 修 → 重親驗。
 - **reviewer 指控主迴圈的驗證不實時，主迴圈必須自己重跑該驗證**，不得以「已核對過」帶過（2026-07-28 實例：BLOCKER 成立）。
-- 涉 handoff 工作包者：三份 verdict＋單一最重要 finding **另須寫入該輪實作 commit 的 message body**（包完成即刪、留痕不落刪檔包）——見 `AGENTS.md`〈Handoff 工作包〉。**非 handoff 場合**（如本輪這類插入工作）此義務不自動成立，但 verdict 仍應寫入該輪 commit body，否則審查結論只存在於對話輪次、事後無從稽核。
+- 涉 handoff 工作包者：三份 verdict＋單一最重要 finding **另須寫入該輪實作 commit 的 message body**（包完成即刪、留痕不落刪檔包）——見 `AGENTS.md`〈Handoff 工作包〉。
 
 ## 驗收紀律（集中驗收與人工測試）
 
@@ -96,7 +96,7 @@ task brief 固定格式，必須 distill：
 
 ## Lane 平行
 
-只在無依賴的 milestone 間用；平行 lane 須 disjoint 檔。
+只在無依賴的 milestone 間用。
 
 ## 本 repo 的 dev-rituals 設定
 
