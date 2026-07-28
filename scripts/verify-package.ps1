@@ -111,6 +111,40 @@ foreach ($jsonFile in $files | Where-Object Extension -eq '.json') {
     }
 }
 
+# Shipped sample fronts: `id` must equal the file name stem.
+#
+# SCOPE -- this is a PACKAGING self-check over material this repo ships, NOT a protocol
+# requirement on player data. Whether protocol/DATA-SCHEMA.md should require
+# filename == id for every front is a separate, still-undecided question
+# (handoff HANDOFF-007, question 3). Do not cite this assertion as that decision.
+#
+# WHY it exists: a half-finished rename of the sample front (file renamed but the inner
+# `id` left behind, or vice versa) otherwise passes every check green -- Assert-File only
+# proves the path exists, JSON parsing only proves it is well formed, and the healthcheck
+# leak markers never contain a front id. Verified: reverting only the `id` used to leave
+# the whole suite green.
+$frontsDir = Join-Path $PackagePath 'game/private/director/fronts'
+if (-not (Test-Path -LiteralPath $frontsDir -PathType Container)) {
+    # Hard failure rather than a silent skip: a guard that can be disabled by moving the
+    # directory is not a guard. If the sample fronts move (A10 relocates the sample
+    # director material), update this path in the same change as the required-file list.
+    throw "Sample fronts directory not found: game/private/director/fronts"
+}
+$frontFiles = @(Get-ChildItem -LiteralPath $frontsDir -File -Filter '*.json')
+if ($frontFiles.Count -eq 0) {
+    throw "Sample fronts directory contains no .json front: game/private/director/fronts"
+}
+foreach ($front in $frontFiles) {
+    $frontJson = Read-Utf8Strict $front.FullName | ConvertFrom-Json
+    $stem = [System.IO.Path]::GetFileNameWithoutExtension($front.Name)
+    if (-not $frontJson.PSObject.Properties.Name.Contains('id')) {
+        throw "Sample front is missing the required 'id' key: $($front.Name)"
+    }
+    if ([string]$frontJson.id -cne $stem) {
+        throw "Sample front id must equal its file name stem: $($front.Name) declares id '$($frontJson.id)'"
+    }
+}
+
 # Check local relative Markdown links. Web, mail, and anchor links are excluded.
 foreach ($markdownFile in $files | Where-Object Extension -eq '.md') {
     $content = Read-Utf8Strict $markdownFile.FullName
