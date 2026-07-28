@@ -4,6 +4,11 @@
 # 可互為對照組（契約由 tools/healthcheck.fixtures.jsonl 鎖定）。僅讀取、不修改任何檔案。
 # 契約範圍：目標樹為一般檔案與目錄；符號連結一律略過、無法讀取的項目略過而非中止
 # （game/state 正常情況下不含符號連結，兩支工具在此範圍內逐位元一致）。
+# 發行包根上溯（find_base）的契約範圍：於 POSIX 根、Windows 磁碟根與一般 UNC 根
+# （\\server\share）皆會終止；\\?\UNC\ 延伸路徑的走訪深度兩支實作不同，但在其上找不到
+# template.json 時 base 結果仍相同，故不產生輸出差異。豁免比對前提是 base 必為掃描目標
+# 的祖先（故與檔案同磁碟）——若日後允許外部指定 base，須先補跨磁碟的雙實作契約案例：
+# path.relative 會回傳絕對路徑，而 os.path.relpath 會丟 ValueError。
 import json
 import os
 import sys
@@ -22,8 +27,18 @@ HELP = """用法：python healthcheck.py [路徑]
 
 私有識別字串檢查：
   依 DATA-SCHEMA〈主持人操作日誌〉，game/private/director/ 底下任何檔案的存在、
-  檔名與紀錄 id 都不得出現在玩家可見輸出。逐檔判定：位於 game/private/ 或 tools/
-  之內的檔案略過本檢查（私有檔本來就會提及自己；夾具檔以 marker 字面為測試資料）。
+  檔名與紀錄 id 都不得出現在玩家可見輸出。逐檔判定，且**錨定在發行包根**：只有
+  發行包根底下的 game/private/、tools/、example-campaign/ 三個目錄之內的檔案略過
+  本檢查（私有檔與隨包範例導演素材本來就會提及自己；夾具檔以 marker 字面為測試
+  資料）。發行包根＝自掃描目標往上尋找到的第一個含 template.json 的目錄；找不到
+  時退回以掃描起點為基準（掃描目標為單一檔案時＝該檔所在目錄）。
+  往上不以絕對路徑比對，因為發行包會被解壓到任意位置、祖先目錄名不受控（例如整包
+  放在名為 tools 的資料夾下，絕對路徑比對會讓整棵樹靜默豁免＝隱私偽陰性）；往下
+  豁免不遞及更深層的同名目錄（自建的 game/state/tools/ 底下照樣會被檢查）。
+
+路徑語意：
+  路徑不存在 → 結束碼 1 並於 stderr 報錯；路徑存在但其下無可掃檔案 → 結束碼 0
+  且彙總為 {"scanned":0,...}。兩者可據此區分，供自動化盲跑使用。
 
 選項：
   --help  顯示本說明並結束。
@@ -35,11 +50,36 @@ HELP = """用法：python healthcheck.py [路徑]
 PRIVATE_MARKERS = ["host-log", "hlog-", "campaign-arc", "hook-market", "fronts/", "private/director"]
 
 
-# 這些位置提及私有檔名屬正常，不套用上述檢查：
-# game/private/ 內的私有檔本來就會提及自己；tools/ 內的夾具檔以 marker 字面為測試資料。
-def leak_exempt(abs_path):
-    norm = "/" + os.path.abspath(abs_path).replace(os.sep, "/") + "/"
-    return "/game/private/" in norm or "/tools/" in norm
+# 這些位置提及私有檔名屬正常，不套用上述檢查：game/private/ 內的私有檔本來就會提及
+# 自己；tools/ 內的夾具檔以 marker 字面為測試資料；example-campaign/ 是隨包出貨的範例
+# 導演素材，與私有素材同等待遇（見 PLAYBOOK〈狀態健檢〉）。
+EXEMPT_SEGMENTS = ["/game/private/", "/tools/", "/example-campaign/"]
+
+
+# 發行包根＝自 start_dir 往上第一個含 template.json 的目錄；找不到則回傳 fallback。
+# 豁免必須以發行包根為基準：發行包會被解壓到任意位置，用絕對路徑比對時祖先目錄名
+# （例如某層剛好叫 tools）會讓整棵樹靜默豁免，形成隱私偽陰性。
+def find_base(start_dir, fallback):
+    d = os.path.abspath(start_dir)
+    while True:
+        if os.path.isfile(os.path.join(d, "template.json")):
+            return d
+        parent = os.path.dirname(d)
+        if parent == d:
+            return os.path.abspath(fallback)
+        d = parent
+
+
+# 前綴錨定（startswith）而非任意位置比對：豁免的是「發行包根底下這三個目錄」，不是
+# 「路徑裡任何一層叫這個名字」。用任意位置比對時，玩家自建的 game/state/tools/ 會讓
+# 其下檔案靜默豁免——那是玩家可寫區，正是最需要檢查的地方。
+def leak_exempt(abs_path, base):
+    rel = os.path.relpath(os.path.abspath(abs_path), base).replace(os.sep, "/")
+    norm = "/" + rel + "/"
+    for seg in EXEMPT_SEGMENTS:
+        if norm.startswith(seg):
+            return True
+    return False
 
 
 def write_out(text):
@@ -74,7 +114,7 @@ def collect(root):
 
 
 # 檢查單一檔案，回傳 {kind, ok, line, leak}。
-# check_leak 為 False 時（該檔位於 game/private/ 或 tools/ 內）略過私有字串檢查。
+# check_leak 為 False 時（該檔相對發行包根落在 EXEMPT_SEGMENTS 之內）略過私有字串檢查。
 def check(abs_path, check_leak):
     kind = "jsonl" if abs_path.endswith(".jsonl") else "json"
     try:
@@ -127,15 +167,20 @@ def main():
 
     if os.path.isdir(target):
         entries = collect(target)
+        start_dir = target
     else:
         entries = [{"abs": target, "rel": os.path.basename(target)}]
+        start_dir = os.path.dirname(os.path.abspath(target))
+
+    # 豁免基準：目標為檔案時自其所在目錄起算；找不到發行包根時退回掃描起點。
+    base = find_base(start_dir, start_dir)
 
     ok = 0
     failed = 0
     out = []
     for e in entries:
         # 逐檔判定豁免：祖先目錄掃描時，私有檔與夾具檔仍各自豁免。
-        r = check(e["abs"], not leak_exempt(e["abs"]))
+        r = check(e["abs"], not leak_exempt(e["abs"], base))
         if r["ok"]:
             ok += 1
         else:

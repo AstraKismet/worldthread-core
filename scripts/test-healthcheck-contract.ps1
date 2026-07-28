@@ -93,6 +93,18 @@ foreach ($line in Get-Content -LiteralPath $fixturesPath -Encoding UTF8) {
 if ($fixtures.Count -eq 0) { throw "No fixtures found in $fixturesPath" }
 
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+
+# Marks a temp tree as a package root. The leak exemption is judged relative to the
+# first ancestor holding template.json, so blocks that assert exemption must place
+# one; blocks that assert NO exemption must not.
+function Write-Manifest([string]$Root) {
+    New-Item -ItemType Directory -Force -Path $Root | Out-Null
+    [System.IO.File]::WriteAllText(
+        (Join-Path $Root 'template.json'),
+        '{"name":"worldthread-core","version":"0.0.0"}',
+        $utf8NoBom)
+}
+
 function Write-Fixtures([string]$Root, [object[]]$Items) {
     foreach ($fx in $Items) {
         $dest = Join-Path $Root ($fx.name -replace '/', [System.IO.Path]::DirectorySeparatorChar)
@@ -158,11 +170,17 @@ try {
     # === Block 2b: private-dir exemption (leak markers allowed under game/private/) ===
     # A tree ending in game/private must skip the private-marker check entirely:
     # private files legitimately mention host-log / campaign-arc etc.
+    #
+    # The exemption is judged relative to the PACKAGE ROOT (first ancestor holding
+    # template.json), not the absolute path -- so this temp tree must be a real
+    # package or the base falls back to the scan root and nothing is exempt.
+    # Writing template.json here is the point of the block, not a workaround.
     $leakFixtures = @($fixtures | Where-Object { $null -ne $_.expect_leak })
     Assert-True ($leakFixtures.Count -gt 0) "no leak fixtures found; private-exemption block would be vacuous"
     $privRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("wt-healthcheck-priv-" + [System.Guid]::NewGuid().ToString('N'))
     $privTarget = Join-Path (Join-Path $privRoot 'game') 'private'
     New-Item -ItemType Directory -Force -Path $privTarget | Out-Null
+    Write-Manifest $privRoot
     try {
         Write-Fixtures $privTarget $leakFixtures
         # Only fixtures whose sole defect is a leak marker; parse-valid ones must now pass.
@@ -215,6 +233,143 @@ try {
         Remove-Item -LiteralPath $privRoot -Recurse -Force -ErrorAction SilentlyContinue
     }
 
+    # Fixtures whose ONLY defect is a leak marker (parse-clean): used by the blocks below
+    # to assert leak detection without parse failures muddying the exit code.
+    $leakOnly = @($fixtures | Where-Object { $null -ne $_.expect_leak -and $_.parse_ok })
+    Assert-True ($leakOnly.Count -gt 0) "no parse-clean leak fixtures; blocks 2c/2d would be vacuous"
+
+    # === Block 2c: a package unpacked under an ancestor named "tools" is STILL checked ===
+    # Regression guard for the privacy false negative fixed in this round. The pre-fix
+    # implementation matched the ABSOLUTE path against '/tools/', so a package placed under
+    # any directory literally named "tools" had its entire tree silently exempted
+    # (ok:true, exit 0) with no visible sign -- a green light with no leak check performed.
+    # Judging the exemption relative to the package root (template.json) removes that.
+    $ancRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("wt-healthcheck-anc-" + [System.Guid]::NewGuid().ToString('N'))
+    $ancPkg = Join-Path (Join-Path $ancRoot 'tools') 'pkg'
+    $ancTarget = Join-Path (Join-Path $ancPkg 'game') 'state'
+    New-Item -ItemType Directory -Force -Path $ancTarget | Out-Null
+    Write-Manifest $ancPkg
+    try {
+        Write-Fixtures $ancTarget $leakOnly
+        $ra = Invoke-Both @($ancTarget)
+        Assert-True ($ra.Node.ExitCode -eq 1) "tools-ancestor: node exit $($ra.Node.ExitCode), expected 1 (leak must NOT be exempted by an ancestor dir named tools)"
+        Assert-True ($ra.Python.ExitCode -eq 1) "tools-ancestor: python exit $($ra.Python.ExitCode), expected 1"
+        Assert-True ($ra.Node.StdOut -ceq $ra.Python.StdOut) "tools-ancestor: node and python stdout differ"
+        $raByFile = @{}
+        foreach ($outLine in ($ra.Node.StdOut -split "`n")) {
+            $t = $outLine.Trim()
+            if ($t -eq '') { continue }
+            $o = $t | ConvertFrom-Json
+            if (-not ($o.PSObject.Properties.Name -contains 'summary')) { $raByFile[$o.file] = $o }
+        }
+        foreach ($fx in $leakOnly) {
+            $o = $raByFile[$fx.name]
+            Assert-True ($null -ne $o) "tools-ancestor: missing result for $($fx.name)"
+            if ($null -ne $o) {
+                Assert-True (-not [bool]$o.ok) "tools-ancestor: $($fx.name) ok=$($o.ok), expected false"
+                Assert-True ([string]$o.leak -ceq [string]$fx.expect_leak) "tools-ancestor: $($fx.name) leak=$($o.leak), expected $($fx.expect_leak)"
+            }
+        }
+    } finally {
+        Remove-Item -LiteralPath $ancRoot -Recurse -Force -ErrorAction SilentlyContinue
+    }
+
+    # === Block 2cc: an exempt-looking directory BELOW the package root is not exempt ===
+    # The exemption is anchored at the package root: game/private/, tools/ and
+    # example-campaign/ are exempt only as direct children of it. A player-created
+    # game/state/tools/ is inside the player-writable area and must still be checked --
+    # matching the segment at any depth would silently exempt exactly the wrong place.
+    $depRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("wt-healthcheck-dep-" + [System.Guid]::NewGuid().ToString('N'))
+    $depTarget = Join-Path (Join-Path (Join-Path $depRoot 'game') 'state') 'tools'
+    New-Item -ItemType Directory -Force -Path $depTarget | Out-Null
+    Write-Manifest $depRoot
+    try {
+        Write-Fixtures $depTarget $leakOnly
+        $rd = Invoke-Both @((Join-Path (Join-Path $depRoot 'game') 'state'))
+        Assert-True ($rd.Node.ExitCode -eq 1) "nested-exempt-name: node exit $($rd.Node.ExitCode), expected 1 (game/state/tools/ is player-writable, not the package tools dir)"
+        Assert-True ($rd.Python.ExitCode -eq 1) "nested-exempt-name: python exit $($rd.Python.ExitCode), expected 1"
+        Assert-True ($rd.Node.StdOut -ceq $rd.Python.StdOut) "nested-exempt-name: node and python stdout differ"
+        $rdByFile = @{}
+        foreach ($outLine in ($rd.Node.StdOut -split "`n")) {
+            $t = $outLine.Trim()
+            if ($t -eq '') { continue }
+            $o = $t | ConvertFrom-Json
+            if (-not ($o.PSObject.Properties.Name -contains 'summary')) { $rdByFile[$o.file] = $o }
+        }
+        Assert-True ($rdByFile.Count -eq $leakOnly.Count) "nested-exempt-name: got $($rdByFile.Count) file results, expected $($leakOnly.Count)"
+        foreach ($fx in $leakOnly) {
+            $o = $rdByFile["tools/$($fx.name)"]
+            Assert-True ($null -ne $o) "nested-exempt-name: missing result for tools/$($fx.name)"
+            if ($null -ne $o) {
+                Assert-True (-not [bool]$o.ok) "nested-exempt-name: tools/$($fx.name) ok=$($o.ok), expected false"
+                Assert-True ([string]$o.leak -ceq [string]$fx.expect_leak) "nested-exempt-name: tools/$($fx.name) leak=$($o.leak), expected $($fx.expect_leak)"
+            }
+        }
+    } finally {
+        Remove-Item -LiteralPath $depRoot -Recurse -Force -ErrorAction SilentlyContinue
+    }
+
+    # === Block 2d: example-campaign/ exemption (shipped sample director material) ===
+    # example-campaign/ holds the packaged sample's director material, which legitimately
+    # names campaign-arc / hook-market / fronts. It gets the same treatment as
+    # game/private/ (PLAYBOOK〈狀態健檢〉).
+    $exRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("wt-healthcheck-ex-" + [System.Guid]::NewGuid().ToString('N'))
+    $exTarget = Join-Path (Join-Path $exRoot 'example-campaign') 'private-director'
+    New-Item -ItemType Directory -Force -Path $exTarget | Out-Null
+    Write-Manifest $exRoot
+    try {
+        Write-Fixtures $exTarget $leakOnly
+        $re = Invoke-Both @($exTarget)
+        Assert-True ($re.Node.ExitCode -eq 0) "example-campaign-exempt: node exit $($re.Node.ExitCode), expected 0"
+        Assert-True ($re.Python.ExitCode -eq 0) "example-campaign-exempt: python exit $($re.Python.ExitCode), expected 0"
+        Assert-True ($re.Node.StdOut -ceq $re.Python.StdOut) "example-campaign-exempt: node and python stdout differ"
+        # Index by file name and then assert per fixture, so a regression that produces
+        # FEWER result lines fails loudly instead of silently running fewer assertions.
+        $exByFile = @{}
+        foreach ($outLine in ($re.Node.StdOut -split "`n")) {
+            $t = $outLine.Trim()
+            if ($t -eq '') { continue }
+            $o = $t | ConvertFrom-Json
+            if (-not ($o.PSObject.Properties.Name -contains 'summary')) { $exByFile[$o.file] = $o }
+        }
+        Assert-True ($exByFile.Count -eq $leakOnly.Count) "example-campaign-exempt: got $($exByFile.Count) file results, expected $($leakOnly.Count)"
+        foreach ($fx in $leakOnly) {
+            $o = $exByFile[$fx.name]
+            Assert-True ($null -ne $o) "example-campaign-exempt: missing result for $($fx.name)"
+            if ($null -ne $o) {
+                Assert-True ([bool]$o.ok) "example-campaign-exempt: $($fx.name) ok=$($o.ok), expected true"
+                Assert-True ($null -eq $o.leak) "example-campaign-exempt: $($fx.name) leak=$($o.leak), expected null"
+            }
+        }
+    } finally {
+        Remove-Item -LiteralPath $exRoot -Recurse -Force -ErrorAction SilentlyContinue
+    }
+
+    # === Block 2e: existing-but-empty path is distinguishable from a missing path ===
+    # Missing path -> exit 1 + stderr (Block 4). Existing path with nothing scannable ->
+    # exit 0 and summary.scanned == 0, so blind automation can tell the two apart.
+    $emptyRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("wt-healthcheck-empty-" + [System.Guid]::NewGuid().ToString('N'))
+    New-Item -ItemType Directory -Force -Path $emptyRoot | Out-Null
+    try {
+        $rz = Invoke-Both @($emptyRoot)
+        Assert-True ($rz.Node.ExitCode -eq 0) "empty-dir: node exit $($rz.Node.ExitCode), expected 0"
+        Assert-True ($rz.Python.ExitCode -eq 0) "empty-dir: python exit $($rz.Python.ExitCode), expected 0"
+        Assert-True ($rz.Node.StdOut -ceq $rz.Python.StdOut) "empty-dir: node and python stdout differ"
+        Assert-True ($rz.Node.StdErr -eq '') "empty-dir: node unexpected stderr: $($rz.Node.StdErr.TrimEnd())"
+        $zLines = @(($rz.Node.StdOut -split "`n") | Where-Object { $_.Trim() -ne '' })
+        Assert-True ($zLines.Count -eq 1) "empty-dir: expected exactly 1 output line (summary), got $($zLines.Count)"
+        if ($zLines.Count -ge 1) {
+            $zObj = $zLines[0] | ConvertFrom-Json
+            Assert-True ($zObj.PSObject.Properties.Name -contains 'summary') "empty-dir: sole line is not the summary"
+            if ($zObj.PSObject.Properties.Name -contains 'summary') {
+                Assert-True ($zObj.summary.scanned -eq 0) "empty-dir: summary.scanned $($zObj.summary.scanned), expected 0"
+                Assert-True ($zObj.summary.failed -eq 0) "empty-dir: summary.failed $($zObj.summary.failed), expected 0"
+            }
+        }
+    } finally {
+        Remove-Item -LiteralPath $emptyRoot -Recurse -Force -ErrorAction SilentlyContinue
+    }
+
     # === Block 3: single-file mode (file field == basename) ===
     $oneFile = Join-Path $tempClean 'valid.json'
     $rs = Invoke-Both @($oneFile)
@@ -225,6 +380,41 @@ try {
     Assert-True ($sf.file -eq 'valid.json') "single-file: file=$($sf.file), expected valid.json"
     Assert-True ($sf.kind -eq 'json') "single-file: kind=$($sf.kind), expected json"
     Assert-True ([bool]$sf.ok -eq $true) "single-file: ok=$($sf.ok), expected true"
+
+    # === Block 3b: single-file mode resolves the exemption base from the file's own dir ===
+    # Single-file mode takes a different code path for the base (the file's parent dir, not
+    # the scan root). Without this block nothing asserts that path: Block 3 scans a fixture
+    # with no markers in a tree with no template.json, so the exemption result cannot change
+    # any of its assertions.
+    $sfRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("wt-healthcheck-sf-" + [System.Guid]::NewGuid().ToString('N'))
+    $sfPkg = Join-Path (Join-Path $sfRoot 'tools') 'pkg'
+    $sfPriv = Join-Path (Join-Path (Join-Path $sfPkg 'game') 'private') 'director'
+    $sfState = Join-Path (Join-Path $sfPkg 'game') 'state'
+    New-Item -ItemType Directory -Force -Path $sfPriv | Out-Null
+    New-Item -ItemType Directory -Force -Path $sfState | Out-Null
+    Write-Manifest $sfPkg
+    try {
+        $sfFx = $leakOnly[0]
+        Write-Fixtures $sfPriv @($sfFx)
+        Write-Fixtures $sfState @($sfFx)
+        # Exempt: the named file sits under game/private/ relative to the package root.
+        $rp1 = Invoke-Both @((Join-Path $sfPriv $sfFx.name))
+        Assert-True ($rp1.Node.ExitCode -eq 0) "single-file-exempt: node exit $($rp1.Node.ExitCode), expected 0"
+        Assert-True ($rp1.Node.StdOut -ceq $rp1.Python.StdOut) "single-file-exempt: node and python stdout differ"
+        $sf1 = (($rp1.Node.StdOut -split "`n") | Where-Object { $_.Trim() -ne '' })[0] | ConvertFrom-Json
+        Assert-True ([bool]$sf1.ok) "single-file-exempt: ok=$($sf1.ok), expected true"
+        Assert-True ($null -eq $sf1.leak) "single-file-exempt: leak=$($sf1.leak), expected null"
+        # Not exempt: same package sits under an ancestor named tools, but the file is in
+        # game/state/ relative to the package root -- the ancestor must not exempt it.
+        $rp2 = Invoke-Both @((Join-Path $sfState $sfFx.name))
+        Assert-True ($rp2.Node.ExitCode -eq 1) "single-file-checked: node exit $($rp2.Node.ExitCode), expected 1"
+        Assert-True ($rp2.Node.StdOut -ceq $rp2.Python.StdOut) "single-file-checked: node and python stdout differ"
+        $sf2 = (($rp2.Node.StdOut -split "`n") | Where-Object { $_.Trim() -ne '' })[0] | ConvertFrom-Json
+        Assert-True (-not [bool]$sf2.ok) "single-file-checked: ok=$($sf2.ok), expected false"
+        Assert-True ([string]$sf2.leak -ceq [string]$sfFx.expect_leak) "single-file-checked: leak=$($sf2.leak), expected $($sfFx.expect_leak)"
+    } finally {
+        Remove-Item -LiteralPath $sfRoot -Recurse -Force -ErrorAction SilentlyContinue
+    }
 
     # === Block 4: missing path -> exit 1 + stderr, byte-identical ===
     $rm = Invoke-Both @((Join-Path $tempRoot 'does-not-exist'))
@@ -239,6 +429,11 @@ try {
     Assert-True ($rh.Python.ExitCode -eq 0) "help: python exit $($rh.Python.ExitCode), expected 0"
     Assert-True ($rh.Node.StdOut.Trim() -ne '') "help: node produced no stdout"
     Assert-True ($rh.Python.StdOut.Trim() -ne '') "help: python produced no stdout"
+    # The two HELP texts document the same contract and must not drift. Only the first
+    # line (the usage line) legitimately differs -- it names the tool being invoked.
+    $nodeHelpBody = ($rh.Node.StdOut -split "`n", 2)[1]
+    $pyHelpBody = ($rh.Python.StdOut -split "`n", 2)[1]
+    Assert-True ($nodeHelpBody -ceq $pyHelpBody) "help: node and python help bodies differ beyond the usage line"
 
     # === Block 6: unknown flag -> exit 1 + stderr, byte-identical ===
     $ru = Invoke-Both @('--bogus')
@@ -249,10 +444,13 @@ try {
 
     if ($script:failures.Count -gt 0) {
         $script:failures | ForEach-Object { Write-Host "FAIL $_" }
-        throw "Healthcheck contract test failed: $($script:failures.Count) failure(s) across $($fixtures.Count) fixtures + 7 blocks."
+        throw "Healthcheck contract test failed: $($script:failures.Count) failure(s) across $($fixtures.Count) fixtures + 12 blocks."
     }
 
-    Write-Host "Healthcheck contract test passed: $($fixtures.Count) fixtures + 7 blocks (dir-scan/clean-exit0/private-exempt/single-file/missing-path/help/unknown-flag), node == python byte-identical."
+    # "identical" here means the UTF-8-decoded stdout/stderr strings compare equal under
+    # -ceq, not a raw byte comparison; both tools force UTF-8 and python writes bytes to
+    # avoid CRLF translation, so the practical coverage is the same.
+    Write-Host "Healthcheck contract test passed: $($fixtures.Count) fixtures + 12 blocks (dir-scan/clean-exit0/private-exempt/tools-ancestor/nested-exempt-name/example-campaign-exempt/empty-dir/single-file/single-file-base/missing-path/help/unknown-flag), node == python identical (UTF-8 decoded)."
 }
 finally {
     Remove-Item -LiteralPath $tempRoot -Recurse -Force -ErrorAction SilentlyContinue
